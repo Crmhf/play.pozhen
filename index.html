@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<title>破阵大乱斗 · 三国烽烟</title>
+<meta name="description" content="破阵即冲锋陷阵——快节奏横版砍杀，一关一关突破敌阵。十关三国战役，四位江湖侠客。">
+<link rel="stylesheet" href="css/style.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚔️</text></svg>">
+</head>
+<body>
+<div id="app">
+  <!-- Three.js 3D 背景层 -->
+  <canvas id="bg3d"></canvas>
+  <!-- Canvas 2D 游戏层 -->
+  <canvas id="game"></canvas>
+
+  <!-- HUD -->
+  <div id="hud" class="hidden">
+    <div id="hud-player">
+      <div id="hud-portrait"></div>
+      <div class="bars">
+        <div class="bar hp"><div id="bar-hp"></div><span id="hp-text"></span></div>
+        <div class="bar mp"><div id="bar-mp"></div></div>
+        <div class="bar rage"><div id="bar-rage"></div></div>
+      </div>
+    </div>
+    <div id="hud-combo" class="hidden"><b id="combo-num">0</b><span>连击</span></div>
+    <div id="hud-level"><span id="level-name"></span><em id="level-sub"></em></div>
+    <div id="hud-boss" class="hidden">
+      <div id="boss-name"></div>
+      <div class="bar boss"><div id="bar-boss"></div></div>
+    </div>
+  </div>
+
+  <!-- 伤害数字层 -->
+  <div id="dmg-layer"></div>
+
+  <!-- 移动端虚拟按键 -->
+  <div id="touch-ui" class="hidden">
+    <div id="joystick"><div id="joystick-knob"></div></div>
+    <div id="touch-btns">
+      <button class="tbtn" id="tb-jump">跳</button>
+      <button class="tbtn atk" id="tb-j">攻</button>
+      <button class="tbtn skill" id="tb-k">技</button>
+      <button class="tbtn ult" id="tb-l">绝</button>
+    </div>
+  </div>
+
+  <!-- 全屏 UI 层（标题/选将/剧情/结算） -->
+  <div id="screen-layer"></div>
+
+  <!-- 加载层 -->
+  <div id="loading">
+    <div class="load-seal">破陣</div>
+    <div class="load-text">烽烟将起 <span id="load-pct">0%</span></div>
+    <div class="load-bar"><div id="load-fill"></div></div>
+  </div>
+</div>
+
+<!-- 第三方库 CDN（带本地降级） -->
+<script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/planck@1.5.0/dist/planck.min.js"></script>
+<script>
+// CDN 降级：jsdelivr 失败时换 unpkg
+if (!window.THREE) document.write('<script src="https://unpkg.com/three@0.160.0/build/three.min.js"><\/script>');
+if (!window.planck) document.write('<script src="https://unpkg.com/planck@1.5.0/dist/planck.min.js"><\/script>');
+</script>
+<script type="module" src="js/main.js"></script>
+</body>
+</html>
