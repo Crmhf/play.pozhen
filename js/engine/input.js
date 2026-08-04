@@ -3,7 +3,8 @@ export class Input {
   constructor() {
     this.keys = new Set();        // 持续按住
     this.pressed = new Set();     // 本帧按下（edge）
-    this.isTouch = ('ontouchstart' in window) && matchMedia('(pointer:coarse)').matches;
+    this.isTouch = (('ontouchstart' in window) && matchMedia('(pointer:coarse)').matches)
+      || location.search.includes('touch=1'); // 调试强制触屏UI
     this.joy = { x: 0, y: 0, active: false };
     this._bindKeyboard();
     if (this.isTouch) this._bindTouch();
