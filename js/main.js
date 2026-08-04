@@ -1,20 +1,20 @@
 // 破阵大乱斗 · 主入口：启动 / 全局状态机 / 固定时间步游戏循环
-import { clamp } from './engine/utils.js?v=1785885522';
-import { Input } from './engine/input.js?v=1785885522';
-import { audio } from './engine/audio.js?v=1785885522';
-import { feel } from './engine/shake.js?v=1785885522';
-import { particles, vfxLib, VfxPlayer } from './engine/particles.js?v=1785885522';
-import { Physics } from './engine/physics.js?v=1785885522';
-import { Renderer3D } from './engine/renderer3d.js?v=1785885522';
-import { CHARACTERS } from './data/characters.js?v=1785885522';
-import { LEVELS } from './data/levels.js?v=1785885522';
-import { MONSTER_MAP } from './data/monsters.js?v=1785885522';
-import { Player } from './game/player.js?v=1785885522';
-import { Enemy } from './game/enemy.js?v=1785885522';
-import { Combat } from './game/combat.js?v=1785885522';
-import { Director } from './game/director.js?v=1785885522';
-import { Level } from './game/level.js?v=1785885522';
-import { UI } from './game/ui.js?v=1785885522';
+import { clamp } from './engine/utils.js?v=1785885722';
+import { Input } from './engine/input.js?v=1785885722';
+import { audio } from './engine/audio.js?v=1785885722';
+import { feel } from './engine/shake.js?v=1785885722';
+import { particles, vfxLib, VfxPlayer } from './engine/particles.js?v=1785885722';
+import { Physics } from './engine/physics.js?v=1785885722';
+import { Renderer3D } from './engine/renderer3d.js?v=1785885722';
+import { CHARACTERS } from './data/characters.js?v=1785885722';
+import { LEVELS } from './data/levels.js?v=1785885722';
+import { MONSTER_MAP } from './data/monsters.js?v=1785885722';
+import { Player } from './game/player.js?v=1785885722';
+import { Enemy } from './game/enemy.js?v=1785885722';
+import { Combat } from './game/combat.js?v=1785885722';
+import { Director } from './game/director.js?v=1785885722';
+import { Level } from './game/level.js?v=1785885722';
+import { UI } from './game/ui.js?v=1785885722';
 
 const GSTATE = { TITLE: 'TITLE', SELECT: 'SELECT', STORY: 'STORY', PLAYING: 'PLAYING', PAUSED: 'PAUSED', CLEAR: 'CLEAR', OVER: 'OVER', VICTORY: 'VICTORY' };
 const FIXED_DT = 1 / 120;

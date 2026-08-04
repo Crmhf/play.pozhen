@@ -1,13 +1,13 @@
 // 关卡导演：波次编排 + 锁屏推进 + 镜头 + 投射物 + 掉落 + 地面渲染
-import { clamp, rand } from '../engine/utils.js?v=1785885522';
-import { feel } from '../engine/shake.js?v=1785885522';
-import { audio } from '../engine/audio.js?v=1785885522';
-import { particles } from '../engine/particles.js?v=1785885522';
-import { Enemy } from './enemy.js?v=1785885522';
-import { Boss } from './boss.js?v=1785885522';
-import { MONSTER_MAP } from '../data/monsters.js?v=1785885522';
-import { BOSS_MAP } from '../data/bosses.js?v=1785885522';
-import { shade } from '../engine/sprite.js?v=1785885522';
+import { clamp, rand } from '../engine/utils.js?v=1785885722';
+import { feel } from '../engine/shake.js?v=1785885722';
+import { audio } from '../engine/audio.js?v=1785885722';
+import { particles } from '../engine/particles.js?v=1785885722';
+import { Enemy } from './enemy.js?v=1785885722';
+import { Boss } from './boss.js?v=1785885722';
+import { MONSTER_MAP } from '../data/monsters.js?v=1785885722';
+import { BOSS_MAP } from '../data/bosses.js?v=1785885722';
+import { shade } from '../engine/sprite.js?v=1785885722';
 
 const VIEW_W = () => innerWidth;
 const GROUND_Y = 0; // 地面像素 y（世界坐标，向下为正；物理层内部取反）

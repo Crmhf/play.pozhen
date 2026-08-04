@@ -65,7 +65,7 @@ export class SpineActor {
       ult: find('skill_b') || find('skill_a') || names[0],
       hurt: find('hit', 'hurt') || names[0],
       death: find('die', 'death', 'down') || names[0],
-      jump: find('fly', 'jump') || find('idle') || names[0],
+      jump: find('jump') || find('idle') || names[0], // fly 是击飞横躺姿势，跳跃不可用
     };
     // 调试：暴露动画清单
     (window.__spineAnims = window.__spineAnims || {})[this.base] = names;
