@@ -70,6 +70,12 @@ class Game {
     document.getElementById('loading').style.display = 'none';
     this.lastT = performance.now();
     requestAnimationFrame(t => this._frame(t));
+    // RAF 停摆看门狗：隐身标签/激进节流环境下用定时器兜底驱动（真实浏览器 RAF 优先）
+    setInterval(() => {
+      if (performance.now() - (this._lastFrameAt || 0) > 250) {
+        this._frame(performance.now());
+      }
+    }, 250);
   }
 
   toSelect() {
@@ -183,7 +189,10 @@ class Game {
 
   // ---------- 主循环 ----------
   _frame(t) {
-    requestAnimationFrame(tt => this._frame(tt));
+    cancelAnimationFrame(this._rafId); // 看门狗兜底时也保持单循环
+    this._rafId = requestAnimationFrame(tt => this._frame(tt));
+    this._lastFrameAt = performance.now();
+    document.body.dataset.gstate = this.state; // 调试镜像
     let dt = Math.min((t - this.lastT) / 1000, 0.05); // dt clamp
     this.lastT = t;
     this.elapsed += dt;

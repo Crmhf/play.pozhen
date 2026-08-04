@@ -112,7 +112,7 @@ canvas{ position:absolute; inset:0; width:100%; height:100%; display:block; }
 .char-card:hover{ transform:translateY(-6px); border-color:var(--gold); box-shadow:0 10px 30px rgba(212,160,23,.25); }
 .char-card .portrait{ width:100%; height:150px; border-radius:5px; background:#2a2530 center/cover; margin-bottom:10px;
   display:flex; align-items:flex-end; justify-content:center; overflow:hidden; }
-.char-card .portrait canvas{ width:100%; height:100%; }
+.char-card .portrait canvas{ width:100%; height:100%; pointer-events:none; }
 .char-card h3{ font-family:var(--font-title); color:var(--paper); font-size:22px; letter-spacing:4px; }
 .char-card .weapon{ color:var(--gold); font-size:12px; margin:4px 0; letter-spacing:2px; }
 .char-card .skill-line{ color:#9a927e; font-size:11px; line-height:1.7; }

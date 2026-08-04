@@ -9,19 +9,22 @@ class AudioEngine {
     this._proceduralBgm = null;
   }
 
-  // 必须由用户手势触发一次
+  // 必须由用户手势触发一次；任何环境下音频失败都不阻塞游戏
   unlock() {
-    if (this.ctx) { if (this.ctx.state === 'suspended') this.ctx.resume(); return; }
-    const AC = window.AudioContext || window.webkitAudioContext;
-    this.ctx = new AC();
-    this.master = this.ctx.createGain(); this.master.gain.value = 0.9; this.master.connect(this.ctx.destination);
-    this.sfxGain = this.ctx.createGain(); this.sfxGain.gain.value = 0.85; this.sfxGain.connect(this.master);
-    this.bgmGain = this.ctx.createGain(); this.bgmGain.gain.value = 0.5; this.bgmGain.connect(this.master);
-    // 预生成噪声 buffer
-    const len = this.ctx.sampleRate * 1.2, buf = this.ctx.createBuffer(1, len, this.ctx.sampleRate);
-    const d = buf.getChannelData(0);
-    for (let i = 0; i < len; i++) d[i] = Math.random() * 2 - 1;
-    this._noiseBuf = buf;
+    try {
+      if (this.ctx) { if (this.ctx.state === 'suspended') this.ctx.resume(); return; }
+      const AC = window.AudioContext || window.webkitAudioContext;
+      if (!AC) return;
+      this.ctx = new AC();
+      this.master = this.ctx.createGain(); this.master.gain.value = 0.9; this.master.connect(this.ctx.destination);
+      this.sfxGain = this.ctx.createGain(); this.sfxGain.gain.value = 0.85; this.sfxGain.connect(this.master);
+      this.bgmGain = this.ctx.createGain(); this.bgmGain.gain.value = 0.5; this.bgmGain.connect(this.master);
+      // 预生成噪声 buffer
+      const len = this.ctx.sampleRate * 1.2, buf = this.ctx.createBuffer(1, len, this.ctx.sampleRate);
+      const d = buf.getChannelData(0);
+      for (let i = 0; i < len; i++) d[i] = Math.random() * 2 - 1;
+      this._noiseBuf = buf;
+    } catch (e) { this.ctx = null; }
   }
 
   setBgmVolume(v) { this.bgmGain && (this.bgmGain.gain.value = v); this.bgmEl.volume = Math.min(1, v); }

@@ -28,7 +28,12 @@ export class UI {
         移动端：虚拟摇杆 + 攻/技/绝/跳 &nbsp;|&nbsp; 十阵三国 · 三十兵种 · 十大猛将
       </div>`;
     layer().appendChild(el);
-    $('btn-start').onclick = () => { audio.unlock(); audio.play('ui_start'); onStart(); };
+    const start = () => { removeEventListener('keydown', keyStart); audio.unlock(); audio.play('ui_start'); onStart(); };
+    const keyStart = e => { if (e.code === 'Enter' || e.code === 'Space') start(); };
+    addEventListener('keydown', keyStart);
+    const btn = $('btn-start');
+    btn.onclick = start;
+    btn.dataset.bound = '1';
   }
 
   // ---------- 选将 ----------
