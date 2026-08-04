@@ -310,7 +310,13 @@ if (location.search.includes('auto=1')) {
   const keys = game.input.keys, pressed = game.input.pressed;
   const AUTO_KEY = 'KeyD';
   let lastAtk = 0, lastSkill = 0;
-  setTimeout(() => { game.charData = CHARACTERS[0]; game.startLevel(0); }, 1200);
+  setTimeout(() => {
+    const m = location.search.match(/lv=(\d+)/);
+    const lv = m ? Math.min(LEVELS.length, Math.max(1, +m[1])) : 1;
+    game.charData = CHARACTERS[0];
+    game.levelIndex = lv - 1;
+    game.startLevel(lv - 1);
+  }, 1200);
   setInterval(() => {
     const b = document.body;
     // 自动连闯：CLEAR→下一阵；STORY→自动进阵
