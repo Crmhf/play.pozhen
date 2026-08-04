@@ -325,7 +325,7 @@ export class Player {
   get vy() { return this.phys.getVel(this.body).y; }
   get grounded() { return this.phys.isGrounded(this.body); }
 
-  syncBody() { const p = this.pos; this.x = p.x; this.y = p.y; }
+  syncBody() { const p = this.pos; this.x = p.x; this.y = p.y + 28; } // 身体中心→脚底
 
   draw(ctx, camX, camY) {
     // 无敌帧闪烁

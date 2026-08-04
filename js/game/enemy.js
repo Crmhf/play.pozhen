@@ -299,5 +299,5 @@ export class Enemy {
     }
   }
 
-  syncBody() { const p = this.phys.getPos(this.body); this.x = p.x; this.y = p.y; }
+  syncBody() { const p = this.phys.getPos(this.body); this.x = p.x; this.y = p.y + 26 * this.def.scale; } // 中心→脚底
 }

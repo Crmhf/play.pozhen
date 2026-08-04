@@ -47,10 +47,14 @@ export class Level {
   // ---------- 刷怪 ----------
   spawnWave(i) {
     const w = this.data.waves[i];
-    const cx = this.camera.x + VIEW_W() * 0.35;
+    const p = this.game.player;
     w.mobs.forEach((id, k) => {
+      // 近身包夹：左右两翼 180~420px，远程兵放远端
+      const def = MONSTER_MAP[id];
+      const isRanged = def.ai === 'archer' || def.ai === 'caster';
       const side = k % 2 === 0 ? 1 : -1;
-      const x = clamp(cx + side * rand(80, 260) + rand(-40, 40), this.lockLeft + 60, this.camera.x + VIEW_W() * 0.48);
+      const dist = isRanged ? rand(320, 460) : rand(170, 300);
+      const x = clamp(p.x + side * dist + rand(-30, 30), this.lockLeft + 60, this.camera.x + VIEW_W() * 0.48);
       this.game.spawnEnemy(id, x, w.elite);
     });
     this.game.ui.showToast(`第 ${i + 1} 波敌军杀到！`);

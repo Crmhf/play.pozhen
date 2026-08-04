@@ -310,21 +310,33 @@ if (location.search.includes('auto=1')) {
   setInterval(() => {
     const b = document.body;
     if (game.state !== 'PLAYING' || !game.player) { b.dataset.auto = game.state; return; }
-    // 自动向右推进 + 战斗
-    keys.add(AUTO_KEY);
     const now = performance.now();
-    const near = game.enemies.some(e => e.alive && Math.abs(e.x - game.player.x) < 90);
-    if (near) {
-      keys.delete(AUTO_KEY);
-      if (now - lastAtk > 260) { pressed.add('KeyJ'); lastAtk = now; }
+    const p = game.player;
+    const alive = game.enemies.filter(e => e.alive);
+    keys.delete('KeyD'); keys.delete('KeyA');
+    if (alive.length) {
+      // 找最近敌人并朝向他作战
+      const nearest = alive.reduce((a, c) => Math.abs(c.x - p.x) < Math.abs(a.x - p.x) ? c : a);
+      const dx = nearest.x - p.x;
+      if (Math.abs(dx) > 80) keys.add(dx > 0 ? 'KeyD' : 'KeyA');
+      else {
+        keys.add(dx > 0 ? 'KeyD' : 'KeyA'); // 保持朝向
+        if (now - lastAtk > 260) { pressed.add('KeyJ'); lastAtk = now; }
+      }
+    } else {
+      keys.add('KeyD'); // 无敌人时向右推进
     }
-    if (now - lastSkill > 6000 && game.player.mp >= 30) { pressed.add('KeyK'); lastSkill = now; }
-    if (game.player.rage >= 100) pressed.add('KeyL');
+    if (now - lastSkill > 6000 && p.mp >= 30) { pressed.add('KeyK'); lastSkill = now; }
+    if (p.rage >= 100) pressed.add('KeyL');
     // 指标
     fpsAcc++; 
     b.dataset.auto = JSON.stringify({
       state: game.state, px: Math.round(game.player.x), hp: Math.round(game.player.hp),
+      pstate: game.player.fsm.state,
       enemies: game.enemies.filter(e => e.alive).length,
+      ed: game.enemies.filter(e => e.alive).slice(0, 4).map(e =>
+        `${Math.round(e.x)},${Math.round(e.y)}|hp${Math.round(e.hp)}|${e.fsm.state}${e.fsm.stateTime.toFixed(1)}|${e.hasToken ? 'T' : '-'}`),
+      py: Math.round(game.player.y),
       wave: game.level.waveIdx, phase: game.level.phase,
       kills: game.player.stats.kills, combo: game.player.stats.maxCombo,
     });

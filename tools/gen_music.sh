@@ -11,7 +11,7 @@ gen() {
   echo "[gen] $name ..."
   resp=$(curl -s -m 300 -X POST "$URL" \
     -H "Authorization: Bearer $KEY" -H "Content-Type: application/json" \
-    -d "{\"model\":\"music-2.6\",\"prompt\":\"$prompt\",\"instrumental\":true,\"audio_format\":\"mp3\"}")
+    -d "{\"model\":\"music-2.6\",\"prompt\":\"$prompt\",\"lyrics\":\"[Instrumental]\\n[Intro]\\n[Build]\\n[Main Theme]\\n[Climax]\\n[Outro]\",\"audio_format\":\"mp3\"}")
   echo "$resp" > "/tmp/music_$name.json"
   audio_url=$(echo "$resp" | python3 -c "
 import json,sys

@@ -38,17 +38,18 @@ def gen_a(prompt, size, out):
 
 def gen_b(prompt, size, out):
     w, h = size.split("x")
-    body = json.dumps({"model": "image-01", "prompt": prompt, "aspect_ratio": f"{w}:{h}", "response_format": "base64"}).encode()
+    body = json.dumps({"model": "image-01", "prompt": prompt, "aspect_ratio": f"{w}:{h}", "response_format": "url"}).encode()
     req = urllib.request.Request(CH_B_URL, data=body, headers={"Authorization": f"Bearer {CH_B_KEY}", "Content-Type": "application/json"})
     with urllib.request.urlopen(req, timeout=180) as r:
         data = json.loads(r.read())
-    imgs = data.get("data", {}).get("image_base64") or data.get("image_base64")
-    if isinstance(imgs, list):
-        return base64.b64decode(imgs[0])
+    urls = (data.get("data") or {}).get("image_urls") or []
+    if urls:
+        with urllib.request.urlopen(urls[0], timeout=120) as r:
+            return r.read()
     raise RuntimeError("no image: " + json.dumps(data)[:200])
 
 def gen_c(prompt, size, out):
-    body = json.dumps({"model": "Qwen/Qwen-image", "prompt": prompt, "size": size, "n": 1}).encode()
+    body = json.dumps({"model": "Qwen/Qwen-Image", "prompt": prompt, "size": size, "n": 1}).encode()
     req = urllib.request.Request(CH_A_URL, data=body, headers={"Authorization": f"Bearer {CH_A_KEY}", "Content-Type": "application/json"})
     with urllib.request.urlopen(req, timeout=180) as r:
         data = json.loads(r.read())
