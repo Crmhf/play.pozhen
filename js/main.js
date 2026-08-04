@@ -195,6 +195,7 @@ class Game {
     cancelAnimationFrame(this._rafId); // 看门狗兜底时也保持单循环
     this._rafId = requestAnimationFrame(tt => this._frame(tt));
     this._lastFrameAt = performance.now();
+    window.__frameCount = (window.__frameCount || 0) + 1;
     document.body.dataset.gstate = this.state; // 调试镜像
     let dt = Math.min((t - this.lastT) / 1000, 0.05); // dt clamp
     this.lastT = t;
@@ -308,7 +309,7 @@ window.__game = game; // 调试入口
 if (location.search.includes('auto=1')) {
   const keys = game.input.keys, pressed = game.input.pressed;
   const AUTO_KEY = 'KeyD';
-  let lastAtk = 0, lastSkill = 0, fpsAcc = 0, fpsN = 0, fpsT = 0;
+  let lastAtk = 0, lastSkill = 0;
   setTimeout(() => { game.charData = CHARACTERS[0]; game.startLevel(0); }, 1200);
   setInterval(() => {
     const b = document.body;
@@ -337,7 +338,6 @@ if (location.search.includes('auto=1')) {
     if (now - lastSkill > 6000 && p.mp >= 30) { pressed.add('KeyK'); lastSkill = now; }
     if (p.rage >= 100) pressed.add('KeyL');
     // 指标
-    fpsAcc++; 
     b.dataset.auto = JSON.stringify({
       state: game.state, lv: game.levelIndex + 1, px: Math.round(game.player.x), hp: Math.round(game.player.hp),
       pstate: game.player.fsm.state,
@@ -349,8 +349,10 @@ if (location.search.includes('auto=1')) {
       kills: game.player.stats.kills, combo: game.player.stats.maxCombo,
     });
   }, 100);
-  setInterval(() => { // FPS 统计
+  let _lastFc = 0;
+  setInterval(() => { // FPS 统计（基于真实帧数）
     const b = document.body;
-    b.dataset.fps = fpsAcc * 10; fpsAcc = 0;
+    const fc = window.__frameCount || 0;
+    b.dataset.fps = fc - _lastFc; _lastFc = fc;
   }, 1000);
 }
