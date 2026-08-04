@@ -77,9 +77,10 @@ export class Combat {
   _afterPlayerHit(c, hits, cx, cy) {
     const p = this.game.player;
     if (c.vfx) {
-      this.game.vfx.play(c.vfx, cx, cy, {
-        scale: 1.1 + (c.dmg || 1) * 0.2, fps: 30, flip: p.dir < 0,
-        rot: c.kind === 'slash2' ? 0.6 : c.kind === 'slash3' ? -0.2 : 0,
+      // 刀光贴身：锚在角色身前半步，方向跟随朝向
+      this.game.vfx.play(c.vfx, p.x + p.dir * c.range * 0.42, p.y - 36, {
+        scale: 1.15 + (c.dmg || 1) * 0.22, fps: 30, flip: p.dir < 0,
+        rot: (c.kind === 'slash2' ? 0.6 : c.kind === 'slash3' ? -0.2 : 0) * p.dir,
       });
     }
     if (hits === 0) return;

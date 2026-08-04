@@ -2,10 +2,10 @@
 // elite: 精英化开关（红缨强化，数值 ×1.6）
 const M = (id, name, family, ai, o) => ({
   id, name, family, ai,
-  hp: o.hp, atk: o.atk, speed: o.speed || 120, range: o.range || 56, atkCd: o.atkCd || 1.4,
+  hp: o.hp, atk: o.atk, speed: o.speed || 120, range: o.range || 64, atkCd: o.atkCd || 1.2,
   windup: o.windup || 0.35, recover: o.recover || 0.4,
   palette: o.palette, weapon: o.weapon || 'sword', hat: o.hat || null, bulk: o.bulk || 0.9,
-  scale: o.scale || 1.35, score: o.score || 10, projectile: o.projectile || null,
+  scale: o.scale || 1.55, score: o.score || 10, projectile: o.projectile || null,
   blockChance: o.blockChance || 0, knockResist: o.knockResist || 0,
 });
 
@@ -34,11 +34,11 @@ export const MONSTERS = [
   M('m09', '毒镖客', '远程', 'archer', { hp: 26, atk: 6, palette: C.dark, hat: 'hood', weapon: 'fan', range: 260, atkCd: 2.0, projectile: 'poison' }),
   M('m10', '火油兵', '远程', 'bomber', { hp: 30, atk: 18, palette: C.red, weapon: 'staff', speed: 150, projectile: 'firepot' }),
   // ---- 骑兵系 ----
-  M('m11', '轻骑兵', '骑兵', 'charger', { hp: 44, atk: 12, palette: C.blue, weapon: 'spear', speed: 260, range: 70, bulk: 1.05, scale: 1.5 }),
-  M('m12', '重骑兵', '骑兵', 'charger', { hp: 66, atk: 15, palette: C.grey, hat: 'helmet', weapon: 'spear', speed: 230, bulk: 1.15, scale: 1.55, knockResist: 0.4 }),
-  M('m13', '西凉铁骑', '骑兵', 'charger', { hp: 58, atk: 14, palette: C.red, weapon: 'blade', speed: 280, bulk: 1.1, scale: 1.5 }),
-  M('m14', '白马义从', '骑兵', 'archer', { hp: 42, atk: 10, palette: C.blue, weapon: 'bow', speed: 240, range: 300, atkCd: 2.4, projectile: 'arrow', scale: 1.5 }),
-  M('m15', '虎豹骑', '骑兵', 'charger', { hp: 84, atk: 17, palette: C.dark, hat: 'helmet', weapon: 'spear', speed: 300, bulk: 1.2, scale: 1.6, knockResist: 0.5 }),
+  M('m11', '轻骑兵', '骑兵', 'charger', { hp: 44, atk: 12, palette: C.blue, weapon: 'spear', speed: 260, range: 70, bulk: 1.05, scale: 1.7 }),
+  M('m12', '重骑兵', '骑兵', 'charger', { hp: 66, atk: 15, palette: C.grey, hat: 'helmet', weapon: 'spear', speed: 230, bulk: 1.15, scale: 1.75, knockResist: 0.4 }),
+  M('m13', '西凉铁骑', '骑兵', 'charger', { hp: 58, atk: 14, palette: C.red, weapon: 'blade', speed: 280, bulk: 1.1, scale: 1.7 }),
+  M('m14', '白马义从', '骑兵', 'archer', { hp: 42, atk: 10, palette: C.blue, weapon: 'bow', speed: 240, range: 300, atkCd: 2.4, projectile: 'arrow', scale: 1.7 }),
+  M('m15', '虎豹骑', '骑兵', 'charger', { hp: 84, atk: 17, palette: C.dark, hat: 'helmet', weapon: 'spear', speed: 300, bulk: 1.2, scale: 1.8, knockResist: 0.5 }),
   // ---- 奇士系 ----
   M('m16', '方术士', '奇士', 'caster', { hp: 30, atk: 9, palette: C.dark, hat: 'hood', weapon: 'staff', range: 300, atkCd: 3.2, projectile: 'fireball' }),
   M('m17', '巫蛊师', '奇士', 'caster', { hp: 34, atk: 7, palette: C.south, hat: 'hood', weapon: 'staff', range: 280, atkCd: 3.6, projectile: 'curse' }),
@@ -49,7 +49,7 @@ export const MONSTERS = [
   M('m21', '藤甲兵', '南蛮', 'tank', { hp: 60, atk: 10, palette: C.south, weapon: 'sword', blockChance: 0.5, knockResist: 0.3, speed: 90 }),
   M('m22', '蛮刀兵', '南蛮', 'melee', { hp: 46, atk: 12, palette: C.south, weapon: 'blade', speed: 135, bulk: 1.0 }),
   M('m23', '毒蜂手', '南蛮', 'archer', { hp: 30, atk: 8, palette: C.south, weapon: 'fan', range: 260, atkCd: 2.2, projectile: 'poison' }),
-  M('m24', '象兵', '南蛮', 'charger', { hp: 110, atk: 18, palette: C.south, weapon: 'club', speed: 190, bulk: 1.5, scale: 2.0, knockResist: 0.7 }),
+  M('m24', '象兵', '南蛮', 'charger', { hp: 110, atk: 18, palette: C.south, weapon: 'club', speed: 190, bulk: 1.5, scale: 2.25, knockResist: 0.7 }),
   M('m25', '洞主悍卒', '南蛮', 'melee', { hp: 56, atk: 13, palette: C.south, weapon: 'axe', speed: 150, bulk: 1.05 }),
   // ---- 精锐系 ----
   M('m26', '陷阵营', '精锐', 'melee', { hp: 70, atk: 15, palette: C.elite, hat: 'helmet', weapon: 'blade', speed: 140, blockChance: 0.25, bulk: 1.05 }),

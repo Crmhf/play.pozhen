@@ -115,9 +115,10 @@ export class Enemy {
         this._charging = 0.35;
         break;
       }
-      default: { // melee / tank
+      default: { // melee / tank：出刀带前冲，凶且能打到
         audio.play('swing', { pitch: 0.85, vol: 0.7 });
-        const reach = d.range + 14;
+        this.phys.setVel(this.body, this.dir * 240, this.vy); // 前冲步
+        const reach = d.range + 20;
         if (Math.abs(p.x - this.x) <= reach && Math.abs(p.y - this.y) < 70 &&
             Math.sign(p.x - this.x) === this.dir) {
           p.takeHit(this.atk, this.x, { knock: 180 });
