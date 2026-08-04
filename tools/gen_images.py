@@ -37,8 +37,10 @@ def gen_a(prompt, size, out):
     raise RuntimeError("no image in response: " + json.dumps(data)[:200])
 
 def gen_b(prompt, size, out):
+    # minimax 只接受固定比例
     w, h = size.split("x")
-    body = json.dumps({"model": "image-01", "prompt": prompt, "aspect_ratio": f"{w}:{h}", "response_format": "url"}).encode()
+    ratio = {"1536x1024": "3:2", "1024x1024": "1:1", "1024x1536": "2:3"}.get(size, "16:9")
+    body = json.dumps({"model": "image-01", "prompt": prompt, "aspect_ratio": ratio, "response_format": "url"}).encode()
     req = urllib.request.Request(CH_B_URL, data=body, headers={"Authorization": f"Bearer {CH_B_KEY}", "Content-Type": "application/json"})
     with urllib.request.urlopen(req, timeout=180) as r:
         data = json.loads(r.read())
@@ -51,18 +53,24 @@ def gen_b(prompt, size, out):
 def gen_c(prompt, size, out):
     body = json.dumps({"model": "Qwen/Qwen-Image", "prompt": prompt, "size": size, "n": 1}).encode()
     req = urllib.request.Request(CH_A_URL, data=body, headers={"Authorization": f"Bearer {CH_A_KEY}", "Content-Type": "application/json"})
-    with urllib.request.urlopen(req, timeout=180) as r:
+    with urllib.request.urlopen(req, timeout=240) as r:
         data = json.loads(r.read())
-    item = data["data"][0]
-    if item.get("b64_json"):
-        return base64.b64decode(item["b64_json"])
-    if item.get("url"):
-        with urllib.request.urlopen(item["url"], timeout=120) as r:
+    # 该网关返回 {"images":[{"url":...}]}（SiliconFlow 风格）或 OpenAI 风格 data
+    url = None
+    if data.get("images"):
+        url = data["images"][0].get("url")
+    elif data.get("data"):
+        item = data["data"][0]
+        if item.get("b64_json"):
+            return base64.b64decode(item["b64_json"])
+        url = item.get("url")
+    if url:
+        with urllib.request.urlopen(url, timeout=120) as r:
             return r.read()
     raise RuntimeError("no image: " + json.dumps(data)[:200])
 
 GENS = {"A": gen_a, "B": gen_b, "C": gen_c}
-FALLBACK = {"A": ["A", "C", "B"], "B": ["B", "C", "A"], "C": ["C", "A", "B"]}
+FALLBACK = {"A": ["C", "B", "A"], "B": ["B", "C", "A"], "C": ["C", "B", "A"]}  # A(gpt-image-2) 当前无响应，C/B 优先
 
 def run_job(job):
     out, ch, prompt, size = job

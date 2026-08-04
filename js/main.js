@@ -309,6 +309,11 @@ if (location.search.includes('auto=1')) {
   setTimeout(() => { game.charData = CHARACTERS[0]; game.startLevel(0); }, 1200);
   setInterval(() => {
     const b = document.body;
+    // 自动连闯：CLEAR→下一阵；STORY→自动进阵
+    if (game.state === 'CLEAR') { game.toStory(game.levelIndex + 1); return; }
+    if (game.state === 'STORY') { game.startLevel(game.levelIndex); return; }
+    if (game.state === 'OVER') { game.startLevel(game.levelIndex); return; }
+    if (game.state === 'VICTORY') { b.dataset.auto = 'VICTORY'; return; }
     if (game.state !== 'PLAYING' || !game.player) { b.dataset.auto = game.state; return; }
     const now = performance.now();
     const p = game.player;
@@ -331,7 +336,7 @@ if (location.search.includes('auto=1')) {
     // 指标
     fpsAcc++; 
     b.dataset.auto = JSON.stringify({
-      state: game.state, px: Math.round(game.player.x), hp: Math.round(game.player.hp),
+      state: game.state, lv: game.levelIndex + 1, px: Math.round(game.player.x), hp: Math.round(game.player.hp),
       pstate: game.player.fsm.state,
       enemies: game.enemies.filter(e => e.alive).length,
       ed: game.enemies.filter(e => e.alive).slice(0, 4).map(e =>

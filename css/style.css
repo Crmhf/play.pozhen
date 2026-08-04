@@ -88,6 +88,10 @@ html,body{ width:100%; height:100%; overflow:hidden; background:#0b0b10;
 #screen-layer{ position:absolute; inset:0; z-index:30; pointer-events:none; }
 .screen{ position:absolute; inset:0; display:flex; flex-direction:column; align-items:center;
   justify-content:center; pointer-events:auto; }
+.screen.title-screen{ background:url('../assets/ui/title_bg.jpg') center/cover; }
+.screen.title-screen::before{ content:""; position:absolute; inset:0;
+  background:radial-gradient(ellipse at 50% 45%,rgba(8,8,12,.15),rgba(8,8,12,.78)); }
+.screen.title-screen>*{ position:relative; }
 .screen.dim{ background:rgba(8,8,12,.82); backdrop-filter:blur(3px); }
 
 .game-title{ font-family:var(--font-title); font-size:min(15vw,110px); color:var(--paper);

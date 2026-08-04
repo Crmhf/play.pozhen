@@ -22,7 +22,7 @@ export const LEVELS = [
     bossLine: '守阵：华雄 · 影（先锋试刀）',
     scene: {
       seed: 11, skyTop: '#e8b96a', skyBottom: '#8a5a3a', fog: '#c89a6a', sun: '#ffddaa', sunIntensity: 1.3,
-      ambient: { type: 'petal', color: 0xf0b8c8 }, texUrl: 'assets/bg/level01/bg.png',
+      ambient: { type: 'petal', color: 0xf0b8c8 }, texUrl: 'assets/bg/level01/bg.jpg',
       ground: '#5a4a32', grass: '#7a8a4a',
     },
     length: 4200,
@@ -41,7 +41,7 @@ export const LEVELS = [
     bossLine: '守阵：华雄（真身）',
     scene: {
       seed: 22, skyTop: '#d8a558', skyBottom: '#6a4a30', fog: '#b08850', sun: '#ffcc88', sunIntensity: 1.2,
-      ambient: { type: 'dust', color: 0xd8b880 }, texUrl: 'assets/bg/level02/bg.png',
+      ambient: { type: 'dust', color: 0xd8b880 }, texUrl: 'assets/bg/level02/bg.jpg',
       ground: '#6a5638', grass: '#8a7a48',
     },
     length: 5600,
@@ -61,7 +61,7 @@ export const LEVELS = [
     bossLine: '守阵：吕布',
     scene: {
       seed: 33, skyTop: '#c85a3a', skyBottom: '#4a2030', fog: '#8a4a40', sun: '#ff9a66', sunIntensity: 1.1,
-      ambient: { type: 'ember', color: 0xff9a55 }, texUrl: 'assets/bg/level03/bg.png',
+      ambient: { type: 'ember', color: 0xff9a55 }, texUrl: 'assets/bg/level03/bg.jpg',
       ground: '#4a3630', grass: '#6a4a3a',
     },
     length: 6400,
@@ -81,7 +81,7 @@ export const LEVELS = [
     bossLine: '守阵：颜良 & 文丑（双将夹击）',
     scene: {
       seed: 44, skyTop: '#a8bcc8', skyBottom: '#5a6a70', fog: '#9aacb4', sun: '#e8e0c8', sunIntensity: 0.9,
-      ambient: { type: 'dust', color: 0xc8d4da }, texUrl: 'assets/bg/level04/bg.png',
+      ambient: { type: 'dust', color: 0xc8d4da }, texUrl: 'assets/bg/level04/bg.jpg',
       ground: '#5a5a48', grass: '#6a7a52',
     },
     length: 7000,
@@ -101,7 +101,7 @@ export const LEVELS = [
     bossLine: '守阵：夏侯惇',
     scene: {
       seed: 55, skyTop: '#b09a6a', skyBottom: '#5a4a38', fog: '#a08a60', sun: '#f0d8a0', sunIntensity: 1.0,
-      ambient: { type: 'dust', color: 0xc0a878 }, texUrl: 'assets/bg/level05/bg.png',
+      ambient: { type: 'dust', color: 0xc0a878 }, texUrl: 'assets/bg/level05/bg.jpg',
       ground: '#665540', grass: '#7a7040',
     },
     length: 7800,
@@ -122,7 +122,7 @@ export const LEVELS = [
     bossLine: '守阵：张辽',
     scene: {
       seed: 66, skyTop: '#8a2a1a', skyBottom: '#2a1020', fog: '#6a2820', sun: '#ff7744', sunIntensity: 1.4,
-      ambient: { type: 'ember', color: 0xff8844 }, texUrl: 'assets/bg/level06/bg.png',
+      ambient: { type: 'ember', color: 0xff8844 }, texUrl: 'assets/bg/level06/bg.jpg',
       ground: '#3a2a28', grass: '#5a3a30',
     },
     length: 8200,
@@ -143,7 +143,7 @@ export const LEVELS = [
     bossLine: '守阵：夏侯渊',
     scene: {
       seed: 77, skyTop: '#d89858', skyBottom: '#7a4a30', fog: '#b07848', sun: '#ffc888', sunIntensity: 1.15,
-      ambient: { type: 'leaf', color: 0xd88840 }, texUrl: 'assets/bg/level07/bg.png',
+      ambient: { type: 'leaf', color: 0xd88840 }, texUrl: 'assets/bg/level07/bg.jpg',
       ground: '#5e4a34', grass: '#8a6a38',
     },
     length: 8800,
@@ -164,7 +164,7 @@ export const LEVELS = [
     bossLine: '守阵：庞德',
     scene: {
       seed: 88, skyTop: '#4a5a6a', skyBottom: '#1e2830', fog: '#3e4e5c', sun: '#a0b0c0', sunIntensity: 0.7,
-      ambient: { type: 'rain', color: 0x8aa8c0 }, texUrl: 'assets/bg/level08/bg.png',
+      ambient: { type: 'rain', color: 0x8aa8c0 }, texUrl: 'assets/bg/level08/bg.jpg',
       ground: '#3e4a44', grass: '#4a5e4e',
     },
     length: 9200,
@@ -185,7 +185,7 @@ export const LEVELS = [
     bossLine: '守阵：孟获',
     scene: {
       seed: 99, skyTop: '#3a5a3a', skyBottom: '#16241a', fog: '#2e4a34', sun: '#c0d890', sunIntensity: 0.8,
-      ambient: { type: 'miasma', color: 0x88c068 }, texUrl: 'assets/bg/level09/bg.png',
+      ambient: { type: 'miasma', color: 0x88c068 }, texUrl: 'assets/bg/level09/bg.jpg',
       ground: '#2e3e28', grass: '#3e5a34',
     },
     length: 10000,
@@ -207,7 +207,7 @@ export const LEVELS = [
     bossLine: '守阵：司马懿',
     scene: {
       seed: 110, skyTop: '#1c2240', skyBottom: '#0c0e1c', fog: '#1a2030', sun: '#8898d0', sunIntensity: 0.55,
-      ambient: { type: 'snow', color: 0xb8c8e8 }, texUrl: 'assets/bg/level10/bg.png',
+      ambient: { type: 'snow', color: 0xb8c8e8 }, texUrl: 'assets/bg/level10/bg.jpg',
       ground: '#2a2e3a', grass: '#3a4050',
     },
     length: 11000,

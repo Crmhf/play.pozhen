@@ -18,7 +18,7 @@ export class UI {
   showTitle(onStart) {
     this.clearScreens();
     const el = document.createElement('div');
-    el.className = 'screen';
+    el.className = 'screen title-screen';
     el.innerHTML = `
       <div class="game-title">破陣大亂鬥</div>
       <div class="game-sub">—— 冲锋陷阵 · 一关一关突破敌阵 ——</div>
