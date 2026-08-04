@@ -290,8 +290,17 @@ npx serve .            # 或 python3 -m http.server 8080
 git push origin main   # https://github.com/Crmhf/play.pozhen
 
 # 部署（阿里云 cyr / 121.41.39.129）
-rsync -avz --delete ./ root@121.41.39.129:/www/wwwroot/play.maozirui.com/webgame/play-pozhen/
+tar czf - --exclude='.git' . | ssh root@121.41.39.129 \
+  "tar xzf - -C /www/wwwroot/play.maozirui.com/webgame/play-pozhen/"
 ```
+
+## 调试参数
+
+| URL 参数 | 作用 |
+|----------|------|
+| `?auto=1` | 自动驾驶冒烟测试（自动选将、连闯十关、遥测写入 `body[data-auto]`） |
+| `?touch=1` | 桌面端强制显示移动端虚拟按键 |
+| `spine-test.html` | 8 角色 Spine 素材自检页（动画清单 + 渲染验证） |
 
 线上入口同时登记在：
 - https://play.maozirui.com/ （站点首页游戏列表）
@@ -301,18 +310,18 @@ rsync -avz --delete ./ root@121.41.39.129:/www/wwwroot/play.maozirui.com/webgame
 
 ## 迭代记录（R1–R10）
 
-| 轮 | 主题 | 内容 |
-|----|------|------|
-| R1 | 核心闭环 | 状态机/物理/输入/移动跳跃/普攻，一关可玩 |
-| R2 | 打击感 | 顿帧/震动/击退/连击/伤害数字 |
-| R3 | 角色技能 | 4 角色 K/L 技能 + 特效帧序列接入 |
-| R4 | 关卡与剧情 | 10 关编排 + 三国卷轴剧情 + 波次导演 |
-| R5 | Boss 战 | 10 Boss AI/阶段/狂暴 + Boss 登场演出 |
-| R6 | 视觉升级 | Three.js 视差背景/雾/环境粒子/AI 背景图 |
-| R7 | 音频 | music-2.6 BGM + 全套程序化音效 |
-| R8 | 移动端 | 虚拟摇杆/按键、触控手感、自适应布局 |
-| R9 | 性能 | 对象池/合批/懒加载/降级策略，60FPS 达标 |
-| R10 | 终磨 | 平衡性/水墨滤镜/结算演出/部署上线 |
+| 轮 | 主题 | 内容 | 状态 |
+|----|------|------|------|
+| R1 | 核心闭环 | 状态机/Planck物理/输入/移动跳跃/普攻，一关可玩 | ✅ |
+| R2 | 实测修复 | 音频异常兜底/RAF看门狗/坐标系统一/键盘启动 | ✅ |
+| R3 | 角色技能+Spine | 8名Spine角色接入（spine-canvas 3.8 三角渲染）+ 特效帧序列 | ✅ |
+| R4 | 关卡与剧情 | 10关编排（4200→11000px 难度递增）+ 三国卷轴剧情 + 波次导演 + 自动驾驶通关验证 | ✅ |
+| R5 | Boss 战 | 10 Boss AI/阶段/狂暴 + 双Boss夹击 + Boss 登场演出（自动驾驶验证） | ✅ |
+| R6 | 视觉升级 | Three.js 视差 + 11 张 AI 关卡背景（Qwen-Image）+ 标题史诗背景 | ✅ |
+| R7 | 音频 | music-2.6 四首 BGM（标题/战斗/Boss/胜利）+ 20+ 程序化音效 | ✅ |
+| R8 | 移动端 | 虚拟摇杆/攻技绝跳按键、Spine 头像快照、真实 FPS 统计 | ✅ |
+| R9 | 性能 | 对象池/粒子上限/背景 JPEG 压缩（2MB→300KB）/ dt clamp | ✅ |
+| R10 | 终磨 | 十关连测回归 + 部署上线（GitHub + 阿里云 + 展示页） | ✅ |
 
 ---
 
