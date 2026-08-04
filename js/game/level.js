@@ -22,6 +22,7 @@ export class Level {
     this.phase = 'march';        // march | wave | boss_gate | boss | clear
     this.boss = null;
     this.camera = { x: 0, targetX: 0 };
+    this.camL = 0;               // 镜头左缘（死区卷轴）
     this.lockLeft = 0;           // 锁屏左边界
     this.projectiles = [];
     this.pickups = [];
@@ -54,7 +55,7 @@ export class Level {
       const isRanged = def.ai === 'archer' || def.ai === 'caster';
       const side = k % 3 === 2 ? -1 : 1; // 2/3 从正面杀出
       const dist = isRanged ? rand(280, 420) : rand(140, 280);
-      const x = clamp(p.x + side * dist + rand(-30, 30), this.lockLeft + 60, this.camera.x + VIEW_W() * 0.48);
+      const x = clamp(p.x + side * dist + rand(-30, 30), this.camL + 60, this.camL + VIEW_W() - 80);
       this.game.spawnEnemy(id, x, w.elite);
     });
     this.game.ui.showToast(`第 ${i + 1} 波敌军杀到！`);
@@ -63,7 +64,7 @@ export class Level {
 
   spawnBoss() {
     const def = BOSS_MAP[this.data.boss];
-    const bx = this.camera.x + VIEW_W() * 0.3;
+    const bx = this.camL + VIEW_W() * 0.72;
     this.boss = new Boss(def, this.game.phys, this.game, { x: bx, level: this.index + 1 });
     this.game.enemies.push(this.boss);
     // 双 Boss（颜良文丑）
@@ -86,19 +87,24 @@ export class Level {
   update(dt) {
     this.time += dt;
     const g = this.game, p = g.player;
-    // 镜头目标
     const viewW = VIEW_W();
     if (this.phase === 'march') {
-      this.camera.targetX = p.x;
+      // 经典横版卷轴（死区）：主角越过屏幕 55% 才向前卷轴，锚定 40%；回退过 25% 才向后
+      const fwdLine = this.camL + viewW * 0.55;
+      const backLine = this.camL + viewW * 0.25;
+      if (p.x > fwdLine) this.camL = p.x - viewW * 0.4;
+      else if (p.x < backLine) this.camL = p.x - viewW * 0.25;
+      this.camL = clamp(this.camL, 0, Math.max(0, this.length - viewW + 200));
+      this.camera.targetX = this.camL + viewW / 2;
       // 触发波次
       if (this.waveIdx + 1 < this.waveGates.length && p.x >= this.waveGates[this.waveIdx + 1]) {
         this.waveIdx++;
         this.phase = 'wave';
-        this.lockLeft = this.camera.x - viewW * 0.42;
+        this.lockLeft = this.camL + viewW * 0.08;
         this.spawnWave(this.waveIdx);
       } else if (p.x >= this.bossGateX && this.waveIdx === this.waveGates.length - 1) {
         this.phase = 'boss';
-        this.lockLeft = this.camera.x - viewW * 0.42;
+        this.lockLeft = this.camL + viewW * 0.08;
         this.spawnBoss();
       }
     } else if (this.phase === 'wave' || this.phase === 'boss') {
@@ -133,7 +139,13 @@ export class Level {
         p.heal(p.maxHp * 0.08);
       }
     } else if (this.phase === 'clear') {
-      this.camera.targetX = p.x;
+      // 破阵后自由卷轴（同死区逻辑）
+      const fwdLine = this.camL + viewW * 0.55;
+      const backLine = this.camL + viewW * 0.25;
+      if (p.x > fwdLine) this.camL = p.x - viewW * 0.4;
+      else if (p.x < backLine) this.camL = p.x - viewW * 0.25;
+      this.camL = clamp(this.camL, 0, Math.max(0, this.length - viewW + 200));
+      this.camera.targetX = this.camL + viewW / 2;
     }
     this.camera.targetX = clamp(this.camera.targetX, viewW / 2, this.length - viewW / 2 + 200);
     // 平滑跟随（阻尼弹簧）
