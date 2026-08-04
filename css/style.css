@@ -9,7 +9,7 @@ html,body{ width:100%; height:100%; overflow:hidden; background:#0b0b10;
   font-family:"PingFang SC","Microsoft YaHei",sans-serif; user-select:none;
   touch-action:none; overscroll-behavior:none; }
 #app{ position:fixed; inset:0; }
-canvas{ position:absolute; inset:0; width:100%; height:100%; display:block; }
+#app>canvas{ position:absolute; inset:0; width:100%; height:100%; display:block; }
 #game{ z-index:2; background:transparent; }
 #bg3d{ z-index:1; }
 .hidden{ display:none !important; }
@@ -106,6 +106,9 @@ canvas{ position:absolute; inset:0; width:100%; height:100%; display:block; }
 /* 选将 */
 .select-title{ font-family:var(--font-title); font-size:34px; color:var(--paper); letter-spacing:10px; margin-bottom:26px; }
 .char-row{ display:flex; gap:18px; flex-wrap:wrap; justify-content:center; padding:0 16px; }
+.char-row.eight{ gap:12px; max-width:860px; }
+.char-row.eight .char-card{ width:150px; padding:10px 8px; }
+.char-row.eight .char-card .portrait{ height:130px; }
 .char-card{ width:170px; background:linear-gradient(180deg,rgba(35,32,28,.95),rgba(18,16,14,.95));
   border:2px solid rgba(212,160,23,.25); border-radius:8px; padding:14px 12px; cursor:pointer;
   text-align:center; transition:.18s; }

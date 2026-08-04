@@ -300,3 +300,37 @@ addEventListener('pointerdown', unlock);
 addEventListener('keydown', unlock);
 game.init();
 window.__game = game; // 调试入口
+
+// ---------- 自动驾驶（?auto=1 冒烟测试/平衡性分析）----------
+if (location.search.includes('auto=1')) {
+  const keys = game.input.keys, pressed = game.input.pressed;
+  const AUTO_KEY = 'KeyD';
+  let lastAtk = 0, lastSkill = 0, fpsAcc = 0, fpsN = 0, fpsT = 0;
+  setTimeout(() => { game.charData = CHARACTERS[0]; game.startLevel(0); }, 1200);
+  setInterval(() => {
+    const b = document.body;
+    if (game.state !== 'PLAYING' || !game.player) { b.dataset.auto = game.state; return; }
+    // 自动向右推进 + 战斗
+    keys.add(AUTO_KEY);
+    const now = performance.now();
+    const near = game.enemies.some(e => e.alive && Math.abs(e.x - game.player.x) < 90);
+    if (near) {
+      keys.delete(AUTO_KEY);
+      if (now - lastAtk > 260) { pressed.add('KeyJ'); lastAtk = now; }
+    }
+    if (now - lastSkill > 6000 && game.player.mp >= 30) { pressed.add('KeyK'); lastSkill = now; }
+    if (game.player.rage >= 100) pressed.add('KeyL');
+    // 指标
+    fpsAcc++; 
+    b.dataset.auto = JSON.stringify({
+      state: game.state, px: Math.round(game.player.x), hp: Math.round(game.player.hp),
+      enemies: game.enemies.filter(e => e.alive).length,
+      wave: game.level.waveIdx, phase: game.level.phase,
+      kills: game.player.stats.kills, combo: game.player.stats.maxCombo,
+    });
+  }, 100);
+  setInterval(() => { // FPS 统计
+    const b = document.body;
+    b.dataset.fps = fpsAcc * 10; fpsAcc = 0;
+  }, 1000);
+}

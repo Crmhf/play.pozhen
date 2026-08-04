@@ -4,6 +4,7 @@ import { feel } from '../engine/shake.js';
 import { audio } from '../engine/audio.js';
 import { particles, vfxLib } from '../engine/particles.js';
 import { InkWarrior } from '../engine/sprite.js';
+import { SpineActor } from '../engine/spine-actor.js';
 
 export const PSTATE = {
   IDLE: 'IDLE', RUN: 'RUN', JUMP: 'JUMP', FALL: 'FALL', LAND: 'LAND',
@@ -30,6 +31,9 @@ export class Player {
     this.iFrames = 0; this.skillCd = 0; this.dashCd = 0;
     this.animT = 0; this.hurtT = 0; this.ultT = 0; this.skillFx = null;
     this.warrior = new InkWarrior(charData.palette, { weapon: charData.weaponType, bulk: charData.bulk, hat: charData.hat });
+    // Spine 骨骼动画（有素材则优先）
+    this.spineActor = charData.spine ? new SpineActor(charData.spine, charData.spineScale || 0.42) : null;
+    if (this.spineActor) this.spineActor.load().catch(() => this.spineActor = null);
     this.stats = { kills: 0, dmg: 0, maxCombo: 0 };
   }
 
@@ -94,6 +98,7 @@ export class Player {
   tickPhysics(s, dt, fsm) {
     const phys = this.phys, input = this.game.input, d = this.data;
     this.animT += dt;
+    if (this.spineActor) this.spineActor.update(dt);
     // 计时器
     this.coyote = Math.max(0, this.coyote - dt);
     this.jumpBuf = Math.max(0, this.jumpBuf - dt);
@@ -326,6 +331,21 @@ export class Player {
     // 无敌帧闪烁
     if (this.iFrames > 0 && this.fsm.state !== PSTATE.DEAD && Math.floor(this.animT * 20) % 2 === 0) return;
     const s = this.fsm.state;
+    // ---- Spine 骨骼动画渲染 ----
+    if (this.spineActor && this.spineActor.ready) {
+      let anim = 'idle', loop = true, ts = 1;
+      if (s === PSTATE.RUN) { anim = 'walk'; ts = Math.abs(this.vx) > this.data.speed * 1.2 ? 1.4 : 1; }
+      else if (s === PSTATE.JUMP || s === PSTATE.FALL) anim = 'jump';
+      else if (s === PSTATE.ATTACK) { anim = ['atk1', 'atk2', 'atk3'][this.comboIdx % 3]; loop = false; ts = 1.3; }
+      else if (s === PSTATE.SKILL || s === PSTATE.ULT) { anim = 'skill'; loop = false; }
+      else if (s === PSTATE.DASH) { anim = 'walk'; ts = 1.8; }
+      else if (s === PSTATE.HURT) { anim = 'hurt'; loop = false; }
+      else if (s === PSTATE.DEAD) { anim = 'death'; loop = false; }
+      this.spineActor.play(anim, { loop, timeScale: ts });
+      this.spineActor.draw(ctx, this.x - camX, this.y - camY, this.dir);
+      return;
+    }
+    // ---- 水墨程序化渲染（降级） ----
     const atkState = s === PSTATE.ATTACK ? {
       t: clamp(this.fsm.stateTime / this.data.combo[this.comboIdx].dur, 0, 1),
       kind: this.data.combo[this.comboIdx].kind,

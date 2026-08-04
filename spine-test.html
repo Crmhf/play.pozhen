@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head><meta charset="UTF-8"><title>Spine 素材自检</title>
+<style>body{background:#111;color:#eee;font:13px monospace;padding:20px} .ok{color:#7f7} .err{color:#f77} canvas{background:#222;margin:4px}</style>
+</head>
+<body>
+<h2>Spine 素材自检</h2>
+<div id="log"></div>
+<div id="stage"></div>
+<script src="js/vendor/spine-canvas.js"></script>
+<script>
+const log = (msg, cls) => { const d = document.createElement('div'); d.className = cls || ''; d.textContent = msg; document.getElementById('log').appendChild(d); };
+const chars = ['tanjiro','zenitsu','inosuke','rengoku','shinobu','mitsuri','kanao','nezuko'];
+window.__results = {};
+async function testOne(id) {
+  const base = `assets/spine/${id}/`;
+  try {
+    const am = new spine.canvas.AssetManager(base);
+    am.loadTextureAtlas('skeleton.atlas');
+    am.loadBinary('skeleton.skel');
+    await new Promise((res, rej) => {
+      const t0 = performance.now();
+      const tick = () => {
+        if (am.isLoadingComplete()) return res();
+        if (performance.now() - t0 > 15000) return rej(new Error('timeout 15s'));
+        setTimeout(tick, 80);
+      };
+      tick();
+    });
+    const atlas = am.get('skeleton.atlas');
+    const loader = new spine.AtlasAttachmentLoader(atlas);
+    const binary = new spine.SkeletonBinary(loader);
+    const data = binary.readSkeletonData(am.get('skeleton.skel'));
+    const names = data.animations.map(a => a.name);
+    window.__results[id] = { ok: true, names };
+    log(`[OK] ${id}: 动画 ${names.length} 个 -> ${names.join(', ')}`, 'ok');
+    // 渲染首帧
+    const sk = new spine.Skeleton(data);
+    const st = new spine.AnimationState(new spine.AnimationStateData(data));
+    const idleName = names.includes('idle') ? 'idle' : names[0];
+    st.setAnimation(0, idleName, true);
+    st.update(0.5); st.apply(sk); sk.updateWorldTransform();
+    const cv = document.createElement('canvas'); cv.width = 200; cv.height = 200;
+    const ctx = cv.getContext('2d');
+    // 固定缩放 + 脚底锚定（不用 bounds，避免特效撑爆）
+    const s = 0.55;
+    ctx.translate(100, 190);
+    ctx.scale(s, -s);
+    const rd = new spine.canvas.SkeletonRenderer(ctx);
+    rd.triangleRendering = true;
+    rd.draw(sk);
+    cv.title = id + ': ' + idleName;
+    document.getElementById('stage').appendChild(cv);
+  } catch (e) {
+    window.__results[id] = { ok: false, err: String(e && e.message || e) };
+    log(`[FAIL] ${id}: ${e && e.message || e}`, 'err');
+  }
+}
+(async () => { for (const c of chars) await testOne(c); log('=== DONE ==='); document.title = 'DONE'; })();
+</script>
+</body>
+</html>

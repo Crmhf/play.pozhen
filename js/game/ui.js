@@ -36,12 +36,12 @@ export class UI {
     btn.dataset.bound = '1';
   }
 
-  // ---------- 选将 ----------
+  // ---------- 选将（8选1） ----------
   showCharSelect(onPick) {
     this.clearScreens();
     const el = document.createElement('div');
     el.className = 'screen dim';
-    el.innerHTML = `<div class="select-title">选 择 侠 客</div><div class="char-row"></div>`;
+    el.innerHTML = `<div class="select-title">选 择 剑 士</div><div class="char-row eight"></div>`;
     const row = el.querySelector('.char-row');
     for (const c of CHARACTERS) {
       const card = document.createElement('div');
@@ -51,19 +51,27 @@ export class UI {
         <h3>${c.name}</h3>
         <div class="weapon">${c.title} · ${c.weapon}</div>
         <div class="skill-line">技「${c.skill.name}」<br>绝「${c.ult.name}」</div>`;
-      // 立绘：AI 原画优先，缺省画程序化小人
       const pv = card.querySelector('.portrait');
-      const img = new Image();
-      img.onload = () => { pv.style.backgroundImage = `url(${c.portrait})`; };
-      img.onerror = () => {
-        const cv = document.createElement('canvas'); cv.width = 170; cv.height = 150;
-        const ctx = cv.getContext('2d');
-        ctx.fillStyle = '#26202c'; ctx.fillRect(0, 0, 170, 150);
-        const w = new InkWarrior(c.palette, { weapon: c.weaponType, bulk: c.bulk, hat: c.hat, scale: 1.9 });
-        w.draw(ctx, { x: 85, y: 140, dir: 1, animT: 0, atk: null }, 0, 0);
-        pv.appendChild(cv);
-      };
-      img.src = c.portrait;
+      const cv = document.createElement('canvas'); cv.width = 150; cv.height = 130;
+      pv.appendChild(cv);
+      // 优先 Spine 骨骼立绘预览；失败再 AI 立绘；再水墨小人
+      import('../engine/spine-actor.js').then(({ SpineActor }) => {
+        if (!c.spine) throw 0;
+        const actor = new SpineActor(c.spine, c.spineScale || 0.42);
+        return actor.load().then(() => actor.ready ? actor : Promise.reject());
+      }).then(actor => {
+        actor.drawPreview(cv, 0.6);
+      }).catch(() => {
+        const img = new Image();
+        img.onload = () => { pv.style.backgroundImage = `url(${c.portrait})`; cv.remove(); };
+        img.onerror = () => {
+          const ctx = cv.getContext('2d');
+          ctx.fillStyle = '#26202c'; ctx.fillRect(0, 0, 150, 130);
+          const w = new InkWarrior(c.palette, { weapon: c.weaponType, bulk: 1, scale: 1.7 });
+          w.draw(ctx, { x: 75, y: 122, dir: 1, animT: 0 }, 0, 0);
+        };
+        img.src = c.portrait;
+      });
       card.onclick = () => { audio.play('ui_start'); onPick(c); };
       card.onmouseenter = () => audio.play('ui');
       row.appendChild(card);
