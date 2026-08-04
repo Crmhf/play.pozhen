@@ -268,17 +268,17 @@ class Game {
     const camY = this.camY;
 
     // 地面
-    this.level.drawGround(ctx, camX - w / 2, camY, w, h);
+    this.level.drawGround(ctx, camX, camY, w, h);
     // 投射物/掉落（实体层之下）
-    this.level.drawPickups(ctx, camX - w / 2, camY);
+    this.level.drawPickups(ctx, camX, camY);
     // 实体（按 y 排序画，简单深度）
     const drawables = [...this.enemies.filter(e => e.alive || e.fsm.state === 'DEAD'), this.player]
       .sort((a, b) => (a.y + (a.zOffset || 0)) - (b.y + (b.zOffset || 0)));
-    for (const d of drawables) d.draw(ctx, camX - w / 2, camY);
-    this.level.drawProjectiles(ctx, camX - w / 2, camY);
+    for (const d of drawables) d.draw(ctx, camX, camY);
+    this.level.drawProjectiles(ctx, camX, camY);
     // 粒子 + VFX
-    particles.draw(ctx, camX - w / 2, camY);
-    this.vfx.draw(ctx, camX - w / 2, camY);
+    particles.draw(ctx, camX, camY);
+    this.vfx.draw(ctx, camX, camY);
     ctx.restore();
 
     // 全屏闪光
@@ -346,6 +346,8 @@ if (location.search.includes('auto=1')) {
     // 指标
     b.dataset.auto = JSON.stringify({
       state: game.state, lv: game.levelIndex + 1, px: Math.round(game.player.x), hp: Math.round(game.player.hp),
+      sp: game.player.spineActor ? game.player.spineActor.ready : 'none',
+      ifr: +game.player.iFrames.toFixed(2), anim: game.player.spineActor?.current,
       pstate: game.player.fsm.state,
       enemies: game.enemies.filter(e => e.alive).length,
       ed: game.enemies.filter(e => e.alive).slice(0, 4).map(e =>
