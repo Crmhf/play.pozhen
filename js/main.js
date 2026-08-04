@@ -116,8 +116,11 @@ class Game {
     this.player.x = 200;
     // 3D 背景
     this.bg3d.buildLevel(lv.scene);
-    // HUD
-    this.ui.showHud(this.charData);
+    // HUD（等 Spine 就绪后生成头像快照）
+    if (this.player.spineActor && !this.player.spineActor.ready) {
+      try { await this.player.spineActor.load(); } catch (e) {}
+    }
+    this.ui.showHud(this.charData, this.player.spineActor);
     this.ui.setLevelName(lv.chapter, `${lv.name} · ${lv.place}`);
     this.ui.updateCombo(0);
     audio.playBgm(lv.bgm);

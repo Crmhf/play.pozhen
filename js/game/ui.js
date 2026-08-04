@@ -161,11 +161,31 @@ export class UI {
   hidePause() { const el = $('pause-screen'); el && el.remove(); }
 
   // ---------- HUD ----------
-  showHud(charData) {
+  showHud(charData, spineActor) {
     $('hud').classList.remove('hidden');
     const pv = $('hud-portrait');
-    pv.style.backgroundImage = `url(${charData.portrait})`;
     pv.style.backgroundColor = charData.palette.cloth;
+    // 头像：Spine 立绘快照 > AI 立绘 > 纯色
+    if (spineActor && spineActor.ready) {
+      const cv = document.createElement('canvas');
+      cv.width = 56; cv.height = 56;
+      const ctx = cv.getContext('2d');
+      ctx.fillStyle = '#26202c'; ctx.fillRect(0, 0, 56, 56);
+      const actor = spineActor;
+      actor.play('idle', { loop: true });
+      actor.state.update(0.4); actor.state.apply(actor.skeleton);
+      actor.skeleton.updateWorldTransform();
+      ctx.save();
+      ctx.translate(28, 54); // 全身小像，脚底贴底
+      ctx.scale(0.15, -0.15);
+      const r = new window.spine.canvas.SkeletonRenderer(ctx);
+      r.triangleRendering = true;
+      r.draw(actor.skeleton);
+      ctx.restore();
+      pv.style.backgroundImage = `url(${cv.toDataURL()})`;
+    } else {
+      pv.style.backgroundImage = `url(${charData.portrait})`;
+    }
   }
   hideHud() { $('hud').classList.add('hidden'); }
   updateHud(p) {
