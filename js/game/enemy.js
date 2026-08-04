@@ -159,11 +159,11 @@ export class Enemy {
       return;
     }
 
-    // ---- 战术轮盘（每 2.5~5s 重掷）----
+    // ---- 战术轮盘（每 2~4s 重掷：65% 抢攻 / 25% 绕行 / 10% 环伺）----
     if (this.tacticT <= 0) {
-      this.tacticT = rand(2.5, 5);
+      this.tacticT = rand(2, 4);
       const r = Math.random();
-      this.tactic = r < 0.5 ? 'engage' : r < 0.8 ? 'flank' : 'hold';
+      this.tactic = r < 0.65 ? 'engage' : r < 0.9 ? 'flank' : 'hold';
     }
 
     const dist = Math.abs(p.x - this.x);
@@ -200,7 +200,7 @@ export class Enemy {
     for (const e of this.game.enemies) {
       if (e === this || !e.alive) continue;
       const dx = this.x - e.x;
-      if (Math.abs(dx) < 30 && Math.abs(this.y - e.y) < 40) targetVx += Math.sign(dx || 1) * 60;
+      if (Math.abs(dx) < 26 && Math.abs(this.y - e.y) < 40) targetVx += Math.sign(dx || 1) * 36;
     }
     this.phys.setVel(this.body, targetVx, this.vy);
 

@@ -49,11 +49,11 @@ export class Level {
     const w = this.data.waves[i];
     const p = this.game.player;
     w.mobs.forEach((id, k) => {
-      // 近身包夹：左右两翼 180~420px，远程兵放远端
+      // 近身包夹：前方(右侧)为主 140~360px，远程兵放远端
       const def = MONSTER_MAP[id];
       const isRanged = def.ai === 'archer' || def.ai === 'caster';
-      const side = k % 2 === 0 ? 1 : -1;
-      const dist = isRanged ? rand(320, 460) : rand(170, 300);
+      const side = k % 3 === 2 ? -1 : 1; // 2/3 从正面杀出
+      const dist = isRanged ? rand(280, 420) : rand(140, 280);
       const x = clamp(p.x + side * dist + rand(-30, 30), this.lockLeft + 60, this.camera.x + VIEW_W() * 0.48);
       this.game.spawnEnemy(id, x, w.elite);
     });
@@ -106,6 +106,23 @@ export class Level {
       const minX = this.lockLeft + 30, maxX = this.lockLeft + viewW - 30;
       if (p.x < minX) { g.phys.setPos(p.body, minX, g.phys.getPos(p.body).y); }
       if (p.x > maxX) { g.phys.setPos(p.body, maxX, g.phys.getPos(p.body).y); }
+      // 敌军同样限制在交战区内；被击飞出场外的散兵 2.5s 后拉回，防卡关
+      for (const e of g.enemies) {
+        if (!e.alive) continue;
+        const out = e.x < minX - 80 || e.x > maxX + 80;
+        if (out) {
+          e._outT = (e._outT || 0) + dt;
+          if (e._outT > 2.5) {
+            const tx = clamp(e.x, minX + 60, maxX - 60);
+            g.phys.setPos(e.body, tx, g.phys.getPos(e.body).y);
+            e.x = tx; e._outT = 0;
+          }
+        } else {
+          e._outT = 0;
+          if (e.x < minX) g.phys.setPos(e.body, minX, g.phys.getPos(e.body).y);
+          if (e.x > maxX) g.phys.setPos(e.body, maxX, g.phys.getPos(e.body).y);
+        }
+      }
       this.camera.targetX = this.lockLeft + viewW / 2;
       // 清波判定
       const aliveMobs = g.enemies.filter(e => e.alive && !e.isBoss);

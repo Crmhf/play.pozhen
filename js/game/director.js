@@ -1,6 +1,6 @@
 // 攻击令牌导演（operation-ironhold Combat Director）：同时只允许少数敌人真正出手
 export class Director {
-  constructor(maxAttackers = 2) {
+  constructor(maxAttackers = 3) {
     this.max = maxAttackers;
     this.holders = new Set();
   }

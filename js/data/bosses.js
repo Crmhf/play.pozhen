@@ -2,7 +2,7 @@
 const B = (id, name, title, o) => ({
   id, name, title, isBoss: true,
   hp: o.hp, atk: o.atk, speed: o.speed || 150, range: o.range || 70, atkCd: o.atkCd || 1.8,
-  palette: o.palette, weapon: o.weapon, hat: o.hat || 'helmet', bulk: o.bulk || 1.35, scale: o.scale || 1.3,
+  palette: o.palette, weapon: o.weapon, hat: o.hat || 'helmet', bulk: o.bulk || 1.35, scale: o.scale || 1.85,
   skills: o.skills,           // [{name, kind, dmg, cd, windup, ...}]
   enrage: o.enrage,           // 狂暴描述 {at:0.3, ...}
   knockResist: o.knockResist ?? 0.7, score: o.score || 500,
@@ -32,7 +32,7 @@ export const BOSSES = [
     enrage: { at: 0.3, spdMul: 1.5, cdMul: 0.7 },
   }),
   B('b02', '华雄', '汜水关镇将', {
-    hp: 380, atk: 17, palette: P.huaxiong, weapon: 'blade', bulk: 1.35, scale: 1.34,
+    hp: 380, atk: 17, palette: P.huaxiong, weapon: 'blade', bulk: 1.35, scale: 1.9,
     skills: [
       { name: '力劈华山·改', kind: 'smash_wave', dmg: 2.0, cd: 5, windup: 0.6, vfx: 'boss_stomp', sfx: 'skill_quake', waves: 2 },
       { name: '沙场旋斩', kind: 'spin_aoe', dmg: 1.6, cd: 9, windup: 0.6, vfx: 'tornado', sfx: 'skill_wind', radius: 170 },
@@ -41,7 +41,7 @@ export const BOSSES = [
     enrage: { at: 0.3, summon: ['m02', 'm04'] },
   }),
   B('b03', '吕布', '人中吕布 · 马中赤兔', {
-    hp: 520, atk: 22, palette: P.lvbu, weapon: 'spear', hat: 'crown', bulk: 1.4, scale: 1.38, range: 95,
+    hp: 520, atk: 22, palette: P.lvbu, weapon: 'spear', hat: 'crown', bulk: 1.4, scale: 1.95, range: 95,
     skills: [
       { name: '辕门突刺', kind: 'charge_slash', dmg: 2.2, cd: 6, windup: 0.55, vfx: 'charge', sfx: 'dash', dist: 420 },
       { name: '无双乱舞', kind: 'spin_aoe', dmg: 2.0, cd: 10, windup: 0.7, vfx: 'boss_rage', sfx: 'ult', radius: 220 },
@@ -49,7 +49,7 @@ export const BOSSES = [
     enrage: { at: 0.3, kind: 'red_hare', spdMul: 1.4, cdMul: 0.6 },
   }),
   B('b04', '颜良 & 文丑', '河北双雄', {
-    hp: 300, atk: 16, palette: P.yan, weapon: 'blade', bulk: 1.3, scale: 1.3,
+    hp: 300, atk: 16, palette: P.yan, weapon: 'blade', bulk: 1.3, scale: 1.85,
     second: { name: '文丑', hp: 300, atk: 16, palette: P.wen, weapon: 'spear' },
     skills: [
       { name: '双戟合璧', kind: 'combo_strike', dmg: 1.8, cd: 7, windup: 0.6, vfx: 'slash_5', sfx: 'swing' },
@@ -58,7 +58,7 @@ export const BOSSES = [
     enrage: { at: 0.3, alternateInvuln: true },
   }),
   B('b05', '夏侯惇', '独目苍狼', {
-    hp: 460, atk: 20, palette: P.dun, weapon: 'club', bulk: 1.38, scale: 1.34,
+    hp: 460, atk: 20, palette: P.dun, weapon: 'club', bulk: 1.38, scale: 1.9,
     skills: [
       { name: '独目怒斩', kind: 'smash_wave', dmg: 2.2, cd: 6, windup: 0.65, vfx: 'boss_stomp', sfx: 'skill_quake' },
       { name: '拔矢啖睛', kind: 'burst', dmg: 2.6, cd: 12, windup: 0.9, vfx: 'boss_rage', sfx: 'boss_roar', radius: 200 },
@@ -90,7 +90,7 @@ export const BOSSES = [
     enrage: { at: 0.3, kind: 'last_stand', atkMul: 1.4 },
   }),
   B('b09', '孟获', '南中蛮王', {
-    hp: 620, atk: 24, palette: P.meng, weapon: 'axe', hat: null, bulk: 1.5, scale: 1.42, knockResist: 0.8,
+    hp: 620, atk: 24, palette: P.meng, weapon: 'axe', hat: null, bulk: 1.5, scale: 2.0, knockResist: 0.8,
     skills: [
       { name: '蛮力践踏', kind: 'leap_slam', dmg: 2.4, cd: 7, windup: 0.65, vfx: 'quake', sfx: 'skill_quake', radius: 210 },
       { name: '藤甲护身', kind: 'armor_up', cd: 14, windup: 0.7, vfx: 'buff_aura', sfx: 'boss_roar', dr: 0.6, dur: 6 },
