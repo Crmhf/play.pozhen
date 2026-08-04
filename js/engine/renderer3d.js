@@ -1,6 +1,6 @@
 // Three.js 3D 背景层：多层视差平面 + 雾 + 天光 + 环境粒子（余烬/落英/尘埃/雨）
 // 混合渲染方案：3D 背景层 + Canvas 2D 游戏层叠加
-import { rand, clamp } from './utils.js';
+import { rand, clamp } from './utils.js?v=1785885522';
 
 export class Renderer3D {
   constructor(canvas) {

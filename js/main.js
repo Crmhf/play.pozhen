@@ -1,20 +1,20 @@
 // 破阵大乱斗 · 主入口：启动 / 全局状态机 / 固定时间步游戏循环
-import { clamp } from './engine/utils.js';
-import { Input } from './engine/input.js';
-import { audio } from './engine/audio.js';
-import { feel } from './engine/shake.js';
-import { particles, vfxLib, VfxPlayer } from './engine/particles.js';
-import { Physics } from './engine/physics.js';
-import { Renderer3D } from './engine/renderer3d.js';
-import { CHARACTERS } from './data/characters.js';
-import { LEVELS } from './data/levels.js';
-import { MONSTER_MAP } from './data/monsters.js';
-import { Player } from './game/player.js';
-import { Enemy } from './game/enemy.js';
-import { Combat } from './game/combat.js';
-import { Director } from './game/director.js';
-import { Level } from './game/level.js';
-import { UI } from './game/ui.js';
+import { clamp } from './engine/utils.js?v=1785885522';
+import { Input } from './engine/input.js?v=1785885522';
+import { audio } from './engine/audio.js?v=1785885522';
+import { feel } from './engine/shake.js?v=1785885522';
+import { particles, vfxLib, VfxPlayer } from './engine/particles.js?v=1785885522';
+import { Physics } from './engine/physics.js?v=1785885522';
+import { Renderer3D } from './engine/renderer3d.js?v=1785885522';
+import { CHARACTERS } from './data/characters.js?v=1785885522';
+import { LEVELS } from './data/levels.js?v=1785885522';
+import { MONSTER_MAP } from './data/monsters.js?v=1785885522';
+import { Player } from './game/player.js?v=1785885522';
+import { Enemy } from './game/enemy.js?v=1785885522';
+import { Combat } from './game/combat.js?v=1785885522';
+import { Director } from './game/director.js?v=1785885522';
+import { Level } from './game/level.js?v=1785885522';
+import { UI } from './game/ui.js?v=1785885522';
 
 const GSTATE = { TITLE: 'TITLE', SELECT: 'SELECT', STORY: 'STORY', PLAYING: 'PLAYING', PAUSED: 'PAUSED', CLEAR: 'CLEAR', OVER: 'OVER', VICTORY: 'VICTORY' };
 const FIXED_DT = 1 / 120;

@@ -1,5 +1,5 @@
 // 屏幕震动 + 顿帧（打击感双板斧）
-import { rand } from './utils.js';
+import { rand } from './utils.js?v=1785885522';
 
 export class Feel {
   constructor() {

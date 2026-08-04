@@ -1,10 +1,10 @@
 // 敌军 AI：状态机 + 战术轮盘（围拢/绕后/抢攻）+ 攻击令牌（Combat Director 发牌）
 // 兵种行为：melee/tank/charger/archer/caster/bomber
-import { StateMachine, KEEP, clamp, rand } from '../engine/utils.js';
-import { feel } from '../engine/shake.js';
-import { audio } from '../engine/audio.js';
-import { particles } from '../engine/particles.js';
-import { InkWarrior, shade } from '../engine/sprite.js';
+import { StateMachine, KEEP, clamp, rand } from '../engine/utils.js?v=1785885522';
+import { feel } from '../engine/shake.js?v=1785885522';
+import { audio } from '../engine/audio.js?v=1785885522';
+import { particles } from '../engine/particles.js?v=1785885522';
+import { InkWarrior, shade } from '../engine/sprite.js?v=1785885522';
 
 export const EST = {
   SPAWN: 'SPAWN', IDLE: 'IDLE', MOVE: 'MOVE', WINDUP: 'WINDUP', ATTACK: 'ATTACK',
