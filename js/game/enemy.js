@@ -1,12 +1,12 @@
 // 敌军 AI：状态机 + 战术轮盘（围拢/绕后/抢攻）+ 攻击令牌（Combat Director 发牌）
 // 兵种行为：melee/tank/charger/archer/caster/bomber
-import { StateMachine, KEEP, clamp, rand } from '../engine/utils.js?v=1785942329';
-import { feel } from '../engine/shake.js?v=1785942329';
-import { audio } from '../engine/audio.js?v=1785942329';
-import { particles } from '../engine/particles.js?v=1785942329';
-import { InkWarrior, shade } from '../engine/sprite.js?v=1785942329';
-import { SpineActor } from '../engine/spine-actor.js?v=1785942329';
-import { MOB_MANIFEST } from '../data/mobmanifest.js?v=1785942329';
+import { StateMachine, KEEP, clamp, rand } from '../engine/utils.js?v=1785943046';
+import { feel } from '../engine/shake.js?v=1785943046';
+import { audio } from '../engine/audio.js?v=1785943046';
+import { particles } from '../engine/particles.js?v=1785943046';
+import { InkWarrior, shade } from '../engine/sprite.js?v=1785943046';
+import { SpineActor } from '../engine/spine-actor.js?v=1785943046';
+import { MOB_MANIFEST } from '../data/mobmanifest.js?v=1785943046';
 
 export const EST = {
   SPAWN: 'SPAWN', IDLE: 'IDLE', MOVE: 'MOVE', WINDUP: 'WINDUP', ATTACK: 'ATTACK',
@@ -25,7 +25,7 @@ export class Enemy {
     this.elite = elite;
     const mul = (elite ? 1.6 : 1) * (1 + (level - 1) * 0.08);
     this.maxHp = def.hp * mul; this.hp = this.maxHp;
-    this.atk = def.atk * mul;
+    this.atk = def.atk * mul * 1.25; // 攻击力补正：挨打要疼
     this.x = x; this.y = 0; this.dir = -1;
     this.alive = true;
     this.body = physics.addCharacter(x, -60, 24 * def.bulk, 52 * def.scale, { type: 'enemy', ref: this });
@@ -67,10 +67,10 @@ export class Enemy {
         if (this.freezeT > 0) break;
         if (this._wantAttack(dist, inRange)) return EST.WINDUP;
         break;
-      case EST.WINDUP: if (fsm.stateTime >= this.def.windup) return EST.ATTACK; break;
+      case EST.WINDUP: if (fsm.stateTime >= (this.def.windup || 0.4)) return EST.ATTACK; break;
       case EST.ATTACK: if (fsm.stateTime >= 0.15) return EST.RECOVER; break;
       case EST.RECOVER: if (fsm.stateTime >= this.def.recover) return EST.IDLE; break;
-      case EST.HURT: if (fsm.stateTime >= 0.26) return EST.IDLE; break;
+      case EST.HURT: if (fsm.stateTime >= 0.18) return EST.IDLE; break;
       case EST.LAUNCHED: if (this.grounded && fsm.stateTime > 0.15) return EST.IDLE; break;
       case EST.BLOCK: if (fsm.stateTime >= 0.5) return EST.IDLE; break;
     }
@@ -130,6 +130,7 @@ export class Enemy {
       }
       default: { // melee / tank：出刀带前冲，凶且能打到
         audio.play('swing', { pitch: 0.85, vol: 0.7 });
+        g.vfx.play('slash_1', this.x + this.dir * 40, this.y - 34, { scale: 0.9, fps: 30, flip: this.dir < 0 });
         this.phys.setVel(this.body, this.dir * 240, this.vy); // 前冲步
         const reach = d.range + 20;
         if (Math.abs(p.x - this.x) <= reach && Math.abs(p.y - this.y) < 70 &&
@@ -251,8 +252,10 @@ export class Enemy {
     particles.bloodInk(this.x, this.y - 34, dir);
     this.game.ui.damageNumber(this.x, this.y - 66, Math.round(dmg), opt.crit ? 'crit' : '');
     if (this.hp <= 0) { this.fsm.set(EST.DEAD); return true; }
-    if (opt.launch > 0 && this.grounded) this.fsm.set(EST.LAUNCHED);
-    else if (this.fsm.state !== EST.LAUNCHED && this.fsm.state !== EST.BLOCK) this.fsm.set(EST.HURT);
+    // 出招霸体：前摇/出刀期间吃伤害但不被打断（小怪才能还手）；Boss 免击飞
+    const poised = [EST.WINDUP, EST.ATTACK].includes(this.fsm.state) || this.isBoss;
+    if (opt.launch > 0 && this.grounded && !this.isBoss && !poised) this.fsm.set(EST.LAUNCHED);
+    else if (!poised && ![EST.LAUNCHED, EST.BLOCK].includes(this.fsm.state)) this.fsm.set(EST.HURT);
     return true;
   }
 
