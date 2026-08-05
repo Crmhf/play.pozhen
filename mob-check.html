@@ -1,0 +1,92 @@
+<!DOCTYPE html><html><head><meta charset="UTF-8"><title>怪物全量体检</title>
+<style>body{background:#111;color:#ddd;font:12px monospace}</style></head><body>
+<div id="log"></div>
+<script src="js/vendor/spine-canvas.js"></script>
+<script>
+const IDS = `guaiA10a
+guaiA10b
+guaiA10c
+guaiA10d
+guaiA10e
+guaiA11a
+guaiA11b
+guaiA11c
+guaiA11d
+guaiA11e
+guaiA12a
+guaiA12b
+guaiA12c
+guaiA12d
+guaiA12e
+guaiA13e
+guaiA15c
+guaiA1a
+guaiA1b
+guaiA1c
+guaiA1d
+guaiA1e
+guaiA2a
+guaiA2b
+guaiA2c
+guaiA2d
+guaiA2e
+guaiA3a
+guaiA3b
+guaiA3c
+guaiA3d
+guaiA3e
+guaiA4a
+guaiA4b
+guaiA4c
+guaiA4d
+guaiA4e
+guaiA5a
+guaiA5b
+guaiA5c
+guaiA5d
+guaiA5e
+guaiA6a
+guaiA6b
+guaiA6c
+guaiA6d
+guaiA6e
+guaiA7a
+guaiA7b
+guaiA7c
+guaiA7d
+guaiA7e
+guaiA8a
+guaiA8b
+guaiA8c
+guaiA8d
+guaiA8e
+guaiA9a
+guaiA9b
+guaiA9c
+guaiA9d
+guaiA9e`.split('\n');
+const log = (m, ok) => { const d = document.createElement('div'); d.style.color = ok === false ? '#f66' : '#7f7'; d.textContent = m; document.getElementById('log').appendChild(d); };
+(async () => {
+  const fails = [];
+  for (const id of IDS) {
+    try {
+      const am = new spine.canvas.AssetManager(`assets/spine-mobs/${id}/`);
+      am.loadTextureAtlas(`${id}.atlas`);
+      am.loadText(`${id}.json`);
+      await new Promise((res, rej) => {
+        const t0 = performance.now();
+        const tick = () => { if (am.isLoadingComplete()) return res(); if (performance.now() - t0 > 15000) return rej(new Error('timeout')); setTimeout(tick, 60); };
+        tick();
+      });
+      const data = new spine.SkeletonJson(new spine.AtlasAttachmentLoader(am.get(`${id}.atlas`))).readSkeletonData(am.get(`${id}.json`));
+      const sk = new spine.Skeleton(data);
+      sk.setToSetupPose(); sk.updateWorldTransform();
+      const off = new spine.Vector2(), size = new spine.Vector2();
+      sk.getBounds(off, size);
+      log(`${id} OK H=${Math.round(size.y)}`, true);
+    } catch (e) { fails.push(id); log(`${id} FAIL ${e.message}`, false); }
+  }
+  log('=== FAILS: ' + (fails.join(',') || '无') + ' ===', fails.length === 0);
+  document.title = 'DONE';
+})();
+</script></body></html>

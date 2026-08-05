@@ -1,12 +1,12 @@
 // 敌军 AI：状态机 + 战术轮盘（围拢/绕后/抢攻）+ 攻击令牌（Combat Director 发牌）
 // 兵种行为：melee/tank/charger/archer/caster/bomber
-import { StateMachine, KEEP, clamp, rand } from '../engine/utils.js?v=1785943991';
-import { feel } from '../engine/shake.js?v=1785943991';
-import { audio } from '../engine/audio.js?v=1785943991';
-import { particles } from '../engine/particles.js?v=1785943991';
-import { InkWarrior, shade } from '../engine/sprite.js?v=1785943991';
-import { SpineActor } from '../engine/spine-actor.js?v=1785943991';
-import { MOB_MANIFEST } from '../data/mobmanifest.js?v=1785943991';
+import { StateMachine, KEEP, clamp, rand } from '../engine/utils.js?v=1785944591';
+import { feel } from '../engine/shake.js?v=1785944591';
+import { audio } from '../engine/audio.js?v=1785944591';
+import { particles } from '../engine/particles.js?v=1785944591';
+import { InkWarrior, shade } from '../engine/sprite.js?v=1785944591';
+import { SpineActor } from '../engine/spine-actor.js?v=1785944591';
+import { MOB_MANIFEST } from '../data/mobmanifest.js?v=1785944591';
 
 export const EST = {
   SPAWN: 'SPAWN', IDLE: 'IDLE', MOVE: 'MOVE', WINDUP: 'WINDUP', ATTACK: 'ATTACK',
@@ -145,6 +145,10 @@ export class Enemy {
   tickPhysics(s, dt, fsm) {
     this.animT += dt;
     if (this.spineActor) this.spineActor.update(dt);
+    // 精英怪：红缨气场粒子
+    if (this.elite && this.alive && Math.floor(this.animT * 4) !== Math.floor((this.animT - dt) * 4)) {
+      particles.emit({ x: this.x, y: this.y - 20 - Math.random() * 40, vy: -60, vrand: 20, life: 0.5, size: 3.5, color: '#ff5030' }, 2);
+    }
     this.hurtT = Math.max(0, this.hurtT - dt);
     this.flashT = Math.max(0, this.flashT - dt);
     this.atkTimer -= dt;
@@ -269,8 +273,9 @@ export class Enemy {
     this.alive = false;
     if (this.hasToken) g.director.releaseToken(this);
     audio.play('die', { pitch: rand(0.9, 1.15) });
-    particles.deathBurst(this.x, this.y - 30);
-    g.vfx.play('die', this.x, this.y - 30, { scale: this.def.scale * 1.2, fps: 20 });
+    particles.deathBurst(this.x, this.y - 30, this.elite ? '#ff6840' : '#c8c2b2');
+    if (this.elite) particles.emit({ x: this.x, y: this.y - 30, vrand: 320, life: 0.8, size: 6, color: '#ff8830' }, 16);
+    g.vfx.play('die', this.x, this.y - 30, { scale: this.def.scale * (this.elite ? 1.6 : 1.2), fps: 20 });
     g.player.stats.kills++;
     g.player.addRage(4);
     g.onEnemyDead(this);

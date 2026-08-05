@@ -1,0 +1,55 @@
+
+guaiA6aTexture.png
+size: 241,124
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+guaiA6a/guaiA6a_body
+  rotate: false
+  xy: 111, 77
+  size: 55, 47
+  orig: 55, 47
+  offset: 0, 0
+  index: -1
+guaiA6a/guaiA6a_chibang1
+  rotate: false
+  xy: 168, 74
+  size: 37, 50
+  orig: 37, 50
+  offset: 0, 0
+  index: -1
+guaiA6a/guaiA6a_chibang2
+  rotate: false
+  xy: 111, 26
+  size: 30, 49
+  orig: 30, 49
+  offset: 0, 0
+  index: -1
+guaiA6a/guaiA6a_head
+  rotate: false
+  xy: 2, 40
+  size: 107, 84
+  orig: 107, 84
+  offset: 0, 0
+  index: -1
+guaiA6a/guaiA6a_jian
+  rotate: false
+  xy: 2, 2
+  size: 32, 36
+  orig: 32, 36
+  offset: 0, 0
+  index: -1
+guaiA6a/guaiA6a_qian1
+  rotate: false
+  xy: 207, 76
+  size: 34, 48
+  orig: 34, 48
+  offset: 0, 0
+  index: -1
+guaiA6a/guaiA6a_qian2
+  rotate: false
+  xy: 143, 33
+  size: 22, 42
+  orig: 22, 42
+  offset: 0, 0
+  index: -1

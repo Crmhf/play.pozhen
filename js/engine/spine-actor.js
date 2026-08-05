@@ -53,7 +53,10 @@ export class SpineActor {
     const am = new sp.canvas.AssetManager(this.base);
     let atlasPath, dataPath, isJson;
     if (this.mobId) {
-      atlasPath = `${this.mobId}.atlas`;
+      // 部分素材只有 <id>Texture.atlas 命名：先探测
+      const plain = `${this.mobId}.atlas`;
+      const texed = `${this.mobId}Texture.atlas`;
+      atlasPath = await fetch(this.base + plain, { method: 'HEAD' }).then(r => r.ok ? plain : texed).catch(() => texed);
       dataPath = `${this.mobId}.json`;
       isJson = true;
     } else {
