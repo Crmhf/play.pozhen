@@ -1,10 +1,10 @@
 // Boss：独立 AI —— 阶段技能循环 + 狂暴 + 登场演出
-import { EST, Enemy } from './enemy.js?v=1785961530';
-import { KEEP, clamp, rand } from '../engine/utils.js?v=1785961530';
-import { feel } from '../engine/shake.js?v=1785961530';
-import { audio } from '../engine/audio.js?v=1785961530';
-import { particles } from '../engine/particles.js?v=1785961530';
-import { shade } from '../engine/sprite.js?v=1785961530';
+import { EST, Enemy } from './enemy.js?v=1785962621';
+import { KEEP, clamp, rand } from '../engine/utils.js?v=1785962621';
+import { feel } from '../engine/shake.js?v=1785962621';
+import { audio } from '../engine/audio.js?v=1785962621';
+import { particles } from '../engine/particles.js?v=1785962621';
+import { shade } from '../engine/sprite.js?v=1785962621';
 
 export class Boss extends Enemy {
   constructor(def, physics, game, opts) {
@@ -54,7 +54,13 @@ export class Boss extends Enemy {
     }
     if (this._skillState) { this._tickSkill(dt); return; }
     super.tickPhysics(s, dt, fsm);
-    // Boss 常态也主动进攻（不受令牌限制，但保持距离感）
+    // Boss 距离带控制：贴太近时后撤步拉开（不黏着玩家）
+    const distToP = Math.abs(this.player.x - this.x);
+    if (![EST.HURT, EST.DEAD, EST.LAUNCHED, EST.WINDUP, EST.ATTACK].includes(s) && this.freezeT <= 0) {
+      if (distToP < 70) {
+        this.phys.setVel(this.body, (this.x > this.player.x ? 1 : -1) * this.def.speed * 0.9, this.vy);
+      }
+    }
   }
 
   _onEnrage() {

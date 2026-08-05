@@ -1,10 +1,10 @@
 // 玩家：通用状态机驱动，土狼时间+跳跃缓冲+可变跳高+连段+技能+绝技+闪避
-import { StateMachine, KEEP, clamp } from '../engine/utils.js?v=1785961530';
-import { feel } from '../engine/shake.js?v=1785961530';
-import { audio } from '../engine/audio.js?v=1785961530';
-import { particles, vfxLib } from '../engine/particles.js?v=1785961530';
-import { InkWarrior } from '../engine/sprite.js?v=1785961530';
-import { SpineActor } from '../engine/spine-actor.js?v=1785961530';
+import { StateMachine, KEEP, clamp } from '../engine/utils.js?v=1785962621';
+import { feel } from '../engine/shake.js?v=1785962621';
+import { audio } from '../engine/audio.js?v=1785962621';
+import { particles, vfxLib } from '../engine/particles.js?v=1785962621';
+import { InkWarrior } from '../engine/sprite.js?v=1785962621';
+import { SpineActor } from '../engine/spine-actor.js?v=1785962621';
 
 export const PSTATE = {
   IDLE: 'IDLE', RUN: 'RUN', JUMP: 'JUMP', FALL: 'FALL', LAND: 'LAND',
@@ -317,7 +317,7 @@ export class Player {
     if (this.iFrames > 0 || this.hp <= 0) return false;
     const kResist = 0;
     this.hp = Math.max(0, this.hp - dmg);
-    this.iFrames = opt.iFrames ?? 1.0; // 受击保护拉长，防连续硬直
+    this.iFrames = opt.iFrames ?? 0.7; // 受击保护：防锁死但不无敌
     this.hurtT = 0.3;
     const dir = this.x >= fromX ? 1 : -1;
     this.phys.setVel(this.body, dir * (opt.knock || 200), this.grounded ? 120 : this.vy);

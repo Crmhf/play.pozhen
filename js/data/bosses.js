@@ -2,7 +2,7 @@
 const B = (id, name, title, o) => ({
   id, name, title, isBoss: true, ai: 'melee', windup: o.windup || 0.45, recover: o.recover || 0.5,
   spineMob: o.spineMob || null, mobPx: o.mobPx || 190,
-  hp: o.hp, atk: o.atk, speed: o.speed || 150, range: o.range || 70, atkCd: o.atkCd || 1.8,
+  hp: o.hp, atk: o.atk, speed: o.speed || 150, range: o.range || 95, atkCd: o.atkCd || 1.8,
   palette: o.palette, weapon: o.weapon, hat: o.hat || 'helmet', bulk: o.bulk || 1.35, scale: o.scale || 2.05,
   skills: o.skills,           // [{name, kind, dmg, cd, windup, ...}]
   enrage: o.enrage,           // 狂暴描述 {at:0.3, ...}
