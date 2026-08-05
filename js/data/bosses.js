@@ -24,7 +24,7 @@ const P = {
 };
 
 export const BOSSES = [
-  B('b01', '华雄 · 影', '汜水先锋', {
+  B('b01', '熊阔山 · 影', '铁掌震山·试阵分身', {
     spineMob: 'guaiA1c', hp: 260, atk: 14, palette: P.huaxiong, weapon: 'blade', bulk: 1.3,
     skills: [
       { name: '力劈华山', kind: 'smash_wave', dmg: 1.8, cd: 6, windup: 0.7, vfx: 'boss_stomp', sfx: 'skill_quake' },
@@ -32,7 +32,7 @@ export const BOSSES = [
     ],
     enrage: { at: 0.3, spdMul: 1.5, cdMul: 0.7 },
   }),
-  B('b02', '华雄', '汜水关镇将', {
+  B('b02', '沙通天', '黑风寨·沙暴狂刀', {
     spineMob: 'guaiA1d', hp: 380, atk: 17, palette: P.huaxiong, weapon: 'blade', bulk: 1.35, scale: 2.1,
     skills: [
       { name: '力劈华山·改', kind: 'smash_wave', dmg: 2.0, cd: 5, windup: 0.6, vfx: 'boss_stomp', sfx: 'skill_quake', waves: 2 },
@@ -41,7 +41,7 @@ export const BOSSES = [
     ],
     enrage: { at: 0.3, summon: ['m02', 'm04'] },
   }),
-  B('b03', '吕布', '人中吕布 · 马中赤兔', {
+  B('b03', '炎无极', '烈焰刀魔·焦土十里', {
     spineMob: 'guaiA1e', hp: 520, atk: 22, palette: P.lvbu, weapon: 'spear', hat: 'crown', bulk: 1.4, scale: 2.15, range: 95,
     skills: [
       { name: '辕门突刺', kind: 'charge_slash', dmg: 2.2, cd: 6, windup: 0.55, vfx: 'charge', sfx: 'dash', dist: 420 },
@@ -49,16 +49,16 @@ export const BOSSES = [
     ],
     enrage: { at: 0.3, kind: 'red_hare', spdMul: 1.4, cdMul: 0.6 },
   }),
-  B('b04', '颜良 & 文丑', '河北双雄', {
+  B('b04', '黑煞', '黑白双煞·寒江拦路', {
     spineMob: 'guaiA8c', hp: 300, atk: 16, palette: P.yan, weapon: 'blade', bulk: 1.3, scale: 2.05,
-    second: { name: '文丑', hp: 300, atk: 16, palette: P.wen, weapon: 'spear', spineMob: 'guaiA8e' },
+    second: { name: '白煞', hp: 300, atk: 16, palette: P.wen, weapon: 'spear', spineMob: 'guaiA8e' },
     skills: [
       { name: '双戟合璧', kind: 'combo_strike', dmg: 1.8, cd: 7, windup: 0.6, vfx: 'slash_5', sfx: 'swing' },
       { name: '河北杀阵', kind: 'spin_aoe', dmg: 1.5, cd: 9, windup: 0.6, vfx: 'tornado', sfx: 'skill_wind', radius: 160 },
     ],
     enrage: { at: 0.3, alternateInvuln: true },
   }),
-  B('b05', '夏侯惇', '独目苍狼', {
+  B('b05', '独孤睚', '独目刀王·断魂坡主', {
     spineMob: 'guaiA10d', hp: 460, atk: 20, palette: P.dun, weapon: 'club', bulk: 1.38, scale: 2.1,
     skills: [
       { name: '独目怒斩', kind: 'smash_wave', dmg: 2.2, cd: 6, windup: 0.65, vfx: 'boss_stomp', sfx: 'skill_quake' },
@@ -66,7 +66,7 @@ export const BOSSES = [
     ],
     enrage: { at: 0.3, summon: ['m11', 'm11'] },
   }),
-  B('b06', '张辽', '威震逍遥津', {
+  B('b06', '阎罗子', '逍遥阎罗·焚江楼主', {
     spineMob: 'guaiA10e', hp: 480, atk: 21, palette: P.liao, weapon: 'blade', speed: 190, bulk: 1.32,
     skills: [
       { name: '威震逍遥津', kind: 'charge_slash', dmg: 2.2, cd: 6, windup: 0.5, vfx: 'charge', sfx: 'dash', dist: 460 },
@@ -74,7 +74,7 @@ export const BOSSES = [
     ],
     enrage: { at: 0.3, kind: 'multi_charge', cdMul: 0.55 },
   }),
-  B('b07', '夏侯渊', '虎步关右', {
+  B('b07', '燕疾风', '神行夜叉·枫霜岭主', {
     spineMob: 'guaiA11e', hp: 500, atk: 22, palette: P.yuan, weapon: 'dual', speed: 200, bulk: 1.3,
     skills: [
       { name: '妙才疾袭', kind: 'blink_strike', dmg: 2.0, cd: 5.5, windup: 0.4, vfx: 'moon_dance_2', sfx: 'skill_blink' },
@@ -82,7 +82,7 @@ export const BOSSES = [
     ],
     enrage: { at: 0.3, kind: 'blink', cdMul: 0.6 },
   }),
-  B('b08', '庞德', '抬棺死战', {
+  B('b08', '石敢死', '抬棺死士·覆雨泽主', {
     spineMob: 'guaiA13e', hp: 540, atk: 23, palette: P.pang, weapon: 'blade', bulk: 1.36, knockResist: 0.85,
     skills: [
       { name: '抬棺决意', kind: 'armor_up', cd: 12, windup: 0.7, vfx: 'buff_aura', sfx: 'boss_roar', dr: 0.5, dur: 5 },
@@ -90,7 +90,7 @@ export const BOSSES = [
     ],
     enrage: { at: 0.3, kind: 'last_stand', atkMul: 1.4 },
   }),
-  B('b09', '孟获', '南中蛮王', {
+  B('b09', '孟蚩', '万蛊蛮王·南疆之主', {
     spineMob: 'guaiA15c', hp: 620, atk: 24, palette: P.meng, weapon: 'axe', hat: null, bulk: 1.5, scale: 2.25, knockResist: 0.8,
     skills: [
       { name: '蛮力践踏', kind: 'leap_slam', dmg: 2.4, cd: 7, windup: 0.65, vfx: 'quake', sfx: 'skill_quake', radius: 210 },
@@ -98,7 +98,7 @@ export const BOSSES = [
     ],
     enrage: { at: 0.3, summon: ['m24'] },
   }),
-  B('b10', '司马懿', '鹰视狼顾 · 冢虎', {
+  B('b10', '冥蛇先生', '黑衣宰相·摘星崖主', {
     spineMob: 'guaiA9d', hp: 700, atk: 26, palette: P.sima, weapon: 'staff', hat: 'hood', speed: 170, bulk: 1.34, range: 90,
     skills: [
       { name: '鬼谋·黑鸦', kind: 'dark_crows', dmg: 1.6, cd: 6, windup: 0.6, vfx: 'boss_dark', sfx: 'thunder', count: 6 },

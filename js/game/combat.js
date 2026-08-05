@@ -1,7 +1,7 @@
 // 战斗结算：命中判定 / 伤害 / 连击 / 击退（Hitbox-Hurtbox 逻辑分离）
-import { feel } from '../engine/shake.js?v=1785924343';
-import { audio } from '../engine/audio.js?v=1785924343';
-import { particles } from '../engine/particles.js?v=1785924343';
+import { feel } from '../engine/shake.js?v=1785927271';
+import { audio } from '../engine/audio.js?v=1785927271';
+import { particles } from '../engine/particles.js?v=1785927271';
 
 export class Combat {
   constructor(game) { this.game = game; }

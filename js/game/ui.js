@@ -1,7 +1,7 @@
 // UI：标题/选将/剧情卷轴/结算/暂停/Boss横幅/伤害数字/HUD
-import { audio } from '../engine/audio.js?v=1785924343';
-import { InkWarrior } from '../engine/sprite.js?v=1785924343';
-import { CHARACTERS } from '../data/characters.js?v=1785924343';
+import { audio } from '../engine/audio.js?v=1785927271';
+import { InkWarrior } from '../engine/sprite.js?v=1785927271';
+import { CHARACTERS } from '../data/characters.js?v=1785927271';
 
 const $ = id => document.getElementById(id);
 const layer = () => $('screen-layer');
@@ -25,7 +25,7 @@ export class UI {
       <button class="ink-btn" id="btn-start">出 征</button>
       <div class="title-tip">
         PC：A/D 移动 · 空格/W 跳跃 · J 攻击 · K 技能 · L 绝技 · Shift 闪避<br>
-        移动端：虚拟摇杆 + 攻/技/绝/跳 &nbsp;|&nbsp; 十阵三国 · 三十兵种 · 十大猛将
+        移动端：虚拟摇杆 + 攻/技/绝/跳 &nbsp;|&nbsp; 十阵江湖 · 六十奇兵 · 十大枭雄
       </div>`;
     layer().appendChild(el);
     const start = () => { removeEventListener('keydown', keyStart); audio.unlock(); audio.play('ui_start'); onStart(); };
@@ -55,7 +55,7 @@ export class UI {
       const cv = document.createElement('canvas'); cv.width = 150; cv.height = 130;
       pv.appendChild(cv);
       // 优先 Spine 骨骼立绘预览；失败再 AI 立绘；再水墨小人
-      import('../engine/spine-actor.js?v=1785924343').then(({ SpineActor }) => {
+      import('../engine/spine-actor.js?v=1785927271').then(({ SpineActor }) => {
         if (!c.spine) throw 0;
         const actor = new SpineActor(c.spine, c.spineScale || 0.42);
         return actor.load().then(() => actor.ready ? actor : Promise.reject());
