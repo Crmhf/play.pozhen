@@ -58,6 +58,42 @@ export const MONSTERS = [
   M('m28', '白毦兵', '精锐', 'tank', { spineMob: 'guaiA7c', mobPx: 100, hp: 90, atk: 13, palette: C.elite, hat: 'helmet', weapon: 'spear', range: 80, blockChance: 0.5, knockResist: 0.4, speed: 100 }),
   M('m29', '无当飞军', '精锐', 'archer', { spineMob: 'guaiA7d', mobPx: 95, hp: 50, atk: 12, palette: C.elite, weapon: 'bow', range: 330, atkCd: 2.0, projectile: 'arrow3', speed: 160 }),
   M('m30', '虎卫军', '精锐', 'melee', { spineMob: 'guaiA7e', mobPx: 100, hp: 100, atk: 18, palette: C.elite, hat: 'helmet', weapon: 'axe', speed: 130, bulk: 1.15, blockChance: 0.3, knockResist: 0.5 }),
+  // ---- 山贼系（A2）----
+  M('m31', '山贼喽啰', '山贼', 'melee', { spineMob: 'guaiA2a', mobPx: 85, hp: 44, atk: 10, palette: C.green, weapon: 'club', speed: 130 }),
+  M('m32', '山贼刀客', '山贼', 'melee', { spineMob: 'guaiA2b', mobPx: 88, hp: 56, atk: 13, palette: C.grey, weapon: 'blade', speed: 145 }),
+  M('m33', '山贼弓手', '山贼', 'archer', { spineMob: 'guaiA2c', mobPx: 82, hp: 38, atk: 9, palette: C.yellow, weapon: 'bow', range: 310, atkCd: 2.1, projectile: 'arrow' }),
+  M('m34', '黑风骑手', '山贼', 'charger', { spineMob: 'guaiA2d', mobPx: 108, hp: 72, atk: 15, palette: C.dark, weapon: 'blade', speed: 270, bulk: 1.1 }),
+  M('m35', '寨主亲卫', '山贼', 'tank', { spineMob: 'guaiA2e', mobPx: 98, hp: 96, atk: 15, palette: C.elite, hat: 'helmet', weapon: 'axe', blockChance: 0.4, knockResist: 0.4, speed: 110 }),
+  // ---- 水鬼系（A8）----
+  M('m36', '水鬼卒', '水鬼', 'melee', { spineMob: 'guaiA8a', mobPx: 85, hp: 50, atk: 11, palette: C.blue, weapon: 'sword', speed: 135 }),
+  M('m37', '浪里刀', '水鬼', 'melee', { spineMob: 'guaiA8b', mobPx: 88, hp: 60, atk: 14, palette: C.blue, weapon: 'blade', speed: 165, windup: 0.3 }),
+  M('m38', '水瘴术士', '水鬼', 'caster', { spineMob: 'guaiA8c', mobPx: 85, hp: 44, atk: 10, palette: C.dark, hat: 'hood', weapon: 'staff', range: 290, atkCd: 3.2, projectile: 'curse' }),
+  M('m39', '巨鳌骑', '水鬼', 'charger', { spineMob: 'guaiA8d', mobPx: 112, hp: 90, atk: 16, palette: C.blue, weapon: 'spear', speed: 240, bulk: 1.15, knockResist: 0.4 }),
+  M('m40', '水军督卫', '水鬼', 'tank', { spineMob: 'guaiA8e', mobPx: 100, hp: 100, atk: 14, palette: C.grey, hat: 'helmet', weapon: 'spear', range: 80, blockChance: 0.45, knockResist: 0.5, speed: 105 }),
+  // ---- 巫蛊系（A9）----
+  M('m41', '蛊童', '巫蛊', 'melee', { spineMob: 'guaiA9a', mobPx: 78, hp: 36, atk: 8, palette: C.south, weapon: 'dual', speed: 190, windup: 0.28 }),
+  M('m42', '毒巫', '巫蛊', 'archer', { spineMob: 'guaiA9b', mobPx: 82, hp: 40, atk: 9, palette: C.dark, hat: 'hood', weapon: 'fan', range: 270, atkCd: 2.0, projectile: 'poison' }),
+  M('m43', '蜈奴', '巫蛊', 'melee', { spineMob: 'guaiA9c', mobPx: 88, hp: 58, atk: 12, palette: C.south, weapon: 'club', speed: 150 }),
+  M('m44', '蛊母卫', '巫蛊', 'tank', { spineMob: 'guaiA9d', mobPx: 95, hp: 88, atk: 13, palette: C.south, weapon: 'sword', blockChance: 0.4, knockResist: 0.35, speed: 100 }),
+  M('m45', '万蛊祭司', '巫蛊', 'caster', { spineMob: 'guaiA9e', mobPx: 92, hp: 64, atk: 13, palette: C.dark, hat: 'hood', weapon: 'staff', range: 310, atkCd: 3.0, projectile: 'fireball' }),
+  // ---- 机关系（A10）----
+  M('m46', '木甲兵', '机关', 'melee', { spineMob: 'guaiA10a', mobPx: 88, hp: 62, atk: 12, palette: C.grey, weapon: 'club', speed: 115 }),
+  M('m47', '铜偶士', '机关', 'melee', { spineMob: 'guaiA10b', mobPx: 90, hp: 74, atk: 14, palette: C.grey, hat: 'helmet', weapon: 'blade', speed: 120 }),
+  M('m48', '机关弩车', '机关', 'archer', { spineMob: 'guaiA10c', mobPx: 92, hp: 66, atk: 8, palette: C.grey, weapon: 'bow', range: 330, atkCd: 2.4, projectile: 'arrow3' }),
+  M('m49', '铁傀儡', '机关', 'tank', { spineMob: 'guaiA10d', mobPx: 105, hp: 120, atk: 16, palette: C.grey, hat: 'helmet', weapon: 'club', blockChance: 0.5, knockResist: 0.6, speed: 85 }),
+  M('m50', '霹雳机', '机关', 'bomber', { spineMob: 'guaiA10e', mobPx: 90, hp: 46, atk: 20, palette: C.red, weapon: 'staff', speed: 145, projectile: 'firepot' }),
+  // ---- 妖兽系（A11）----
+  M('m51', '狼妖', '妖兽', 'melee', { spineMob: 'guaiA11a', mobPx: 85, hp: 52, atk: 12, palette: C.dark, weapon: 'dual', speed: 185, windup: 0.28 }),
+  M('m52', '蝠妖', '妖兽', 'archer', { spineMob: 'guaiA11b', mobPx: 80, hp: 40, atk: 9, palette: C.dark, weapon: 'fan', range: 260, atkCd: 1.9, projectile: 'poison' }),
+  M('m53', '山魈', '妖兽', 'melee', { spineMob: 'guaiA11c', mobPx: 95, hp: 78, atk: 15, palette: C.south, weapon: 'club', speed: 140, bulk: 1.05 }),
+  M('m54', '赤豹骑', '妖兽', 'charger', { spineMob: 'guaiA11d', mobPx: 115, hp: 86, atk: 17, palette: C.red, weapon: 'spear', speed: 290, bulk: 1.15 }),
+  M('m55', '千年妖将', '妖兽', 'melee', { spineMob: 'guaiA11e', mobPx: 100, hp: 110, atk: 19, palette: C.dark, hat: 'crown', weapon: 'blade', speed: 150, bulk: 1.1, knockResist: 0.4 }),
+  // ---- 阴兵系（A12）----
+  M('m56', '阴兵卒', '阴兵', 'melee', { spineMob: 'guaiA12a', mobPx: 85, hp: 60, atk: 13, palette: C.dark, weapon: 'sword', speed: 130 }),
+  M('m57', '幽影刺', '阴兵', 'melee', { spineMob: 'guaiA12b', mobPx: 82, hp: 52, atk: 16, palette: C.dark, hat: 'hood', weapon: 'dual', speed: 200, windup: 0.26 }),
+  M('m58', '招魂幡手', '阴兵', 'caster', { spineMob: 'guaiA12c', mobPx: 85, hp: 56, atk: 12, palette: C.dark, hat: 'hood', weapon: 'staff', range: 300, atkCd: 3.0, projectile: 'curse' }),
+  M('m59', '铁面阴将', '阴兵', 'tank', { spineMob: 'guaiA12d', mobPx: 100, hp: 115, atk: 16, palette: C.dark, hat: 'helmet', weapon: 'blade', blockChance: 0.5, knockResist: 0.55, speed: 95 }),
+  M('m60', '黄泉骑', '阴兵', 'charger', { spineMob: 'guaiA12e', mobPx: 115, hp: 95, atk: 18, palette: C.dark, hat: 'helmet', weapon: 'spear', speed: 300, bulk: 1.15, knockResist: 0.4 }),
 ];
 
 export const MONSTER_MAP = Object.fromEntries(MONSTERS.map(m => [m.id, m]));

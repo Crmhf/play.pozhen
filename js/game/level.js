@@ -1,13 +1,13 @@
 // 关卡导演：波次编排 + 锁屏推进 + 镜头 + 投射物 + 掉落 + 地面渲染
-import { clamp, rand } from '../engine/utils.js?v=1785918405';
-import { feel } from '../engine/shake.js?v=1785918405';
-import { audio } from '../engine/audio.js?v=1785918405';
-import { particles } from '../engine/particles.js?v=1785918405';
-import { Enemy } from './enemy.js?v=1785918405';
-import { Boss } from './boss.js?v=1785918405';
-import { MONSTER_MAP } from '../data/monsters.js?v=1785918405';
-import { BOSS_MAP } from '../data/bosses.js?v=1785918405';
-import { shade } from '../engine/sprite.js?v=1785918405';
+import { clamp, rand } from '../engine/utils.js?v=1785924343';
+import { feel } from '../engine/shake.js?v=1785924343';
+import { audio } from '../engine/audio.js?v=1785924343';
+import { particles } from '../engine/particles.js?v=1785924343';
+import { Enemy } from './enemy.js?v=1785924343';
+import { Boss } from './boss.js?v=1785924343';
+import { MONSTER_MAP } from '../data/monsters.js?v=1785924343';
+import { BOSS_MAP } from '../data/bosses.js?v=1785924343';
+import { shade } from '../engine/sprite.js?v=1785924343';
 
 const VIEW_W = () => innerWidth;
 const GROUND_Y = 0; // 地面像素 y（世界坐标，向下为正；物理层内部取反）
@@ -274,12 +274,13 @@ export class Level {
   drawGround(ctx, camX, camY, w, h) {
     const sc = this.data.scene;
     const gy = GROUND_Y - camY;
-    // 主地面
-    ctx.fillStyle = sc.ground;
+    // 主地面（柔和渐变融入幻境）
+    const gg = ctx.createLinearGradient(0, gy, 0, h);
+    gg.addColorStop(0, sc.grass);
+    gg.addColorStop(0.12, sc.ground);
+    gg.addColorStop(1, shade(sc.ground, -26));
+    ctx.fillStyle = gg;
     ctx.fillRect(0, gy, w, h - gy);
-    // 地表草色带
-    ctx.fillStyle = sc.grass;
-    ctx.fillRect(0, gy, w, 8);
     // 水墨笔触地表纹理（滚动）
     ctx.save();
     ctx.globalAlpha = 0.25;

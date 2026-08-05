@@ -1,23 +1,23 @@
 // 破阵大乱斗 · 主入口：启动 / 全局状态机 / 固定时间步游戏循环
-import { clamp } from './engine/utils.js?v=1785918405';
-import { Input } from './engine/input.js?v=1785918405';
-import { audio } from './engine/audio.js?v=1785918405';
-import { feel } from './engine/shake.js?v=1785918405';
-import { particles, vfxLib, VfxPlayer } from './engine/particles.js?v=1785918405';
-import { Physics } from './engine/physics.js?v=1785918405';
-import { Renderer3D } from './engine/renderer3d.js?v=1785918405';
-import { CHARACTERS } from './data/characters.js?v=1785918405';
-import { LEVELS } from './data/levels.js?v=1785918405';
-import { MONSTER_MAP } from './data/monsters.js?v=1785918405';
-import { BOSS_MAP } from './data/bosses.js?v=1785918405';
-import { SpineActor } from './engine/spine-actor.js?v=1785918405';
-import { MOB_MANIFEST } from './data/mobmanifest.js?v=1785918405';
-import { Player } from './game/player.js?v=1785918405';
-import { Enemy } from './game/enemy.js?v=1785918405';
-import { Combat } from './game/combat.js?v=1785918405';
-import { Director } from './game/director.js?v=1785918405';
-import { Level } from './game/level.js?v=1785918405';
-import { UI } from './game/ui.js?v=1785918405';
+import { clamp } from './engine/utils.js?v=1785924343';
+import { Input } from './engine/input.js?v=1785924343';
+import { audio } from './engine/audio.js?v=1785924343';
+import { feel } from './engine/shake.js?v=1785924343';
+import { particles, vfxLib, VfxPlayer } from './engine/particles.js?v=1785924343';
+import { Physics } from './engine/physics.js?v=1785924343';
+import { Renderer2D } from './engine/renderer2d.js?v=1785924343';
+import { CHARACTERS } from './data/characters.js?v=1785924343';
+import { LEVELS } from './data/levels.js?v=1785924343';
+import { MONSTER_MAP } from './data/monsters.js?v=1785924343';
+import { BOSS_MAP } from './data/bosses.js?v=1785924343';
+import { SpineActor } from './engine/spine-actor.js?v=1785924343';
+import { MOB_MANIFEST } from './data/mobmanifest.js?v=1785924343';
+import { Player } from './game/player.js?v=1785924343';
+import { Enemy } from './game/enemy.js?v=1785924343';
+import { Combat } from './game/combat.js?v=1785924343';
+import { Director } from './game/director.js?v=1785924343';
+import { Level } from './game/level.js?v=1785924343';
+import { UI } from './game/ui.js?v=1785924343';
 
 const GSTATE = { TITLE: 'TITLE', SELECT: 'SELECT', STORY: 'STORY', PLAYING: 'PLAYING', PAUSED: 'PAUSED', CLEAR: 'CLEAR', OVER: 'OVER', VICTORY: 'VICTORY' };
 const FIXED_DT = 1 / 120;
@@ -28,7 +28,7 @@ class Game {
     this.ctx = this.canvas.getContext('2d');
     this.input = new Input();
     this.ui = new UI(this);
-    this.bg3d = new Renderer3D(document.getElementById('bg3d'));
+    this.bg3d = new Renderer2D();
     this.combat = new Combat(this);
     this.director = new Director(2);
     this.vfx = new VfxPlayer(vfxLib);
@@ -267,13 +267,11 @@ class Game {
     const camX = playing ? this.level.camera.x - w / 2 : this.elapsed * 30; // 标题时镜头缓慢漂移
     const shake = feel.offsets(this.elapsed);
 
-    // 3D 背景层
-    if (this.bg3d.ok) {
-      this.bg3d.update(dt, camX + w / 2, playing ? shake : null);
-    } else {
-      // Canvas 降级背景
+    // 2D 幻想江湖背景层（多层视差，直接绘入游戏画布）
+    if (playing) this.bg3d.render(ctx, w, h, camX, shake);
+    else {
       const g = ctx.createLinearGradient(0, 0, 0, h);
-      g.addColorStop(0, '#2a3040'); g.addColorStop(1, '#12141c');
+      g.addColorStop(0, '#1c1a26'); g.addColorStop(1, '#0c0a12');
       ctx.fillStyle = g; ctx.fillRect(0, 0, w, h);
     }
     if (!playing) return;

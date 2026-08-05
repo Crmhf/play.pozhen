@@ -1,5 +1,5 @@
 // 音频引擎：MiniMax music-2.6 生成的 BGM + WebAudio 程序化战斗音效（零延迟、零文件）
-import { rand, pick } from './utils.js?v=1785918405';
+import { rand, pick } from './utils.js?v=1785924343';
 
 class AudioEngine {
   constructor() {
@@ -7,6 +7,56 @@ class AudioEngine {
     this.bgmEl = new Audio(); this.bgmEl.loop = true;
     this.bgmName = null; this.enabled = true; this._noiseBuf = null;
     this._proceduralBgm = null;
+    // 采样音效（assets/audio/sfx/）：解码缓存 + 声部限流
+    this._samples = new Map();   // name -> AudioBuffer | 'loading'
+    this._voices = 0;            // 当前并发声部
+    this._lastPlay = new Map();  // 同名限频
+  }
+
+  // 采样名映射（值数组=随机选一）
+  static SAMPLES = {
+    swing: ['swing1', 'swing2'], swing2: ['swing3', 'swing1'],
+    hit: ['hit1', 'hit2'], hit2: ['hit3', 'hit2'], crit: ['crit'],
+    clang: ['clang1', 'clang2'], dash: ['dash'],
+    bow: ['bow1'], fireball: ['fire1'], thunder: ['explo1'],
+    land: ['land1'], die: ['die1'], hurt: ['punch1', 'punch2'],
+    bowhit: ['bowhit'], combo3: ['combo3'],
+  };
+
+  // 懒加载采样（首次解锁后后台解码，不阻塞）
+  preloadSamples() {
+    if (!this.ctx || this._preloaded) return;
+    this._preloaded = true;
+    const names = new Set();
+    for (const arr of Object.values(AudioEngine.SAMPLES)) arr.forEach(n => names.add(n));
+    for (const n of names) this._loadSample(n);
+  }
+  async _loadSample(name) {
+    if (this._samples.has(name)) return;
+    this._samples.set(name, 'loading');
+    try {
+      const r = await fetch(`assets/audio/sfx/${name}.mp3`);
+      const buf = await this.ctx.decodeAudioData(await r.arrayBuffer());
+      this._samples.set(name, buf);
+    } catch (e) { this._samples.delete(name); }
+  }
+  _playSample(name, pitch = 1, vol = 1) {
+    const buf = this._samples.get(name);
+    if (!buf || buf === 'loading') return false;
+    if (this._voices >= 10) return true; // 声部限流：丢弃但不回退
+    const now = performance.now();
+    if (now - (this._lastPlay.get(name) || 0) < 40) return true; // 同名40ms限频
+    this._lastPlay.set(name, now);
+    const src = this.ctx.createBufferSource();
+    src.buffer = buf;
+    src.playbackRate.value = pitch * (0.94 + Math.random() * 0.12); // 微随机防机械感
+    const g = this.ctx.createGain();
+    g.gain.value = Math.min(1, vol);
+    src.connect(g).connect(this.sfxGain);
+    this._voices++;
+    src.onended = () => this._voices--;
+    src.start();
+    return true;
   }
 
   // 必须由用户手势触发一次；任何环境下音频失败都不阻塞游戏
@@ -24,6 +74,7 @@ class AudioEngine {
       const d = buf.getChannelData(0);
       for (let i = 0; i < len; i++) d[i] = Math.random() * 2 - 1;
       this._noiseBuf = buf;
+      setTimeout(() => this.preloadSamples(), 100);
     } catch (e) { this.ctx = null; }
   }
 
@@ -106,6 +157,9 @@ class AudioEngine {
   play(name, opt = {}) {
     if (!this.ctx || !this.enabled) return;
     const p = opt.pitch || 1, v = opt.vol || 1;
+    // 采样优先：命中映射且已解码则用真实音效
+    const smp = AudioEngine.SAMPLES[name];
+    if (smp && this._playSample(smp[Math.floor(Math.random() * smp.length)], p, v)) return;
     switch (name) {
       case 'swing':   // 挥砍破空
         this._noise(0.12, 0.25 * v, 'bandpass', 1200 * p, 2, 3500 * p); break;

@@ -1,12 +1,12 @@
 // 敌军 AI：状态机 + 战术轮盘（围拢/绕后/抢攻）+ 攻击令牌（Combat Director 发牌）
 // 兵种行为：melee/tank/charger/archer/caster/bomber
-import { StateMachine, KEEP, clamp, rand } from '../engine/utils.js?v=1785918405';
-import { feel } from '../engine/shake.js?v=1785918405';
-import { audio } from '../engine/audio.js?v=1785918405';
-import { particles } from '../engine/particles.js?v=1785918405';
-import { InkWarrior, shade } from '../engine/sprite.js?v=1785918405';
-import { SpineActor } from '../engine/spine-actor.js?v=1785918405';
-import { MOB_MANIFEST } from '../data/mobmanifest.js?v=1785918405';
+import { StateMachine, KEEP, clamp, rand } from '../engine/utils.js?v=1785924343';
+import { feel } from '../engine/shake.js?v=1785924343';
+import { audio } from '../engine/audio.js?v=1785924343';
+import { particles } from '../engine/particles.js?v=1785924343';
+import { InkWarrior, shade } from '../engine/sprite.js?v=1785924343';
+import { SpineActor } from '../engine/spine-actor.js?v=1785924343';
+import { MOB_MANIFEST } from '../data/mobmanifest.js?v=1785924343';
 
 export const EST = {
   SPAWN: 'SPAWN', IDLE: 'IDLE', MOVE: 'MOVE', WINDUP: 'WINDUP', ATTACK: 'ATTACK',
@@ -44,7 +44,7 @@ export class Enemy {
       const mm = MOB_MANIFEST[def.spineMob];
       const targetPx = (def.mobPx || 85) * (elite ? 1.15 : 1);
       this.spineActor = new SpineActor(`assets/spine-mobs/${def.spineMob}/`, targetPx / mm.h, {
-        mobId: def.spineMob, minY: mm.minY,
+        mobId: def.spineMob, minY: mm.minY, targetPx,
       });
       this.spineActor.load().catch(() => this.spineActor = null);
     }

@@ -14,6 +14,7 @@ export class SpineActor {
     this.base = basePath;
     this.scale = scale;
     this.mobId = opts.mobId || null;
+    this.targetPx = opts.targetPx || 0; // 怪物目标像素高（加载后按实测包围盒反算 scale）
     this.minY = opts.minY || 0;   // 怪物模型中心原点 → 脚底偏移
     this.ready = false;
     this.anims = {};
@@ -31,6 +32,18 @@ export class SpineActor {
     this.anims = anims;
     this.skeleton = new sp.Skeleton(data);
     this.skeleton.setToSetupPose();
+    this.skeleton.updateWorldTransform();
+    // 运行时实测包围盒（mesh 附件在离线清单里量不准）：怪物按目标像素高反算缩放
+    if (this.mobId && this.targetPx) {
+      try {
+        const off = new sp.Vector2(), size = new sp.Vector2();
+        this.skeleton.getBounds(off, size);
+        if (size.y > 10) {
+          this.scale = this.targetPx / size.y;
+          this.minY = off.y;
+        }
+      } catch (e) { /* 用 manifest 预估值 */ }
+    }
     this.state = new sp.AnimationState(new sp.AnimationStateData(data));
     this.ready = true;
   }
