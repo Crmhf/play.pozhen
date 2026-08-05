@@ -1,10 +1,10 @@
 // Boss：独立 AI —— 阶段技能循环 + 狂暴 + 登场演出
-import { EST, Enemy } from './enemy.js?v=1785962621';
-import { KEEP, clamp, rand } from '../engine/utils.js?v=1785962621';
-import { feel } from '../engine/shake.js?v=1785962621';
-import { audio } from '../engine/audio.js?v=1785962621';
-import { particles } from '../engine/particles.js?v=1785962621';
-import { shade } from '../engine/sprite.js?v=1785962621';
+import { EST, Enemy } from './enemy.js?v=1785964069';
+import { KEEP, clamp, rand } from '../engine/utils.js?v=1785964069';
+import { feel } from '../engine/shake.js?v=1785964069';
+import { audio } from '../engine/audio.js?v=1785964069';
+import { particles } from '../engine/particles.js?v=1785964069';
+import { shade } from '../engine/sprite.js?v=1785964069';
 
 export class Boss extends Enemy {
   constructor(def, physics, game, opts) {

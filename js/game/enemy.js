@@ -1,12 +1,12 @@
 // 敌军 AI：状态机 + 战术轮盘（围拢/绕后/抢攻）+ 攻击令牌（Combat Director 发牌）
 // 兵种行为：melee/tank/charger/archer/caster/bomber
-import { StateMachine, KEEP, clamp, rand } from '../engine/utils.js?v=1785962621';
-import { feel } from '../engine/shake.js?v=1785962621';
-import { audio } from '../engine/audio.js?v=1785962621';
-import { particles } from '../engine/particles.js?v=1785962621';
-import { InkWarrior, shade } from '../engine/sprite.js?v=1785962621';
-import { SpineActor } from '../engine/spine-actor.js?v=1785962621';
-import { MOB_MANIFEST } from '../data/mobmanifest.js?v=1785962621';
+import { StateMachine, KEEP, clamp, rand } from '../engine/utils.js?v=1785964069';
+import { feel } from '../engine/shake.js?v=1785964069';
+import { audio } from '../engine/audio.js?v=1785964069';
+import { particles } from '../engine/particles.js?v=1785964069';
+import { InkWarrior, shade } from '../engine/sprite.js?v=1785964069';
+import { SpineActor } from '../engine/spine-actor.js?v=1785964069';
+import { MOB_MANIFEST } from '../data/mobmanifest.js?v=1785964069';
 
 export const EST = {
   SPAWN: 'SPAWN', IDLE: 'IDLE', MOVE: 'MOVE', WINDUP: 'WINDUP', ATTACK: 'ATTACK',
@@ -108,14 +108,22 @@ export class Enemy {
     const d = this.def, g = this.game, p = this.player;
     this.atkTimer = d.atkCd * rand(0.85, 1.25);
     switch (d.ai) {
-      case 'archer': case 'caster':
+      case 'archer': case 'caster': {
         audio.play(d.projectile === 'arrow' || d.projectile === 'arrow3' ? 'bow' : 'fireball');
-        g.spawnProjectile(this, d.projectile);
+        if (d.projectile === 'arrow' && Math.random() < 0.35) {
+          // 扇形三箭（上中下）
+          g.spawnProjectile(this, 'arrow', { vyOff: -120 });
+          g.spawnProjectile(this, 'arrow');
+          g.spawnProjectile(this, 'arrow', { vyOff: 120 });
+        } else {
+          g.spawnProjectile(this, d.projectile);
+        }
         if (d.projectile === 'arrow3') { // 连弩三连
           setTimeout(() => this.alive && g.spawnProjectile(this, 'arrow'), 140);
           setTimeout(() => this.alive && g.spawnProjectile(this, 'arrow'), 280);
         }
         break;
+      }
       case 'bomber': {
         audio.play('fireball');
         g.combat.explode(this.x, this.y - 20, 90, this.atk, this);
@@ -130,14 +138,33 @@ export class Enemy {
         this._charging = 0.35;
         break;
       }
-      default: { // melee / tank：出刀带前冲，凶且能打到
-        audio.play('swing', { pitch: 0.85, vol: 0.7 });
-        g.vfx.play('slash_1', this.x + this.dir * 40, this.y - 34, { scale: 0.9, fps: 30, flip: this.dir > 0 });
-        this.phys.setVel(this.body, this.dir * 240, this.vy); // 前冲步
-        const reach = d.range + 20;
-        if (Math.abs(p.x - this.x) <= reach && Math.abs(p.y - this.y) < 70 &&
-            Math.sign(p.x - this.x) === this.dir) {
-          p.takeHit(this.atk, this.x, { knock: 180 });
+      default: { // melee / tank：随机招式——跳劈/横扫/盾击，出刀带前冲
+        const roll = Math.random();
+        if (d.ai === 'tank' || roll < 0.5) {
+          // 横扫（默认）
+          audio.play('swing', { pitch: 0.85, vol: 0.7 });
+          g.vfx.play('slash_1', this.x + this.dir * 40, this.y - 34, { scale: 0.9, fps: 30, flip: this.dir > 0 });
+          this.phys.setVel(this.body, this.dir * 240, this.vy);
+          const reach = d.range + 20;
+          if (Math.abs(p.x - this.x) <= reach && Math.abs(p.y - this.y) < 70 &&
+              Math.sign(p.x - this.x) === this.dir) {
+            p.takeHit(this.atk, this.x, { knock: 180 });
+          }
+        } else if (roll < 0.8) {
+          // 跳劈：跃起砸向玩家（范围更大）
+          audio.play('swing2', { pitch: 0.8 });
+          this.phys.setVel(this.body, this.dir * 300, 480);
+          this._leapAttack = 0.5; // 落地判定计时
+        } else {
+          // 盾击/直刺：小前冲大击退
+          audio.play('swing', { pitch: 0.7, vol: 0.8 });
+          g.vfx.play('slash_3', this.x + this.dir * 40, this.y - 34, { scale: 1.0, fps: 30, flip: this.dir > 0 });
+          this.phys.setVel(this.body, this.dir * 380, this.vy);
+          const reach = d.range + 26;
+          if (Math.abs(p.x - this.x) <= reach && Math.abs(p.y - this.y) < 70 &&
+              Math.sign(p.x - this.x) === this.dir) {
+            p.takeHit(this.atk * 1.2, this.x, { knock: 320 });
+          }
         }
       }
     }
@@ -171,6 +198,20 @@ export class Enemy {
         if (Math.abs(p.x - this.x) < 46 && Math.abs(p.y - this.y) < 60) {
           p.takeHit(this.atk, this.x, { knock: 320 });
           this._charging = 0;
+        }
+      }
+      // 跳劈落地判定
+      if (this._leapAttack > 0) {
+        this._leapAttack -= dt;
+        if (this.grounded || this._leapAttack <= 0) {
+          const g = this.game;
+          g.vfx.play('quake', this.x, this.y - 14, { scale: 0.9, fps: 28 });
+          particles.emit({ x: this.x, y: this.y, vrand: 140, vy: -100, life: 0.4, size: 5, color: '#a89060', glow: false, gravity: 700 }, 8);
+          audio.play('skill_quake', { vol: 0.4 });
+          if (Math.abs(p.x - this.x) < 90 && Math.abs(p.y - this.y) < 70) {
+            p.takeHit(this.atk * 1.3, this.x, { knock: 260 });
+          }
+          this._leapAttack = 0;
         }
       }
       return;

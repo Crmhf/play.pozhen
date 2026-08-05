@@ -1,6 +1,6 @@
 // 2D 幻想江湖背景层：多层视差 + 环境粒子（Canvas 2D，替代 3D 方案）
 // 层序：天空渐变 → AI 幻境原画(0.12) → 中景剪影山(0.35) → 雾霭(0.55) → 环境粒子
-import { rand } from './utils.js?v=1785962621';
+import { rand } from './utils.js?v=1785964069';
 
 export class Renderer2D {
   constructor() {

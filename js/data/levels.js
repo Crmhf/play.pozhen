@@ -25,7 +25,7 @@ export const LEVELS = [
       ambient: { type: 'petal', color: 0xf0b8c8 }, texUrl: 'assets/bg2/level01/bg.jpg',
       ground: '#5a4a32', grass: '#7a8a4a',
     },
-    length: 4200,
+    length: 2730,
     waves: [
       { mobs: ['m01', 'm01', 'm01', 'm01', 'm01', 'm01'] },
       { mobs: ['m01', 'm01', 'm03', 'm01', 'm01', 'm03'] },
@@ -44,7 +44,7 @@ export const LEVELS = [
       ambient: { type: 'dust', color: 0xd8b880 }, texUrl: 'assets/bg2/level02/bg.jpg',
       ground: '#6a5638', grass: '#8a7a48',
     },
-    length: 5600,
+    length: 3640,
     waves: [
       { mobs: ['m02', 'm03', 'm04', 'm02', 'm03', 'm04'] },
       { mobs: ['m03', 'm03', 'm06', 'm01', 'm03', 'm03', 'm06', 'm01'] },
@@ -64,7 +64,7 @@ export const LEVELS = [
       ambient: { type: 'ember', color: 0xff9a55 }, texUrl: 'assets/bg2/level03/bg.jpg',
       ground: '#4a3630', grass: '#6a4a3a',
     },
-    length: 6400,
+    length: 4160,
     waves: [
       { mobs: ['m04', 'm05', 'm06', 'm04', 'm05', 'm06'] },
       { mobs: ['m11', 'm03', 'm03', 'm11', 'm03', 'm03'] },
@@ -84,7 +84,7 @@ export const LEVELS = [
       ambient: { type: 'dust', color: 0xc8d4da }, texUrl: 'assets/bg2/level04/bg.jpg',
       ground: '#5a5a48', grass: '#6a7a52',
     },
-    length: 7000,
+    length: 4550,
     waves: [
       { mobs: ['m03', 'm06', 'm06', 'm02', 'm03', 'm06', 'm06', 'm02'] },
       { mobs: ['m14', 'm04', 'm05', 'm14', 'm04', 'm05'] },
@@ -104,7 +104,7 @@ export const LEVELS = [
       ambient: { type: 'dust', color: 0xc0a878 }, texUrl: 'assets/bg2/level05/bg.jpg',
       ground: '#665540', grass: '#7a7040',
     },
-    length: 7800,
+    length: 5070,
     waves: [
       { mobs: ['m11', 'm04', 'm06', 'm11', 'm04', 'm06'] },
       { mobs: ['m12', 'm12', 'm07', 'm12', 'm12', 'm07'] },
@@ -126,7 +126,7 @@ export const LEVELS = [
       ambient: { type: 'ember', color: 0xff8844 }, texUrl: 'assets/bg2/level06/bg.jpg',
       ground: '#3a2a28', grass: '#5a3a30',
     },
-    length: 8200,
+    length: 5330,
     waves: [
       { mobs: ['m10', 'm06', 'm06', 'm04', 'm10', 'm06', 'm06', 'm04'] },
       { mobs: ['m16', 'm05', 'm05', 'm16', 'm05', 'm05'] },
@@ -149,7 +149,7 @@ export const LEVELS = [
       ambient: { type: 'leaf', color: 0xd88840 }, texUrl: 'assets/bg2/level07/bg.jpg',
       ground: '#5e4a34', grass: '#8a6a38',
     },
-    length: 8800,
+    length: 5720,
     waves: [
       { mobs: ['m12', 'm08', 'm08', 'm04', 'm12', 'm08', 'm08', 'm04'] },
       { mobs: ['m19', 'm06', 'm06', 'm05', 'm19', 'm06', 'm06', 'm05'] },
@@ -171,7 +171,7 @@ export const LEVELS = [
       ambient: { type: 'rain', color: 0x8aa8c0 }, texUrl: 'assets/bg2/level08/bg.jpg',
       ground: '#3e4a44', grass: '#4a5e4e',
     },
-    length: 9200,
+    length: 5980,
     waves: [
       { mobs: ['m14', 'm06', 'm06', 'm08', 'm14', 'm06', 'm06', 'm08'] },
       { mobs: ['m28', 'm07', 'm07', 'm28', 'm07', 'm07'] },
@@ -193,7 +193,7 @@ export const LEVELS = [
       ambient: { type: 'miasma', color: 0x88c068 }, texUrl: 'assets/bg2/level09/bg.jpg',
       ground: '#2e3e28', grass: '#3e5a34',
     },
-    length: 10000,
+    length: 6500,
     waves: [
       { mobs: ['m21', 'm22', 'm23', 'm41', 'm21', 'm22', 'm23', 'm41'] },
       { mobs: ['m22', 'm22', 'm23', 'm17', 'm22', 'm22', 'm23', 'm17'] },
@@ -217,7 +217,7 @@ export const LEVELS = [
       ambient: { type: 'snow', color: 0xb8c8e8 }, texUrl: 'assets/bg2/level10/bg.jpg',
       ground: '#2a2e3a', grass: '#3a4050',
     },
-    length: 11000,
+    length: 7150,
     waves: [
       { mobs: ['m26', 'm27', 'm29', 'm26', 'm27', 'm29'] },
       { mobs: ['m56', 'm57', 'm58', 'm46', 'm56', 'm57', 'm58', 'm46'] },
