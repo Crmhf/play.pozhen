@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html><head><meta charset="UTF-8"><title>刀光朝向对比</title>
+<style>body{background:#222;color:#ddd;font:14px monospace;display:flex;gap:20px;padding:20px}
+.box{text-align:center}canvas{background:#333;display:block}</style></head><body>
+<div class="box"><canvas id="a" width="300" height="200"></canvas>flip=false（当前向右攻击）</div>
+<div class="box"><canvas id="b" width="300" height="200"></canvas>flip=true（镜像）</div>
+<div class="box"><canvas id="c" width="300" height="200"></canvas>flip=false+反向播放</div>
+<script>
+// 模拟人物在左侧 1/3 处向右攻击，刀光应在身前向外展开
+const sets = [];
+async function load(name, count) {
+  const frames = [];
+  await Promise.all(Array.from({length: count}, (_, i) => new Promise(res => {
+    const img = new Image();
+    img.onload = () => { frames[i] = img; res(); };
+    img.onerror = () => res();
+    img.src = `assets/vfx/${name}/frame_${String(i).padStart(2,'0')}.png`;
+  })));
+  return frames.filter(Boolean);
+}
+function drawSlash(ctx, frames, t, flip, reverse) {
+  ctx.clearRect(0, 0, 300, 200);
+  // 火柴人代替角色
+  ctx.strokeStyle = '#ccc'; ctx.lineWidth = 3;
+  ctx.beginPath(); ctx.arc(70, 90, 12, 0, 7); ctx.stroke(); // 头
+  ctx.beginPath(); ctx.moveTo(70, 102); ctx.lineTo(70, 150); ctx.stroke(); // 身
+  ctx.beginPath(); ctx.moveTo(70, 150); ctx.lineTo(55, 190); ctx.moveTo(70, 150); ctx.lineTo(85, 190); ctx.stroke(); // 腿
+  ctx.fillStyle = '#8f8'; ctx.font = '12px monospace'; ctx.fillText('角色朝右 →', 30, 30);
+  const idx = Math.floor(t * frames.length) % frames.length;
+  const img = frames[reverse ? frames.length - 1 - idx : idx];
+  if (!img) return;
+  ctx.save();
+  ctx.translate(160, 100); // 身前
+  if (flip) ctx.scale(-1, 1);
+  ctx.drawImage(img, -img.width/2, -img.height/2);
+  ctx.restore();
+}
+(async () => {
+  const f = await load('slash_1', 5);
+  const ca = document.getElementById('a').getContext('2d');
+  const cb = document.getElementById('b').getContext('2d');
+  const cc = document.getElementById('c').getContext('2d');
+  let t0 = performance.now();
+  setInterval(() => {
+    const t = ((performance.now() - t0) % 900) / 900;
+    drawSlash(ca, f, t, false, false);
+    drawSlash(cb, f, t, true, false);
+    drawSlash(cc, f, t, false, true);
+  }, 90);
+  document.title = 'READY';
+})();
+</script></body></html>

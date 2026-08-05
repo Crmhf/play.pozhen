@@ -1,10 +1,10 @@
 // 玩家：通用状态机驱动，土狼时间+跳跃缓冲+可变跳高+连段+技能+绝技+闪避
-import { StateMachine, KEEP, clamp } from '../engine/utils.js?v=1785960849';
-import { feel } from '../engine/shake.js?v=1785960849';
-import { audio } from '../engine/audio.js?v=1785960849';
-import { particles, vfxLib } from '../engine/particles.js?v=1785960849';
-import { InkWarrior } from '../engine/sprite.js?v=1785960849';
-import { SpineActor } from '../engine/spine-actor.js?v=1785960849';
+import { StateMachine, KEEP, clamp } from '../engine/utils.js?v=1785961530';
+import { feel } from '../engine/shake.js?v=1785961530';
+import { audio } from '../engine/audio.js?v=1785961530';
+import { particles, vfxLib } from '../engine/particles.js?v=1785961530';
+import { InkWarrior } from '../engine/sprite.js?v=1785961530';
+import { SpineActor } from '../engine/spine-actor.js?v=1785961530';
 
 export const PSTATE = {
   IDLE: 'IDLE', RUN: 'RUN', JUMP: 'JUMP', FALL: 'FALL', LAND: 'LAND',
@@ -210,7 +210,7 @@ export class Player {
       const ex = sk.kind === 'blink' ? this.x + this.dir * (sk.dist || 200)
                : sk.kind === 'ice_lance' ? this.x + this.dir * 160
                : cx;
-      g.vfx.play(sk.extra, ex, cy, { scale: 1.5, fps: 26, flip: this.dir < 0 });
+      g.vfx.play(sk.extra, ex, cy, { scale: 1.5, fps: 26, flip: this.dir > 0 });
     }
     switch (sk.kind) {
       case 'spin':
@@ -240,7 +240,7 @@ export class Player {
         break;
       }
       case 'ice_lance': {
-        g.vfx.play(sk.vfx, this.x + this.dir * 120, cy, { scale: 1.5, fps: 26, flip: this.dir < 0 });
+        g.vfx.play(sk.vfx, this.x + this.dir * 120, cy, { scale: 1.5, fps: 26, flip: this.dir > 0 });
         g.combat.playerLine(this.dir, sk.range, 60, this.atk * sk.dmg, 200, { freeze: sk.freeze, stun: 0.3 });
         feel.shake(0.25);
         break;
@@ -280,7 +280,7 @@ export class Player {
       case 'mega_slash': { // 巨型刀光横贯
         this._ultTick = 999;
         const y = this.y - 34;
-        g.vfx.play('boss_rage', this.x + this.dir * 200, y, { scale: 2.4, fps: 30, flip: this.dir < 0 });
+        g.vfx.play('boss_rage', this.x + this.dir * 200, y, { scale: 2.4, fps: 30, flip: this.dir > 0 });
         g.combat.playerLine(this.dir, ult.width, 120, this.atk * ult.dmg, 600, { stun: 0.8, launch: 260 });
         feel.shake(0.8); feel.hitStop(140);
         audio.play('thunder');

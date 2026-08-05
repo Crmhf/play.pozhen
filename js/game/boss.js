@@ -1,10 +1,10 @@
 // Boss：独立 AI —— 阶段技能循环 + 狂暴 + 登场演出
-import { EST, Enemy } from './enemy.js?v=1785960849';
-import { KEEP, clamp, rand } from '../engine/utils.js?v=1785960849';
-import { feel } from '../engine/shake.js?v=1785960849';
-import { audio } from '../engine/audio.js?v=1785960849';
-import { particles } from '../engine/particles.js?v=1785960849';
-import { shade } from '../engine/sprite.js?v=1785960849';
+import { EST, Enemy } from './enemy.js?v=1785961530';
+import { KEEP, clamp, rand } from '../engine/utils.js?v=1785961530';
+import { feel } from '../engine/shake.js?v=1785961530';
+import { audio } from '../engine/audio.js?v=1785961530';
+import { particles } from '../engine/particles.js?v=1785961530';
+import { shade } from '../engine/sprite.js?v=1785961530';
 
 export class Boss extends Enemy {
   constructor(def, physics, game, opts) {
@@ -113,7 +113,7 @@ export class Boss extends Enemy {
         audio.play('dash');
         this.phys.setVel(this.body, this.dir * 900, 0);
         this._charging = (sk.dist || 380) / 900;
-        g.vfx.play(sk.vfx, cx + this.dir * 60, cy, { scale: 1.6, fps: 24, flip: this.dir < 0 });
+        g.vfx.play(sk.vfx, cx + this.dir * 60, cy, { scale: 1.6, fps: 24, flip: this.dir > 0 });
         break;
       }
       case 'spin_aoe': {
@@ -203,7 +203,7 @@ export class Boss extends Enemy {
           setTimeout(() => {
             if (!this.alive) return;
             audio.play('swing', { pitch: 0.8 });
-            g.vfx.play(sk.vfx, cx + this.dir * 60, cy, { scale: 1.5, fps: 28, flip: this.dir < 0 });
+            g.vfx.play(sk.vfx, cx + this.dir * 60, cy, { scale: 1.5, fps: 28, flip: this.dir > 0 });
             g.combat.bossAoE(cx + this.dir * 80, cy, 110, this.atk * sk.dmg / 1.8, { knock: 240 });
           }, i * 260);
         }

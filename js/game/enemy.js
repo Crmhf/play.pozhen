@@ -1,12 +1,12 @@
 // 敌军 AI：状态机 + 战术轮盘（围拢/绕后/抢攻）+ 攻击令牌（Combat Director 发牌）
 // 兵种行为：melee/tank/charger/archer/caster/bomber
-import { StateMachine, KEEP, clamp, rand } from '../engine/utils.js?v=1785960849';
-import { feel } from '../engine/shake.js?v=1785960849';
-import { audio } from '../engine/audio.js?v=1785960849';
-import { particles } from '../engine/particles.js?v=1785960849';
-import { InkWarrior, shade } from '../engine/sprite.js?v=1785960849';
-import { SpineActor } from '../engine/spine-actor.js?v=1785960849';
-import { MOB_MANIFEST } from '../data/mobmanifest.js?v=1785960849';
+import { StateMachine, KEEP, clamp, rand } from '../engine/utils.js?v=1785961530';
+import { feel } from '../engine/shake.js?v=1785961530';
+import { audio } from '../engine/audio.js?v=1785961530';
+import { particles } from '../engine/particles.js?v=1785961530';
+import { InkWarrior, shade } from '../engine/sprite.js?v=1785961530';
+import { SpineActor } from '../engine/spine-actor.js?v=1785961530';
+import { MOB_MANIFEST } from '../data/mobmanifest.js?v=1785961530';
 
 export const EST = {
   SPAWN: 'SPAWN', IDLE: 'IDLE', MOVE: 'MOVE', WINDUP: 'WINDUP', ATTACK: 'ATTACK',
@@ -132,7 +132,7 @@ export class Enemy {
       }
       default: { // melee / tank：出刀带前冲，凶且能打到
         audio.play('swing', { pitch: 0.85, vol: 0.7 });
-        g.vfx.play('slash_1', this.x + this.dir * 40, this.y - 34, { scale: 0.9, fps: 30, flip: this.dir < 0 });
+        g.vfx.play('slash_1', this.x + this.dir * 40, this.y - 34, { scale: 0.9, fps: 30, flip: this.dir > 0 });
         this.phys.setVel(this.body, this.dir * 240, this.vy); // 前冲步
         const reach = d.range + 20;
         if (Math.abs(p.x - this.x) <= reach && Math.abs(p.y - this.y) < 70 &&
