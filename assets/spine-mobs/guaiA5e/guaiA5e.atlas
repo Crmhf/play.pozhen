@@ -1,0 +1,125 @@
+
+guaiA5e.png
+size: 1024,128
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+guaiA5e/guaiA5e01
+  rotate: false
+  xy: 231, 25
+  size: 100, 100
+  orig: 100, 100
+  offset: 0, 0
+  index: -1
+guaiA5e/guaiA5e02
+  rotate: false
+  xy: 333, 25
+  size: 100, 100
+  orig: 100, 100
+  offset: 0, 0
+  index: -1
+guaiA5e/guaiA5e03
+  rotate: false
+  xy: 435, 25
+  size: 100, 100
+  orig: 100, 100
+  offset: 0, 0
+  index: -1
+guaiA5e/guaiA5e04
+  rotate: false
+  xy: 537, 25
+  size: 100, 100
+  orig: 100, 100
+  offset: 0, 0
+  index: -1
+guaiA5e/guaiA5e_bi1
+  rotate: false
+  xy: 690, 33
+  size: 19, 21
+  orig: 19, 21
+  offset: 0, 0
+  index: -1
+guaiA5e/guaiA5e_bi2
+  rotate: false
+  xy: 876, 64
+  size: 25, 13
+  orig: 25, 13
+  offset: 0, 0
+  index: -1
+guaiA5e/guaiA5e_body
+  rotate: false
+  xy: 820, 64
+  size: 54, 61
+  orig: 54, 61
+  offset: 0, 0
+  index: -1
+guaiA5e/guaiA5e_head
+  rotate: false
+  xy: 740, 63
+  size: 78, 62
+  orig: 78, 62
+  offset: 0, 0
+  index: -1
+guaiA5e/guaiA5e_jiao1
+  rotate: false
+  xy: 944, 80
+  size: 40, 45
+  orig: 40, 45
+  offset: 0, 0
+  index: -1
+guaiA5e/guaiA5e_jiao2
+  rotate: false
+  xy: 986, 82
+  size: 31, 43
+  orig: 31, 43
+  offset: 0, 0
+  index: -1
+guaiA5e/guaiA5e_shou1
+  rotate: true
+  xy: 876, 79
+  size: 46, 66
+  orig: 46, 66
+  offset: 0, 0
+  index: -1
+guaiA5e/guaiA5e_shou2
+  rotate: false
+  xy: 2, 2
+  size: 45, 41
+  orig: 45, 41
+  offset: 0, 0
+  index: -1
+guaiA5e/guaiA5e_shou2a
+  rotate: false
+  xy: 99, 17
+  size: 33, 26
+  orig: 33, 26
+  offset: 0, 0
+  index: -1
+guaiA5e/guaiA5e_tui1
+  rotate: true
+  xy: 49, 11
+  size: 32, 48
+  orig: 32, 48
+  offset: 0, 0
+  index: -1
+guaiA5e/guaiA5e_tui2
+  rotate: true
+  xy: 639, 28
+  size: 26, 49
+  orig: 26, 49
+  offset: 0, 0
+  index: -1
+guaiA5e/guaiA5e_weiba
+  rotate: false
+  xy: 639, 56
+  size: 99, 69
+  orig: 99, 69
+  offset: 0, 0
+  index: -1
+guaiA5e/guaiA5e_wuqi
+  rotate: false
+  xy: 2, 45
+  size: 227, 80
+  orig: 227, 80
+  offset: 0, 0
+  index: -1

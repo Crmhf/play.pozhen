@@ -2,7 +2,7 @@
 // 技能体系映射到战斗引擎的 skill/ult 演出类型
 export const CHARACTERS = [
   {
-    id: 'tanjiro', name: '灶门炭治郎', gender: '男', weapon: '日轮刀 · 黑', weaponType: 'sword',
+    id: 'tanjiro', element: '#4a9ad8', name: '灶门炭治郎', gender: '男', weapon: '日轮刀 · 黑', weaponType: 'sword',
     title: '水之呼吸', desc: '水面般柔韧的剑技，攻防一体。',
     spine: 'assets/spine/tanjiro/', spineScale: 0.28,
     palette: { cloth: '#2e4a3a', trim: '#3a6a52', skin: '#e8c39a', weapon: '#2a2a30', hair: '#5a2a22' },
@@ -19,7 +19,7 @@ export const CHARACTERS = [
     portrait: 'assets/characters/tanjiro_portrait.png',
   },
   {
-    id: 'zenitsu', name: '我妻善逸', gender: '男', weapon: '日轮刀 · 金', weaponType: 'sword',
+    id: 'zenitsu', element: '#f0d040', name: '我妻善逸', gender: '男', weapon: '日轮刀 · 金', weaponType: 'sword',
     title: '雷之呼吸', desc: '沉睡中的雷霆一击，快若闪电。',
     spine: 'assets/spine/zenitsu/', spineScale: 0.28,
     palette: { cloth: '#c8a028', trim: '#f0d060', skin: '#e8c39a', weapon: '#e8e0c8', hair: '#e8c838' },
@@ -36,7 +36,7 @@ export const CHARACTERS = [
     portrait: 'assets/characters/zenitsu_portrait.png',
   },
   {
-    id: 'inosuke', name: '嘴平伊之助', gender: '男', weapon: '双刀 · 锯齿', weaponType: 'dual',
+    id: 'inosuke', element: '#b0a080', name: '嘴平伊之助', gender: '男', weapon: '双刀 · 锯齿', weaponType: 'dual',
     title: '兽之呼吸', desc: '山猪突猛进，野性双刀乱舞。',
     spine: 'assets/spine/inosuke/', spineScale: 0.28,
     palette: { cloth: '#4a3a2e', trim: '#8a6a4a', skin: '#d9a877', weapon: '#c8d0d8', hair: '#2a2a34' },
@@ -54,7 +54,7 @@ export const CHARACTERS = [
     portrait: 'assets/characters/inosuke_portrait.png',
   },
   {
-    id: 'rengoku', name: '炼狱杏寿郎', gender: '男', weapon: '日轮刀 · 炎', weaponType: 'blade',
+    id: 'rengoku', element: '#ff7030', name: '炼狱杏寿郎', gender: '男', weapon: '日轮刀 · 炎', weaponType: 'blade',
     title: '炎之呼吸', desc: '燃烧心灵的豪炎剑士，势如烈火。',
     spine: 'assets/spine/rengoku/', spineScale: 0.28,
     palette: { cloth: '#8a2a1a', trim: '#f0b040', skin: '#e8c39a', weapon: '#f0d8a0', hair: '#e8b838' },
@@ -71,7 +71,7 @@ export const CHARACTERS = [
     portrait: 'assets/characters/rengoku_portrait.png',
   },
   {
-    id: 'shinobu', name: '蝴蝶忍', gender: '女', weapon: '细剑 · 毒', weaponType: 'sword',
+    id: 'shinobu', element: '#b060d8', name: '蝴蝶忍', gender: '女', weapon: '细剑 · 毒', weaponType: 'sword',
     title: '虫之呼吸', desc: '蝶舞般轻盈的突刺，紫藤之毒。',
     spine: 'assets/spine/shinobu/', spineScale: 0.28,
     palette: { cloth: '#e8e4ec', trim: '#6a4a8a', skin: '#f0d0b8', weapon: '#c8b8d8', hair: '#2a2030' },
@@ -89,7 +89,7 @@ export const CHARACTERS = [
     portrait: 'assets/characters/shinobu_portrait.png',
   },
   {
-    id: 'mitsuri', name: '甘露寺蜜璃', gender: '女', weapon: '软剑 · 恋', weaponType: 'sword',
+    id: 'mitsuri', element: '#f080a8', name: '甘露寺蜜璃', gender: '女', weapon: '软剑 · 恋', weaponType: 'sword',
     title: '恋之呼吸', desc: '鞭剑如练，刚柔并济的恋之剑舞。',
     spine: 'assets/spine/mitsuri/', spineScale: 0.28,
     palette: { cloth: '#f0e8e0', trim: '#e88aa8', skin: '#f0d0b8', weapon: '#d8e8c8', hair: '#e89ab0' },
@@ -106,7 +106,7 @@ export const CHARACTERS = [
     portrait: 'assets/characters/mitsuri_portrait.png',
   },
   {
-    id: 'kanao', name: '栗花落香奈乎', gender: '女', weapon: '日轮刀 · 桃', weaponType: 'sword',
+    id: 'kanao', element: '#f0b8c8', name: '栗花落香奈乎', gender: '女', weapon: '日轮刀 · 桃', weaponType: 'sword',
     title: '花之呼吸', desc: '静谧绽放的花之剑技，精准而华丽。',
     spine: 'assets/spine/kanao/', spineScale: 0.28,
     palette: { cloth: '#f0f0f2', trim: '#e86a8a', skin: '#f0d0b8', weapon: '#e8d8e0', hair: '#1e1a24' },
@@ -123,7 +123,7 @@ export const CHARACTERS = [
     portrait: 'assets/characters/kanao_portrait.png',
   },
   {
-    id: 'nezuko', name: '灶门弥豆子', gender: '女', weapon: '血鬼之术', weaponType: 'dual',
+    id: 'nezuko', element: '#ff5040', name: '灶门弥豆子', gender: '女', weapon: '血鬼之术', weaponType: 'dual',
     title: '爆血之鬼', desc: '娇小的身躯，爆裂的血鬼术。',
     spine: 'assets/spine/nezuko/', spineScale: 0.28,
     palette: { cloth: '#e88a9a', trim: '#f0d0d8', skin: '#f0d0b8', weapon: '#e86a5a', hair: '#2a1a20' },

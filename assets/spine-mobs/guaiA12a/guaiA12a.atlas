@@ -1,0 +1,139 @@
+
+guaiA12a.png
+size: 256,64
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+guaiA12a/biyan
+  rotate: false
+  xy: 64, 9
+  size: 30, 15
+  orig: 30, 15
+  offset: 0, 0
+  index: -1
+guaiA12a/chengyan1
+  rotate: false
+  xy: 236, 28
+  size: 18, 6
+  orig: 18, 6
+  offset: 0, 0
+  index: -1
+guaiA12a/chengyan2
+  rotate: false
+  xy: 124, 18
+  size: 21, 8
+  orig: 21, 8
+  offset: 0, 0
+  index: -1
+guaiA12a/chengzi
+  rotate: true
+  xy: 124, 28
+  size: 34, 38
+  orig: 34, 38
+  offset: 0, 0
+  index: -1
+guaiA12a/datuiL
+  rotate: true
+  xy: 142, 2
+  size: 14, 15
+  orig: 14, 15
+  offset: 0, 0
+  index: -1
+guaiA12a/datuiR
+  rotate: true
+  xy: 159, 2
+  size: 14, 15
+  orig: 14, 15
+  offset: 0, 0
+  index: -1
+guaiA12a/hua
+  rotate: false
+  xy: 121, 2
+  size: 19, 14
+  orig: 19, 14
+  offset: 0, 0
+  index: -1
+guaiA12a/jiaoL
+  rotate: true
+  xy: 196, 16
+  size: 10, 8
+  orig: 10, 8
+  offset: 0, 0
+  index: -1
+guaiA12a/jiaoR
+  rotate: false
+  xy: 163, 18
+  size: 12, 8
+  orig: 12, 8
+  offset: 0, 0
+  index: -1
+guaiA12a/kuang
+  rotate: false
+  xy: 202, 30
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+guaiA12a/shenti
+  rotate: true
+  xy: 164, 28
+  size: 34, 36
+  orig: 34, 36
+  offset: 0, 0
+  index: -1
+guaiA12a/shouL
+  rotate: false
+  xy: 236, 36
+  size: 18, 26
+  orig: 18, 26
+  offset: 0, 0
+  index: -1
+guaiA12a/shouR
+  rotate: false
+  xy: 96, 8
+  size: 23, 16
+  orig: 23, 16
+  offset: 0, 0
+  index: -1
+guaiA12a/tou
+  rotate: false
+  xy: 2, 7
+  size: 60, 55
+  orig: 60, 55
+  offset: 0, 0
+  index: -1
+guaiA12a/wuqi
+  rotate: true
+  xy: 64, 26
+  size: 36, 58
+  orig: 36, 58
+  offset: 0, 0
+  index: -1
+guaiA12a/xiaotuiL
+  rotate: false
+  xy: 176, 4
+  size: 8, 11
+  orig: 8, 11
+  offset: 0, 0
+  index: -1
+guaiA12a/xiaotuiR
+  rotate: false
+  xy: 186, 4
+  size: 8, 11
+  orig: 8, 11
+  offset: 0, 0
+  index: -1
+guaiA12a/ye1
+  rotate: false
+  xy: 147, 18
+  size: 14, 8
+  orig: 14, 8
+  offset: 0, 0
+  index: -1
+guaiA12a/ye2
+  rotate: false
+  xy: 177, 17
+  size: 17, 9
+  orig: 17, 9
+  offset: 0, 0
+  index: -1

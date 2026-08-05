@@ -1,0 +1,124 @@
+
+guaiA6es.png
+size: 1024,1024
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+guaiA6es/01
+  rotate: false
+  xy: 2, 605
+  size: 437, 413
+  orig: 437, 413
+  offset: 0, 0
+  index: -1
+guaiA6es/02
+  rotate: false
+  xy: 2, 190
+  size: 437, 413
+  orig: 437, 413
+  offset: 0, 0
+  index: -1
+guaiA6es/03
+  rotate: false
+  xy: 441, 605
+  size: 437, 413
+  orig: 437, 413
+  offset: 0, 0
+  index: -1
+guaiA6es/04
+  rotate: false
+  xy: 441, 190
+  size: 437, 413
+  orig: 437, 413
+  offset: 0, 0
+  index: -1
+guaiA6es/guaiA6e_body1
+  rotate: false
+  xy: 2, 92
+  size: 69, 96
+  orig: 69, 96
+  offset: 0, 0
+  index: -1
+guaiA6es/guaiA6e_chibang
+  rotate: false
+  xy: 880, 936
+  size: 81, 82
+  orig: 81, 82
+  offset: 0, 0
+  index: -1
+guaiA6es/guaiA6e_head1
+  rotate: false
+  xy: 2, 2
+  size: 66, 88
+  orig: 66, 88
+  offset: 0, 0
+  index: -1
+guaiA6es/guaiA6e_jianjia1
+  rotate: false
+  xy: 880, 855
+  size: 65, 79
+  orig: 65, 79
+  offset: 0, 0
+  index: -1
+guaiA6es/guaiA6e_jianjia2
+  rotate: false
+  xy: 880, 790
+  size: 44, 63
+  orig: 44, 63
+  offset: 0, 0
+  index: -1
+guaiA6es/guaiA6e_qian1
+  rotate: false
+  xy: 963, 936
+  size: 57, 82
+  orig: 57, 82
+  offset: 0, 0
+  index: -1
+guaiA6es/guaiA6e_qian2
+  rotate: true
+  xy: 231, 148
+  size: 40, 63
+  orig: 40, 63
+  offset: 0, 0
+  index: -1
+guaiA6es/guaiA6e_xiongjia1
+  rotate: false
+  xy: 73, 126
+  size: 84, 62
+  orig: 84, 62
+  offset: 0, 0
+  index: -1
+guaiA6es/guaiA6e_xiongjia2
+  rotate: true
+  xy: 159, 140
+  size: 48, 70
+  orig: 48, 70
+  offset: 0, 0
+  index: -1
+guaiA6es/guaiA6e_zhi1
+  rotate: false
+  xy: 947, 868
+  size: 41, 66
+  orig: 41, 66
+  offset: 0, 0
+  index: -1
+
+guaiA6es2.png
+size: 1024,512
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+guaiA6es/05
+  rotate: false
+  xy: 2, 2
+  size: 437, 413
+  orig: 437, 413
+  offset: 0, 0
+  index: -1
+guaiA6es/06
+  rotate: false
+  xy: 441, 2
+  size: 437, 413
+  orig: 437, 413
+  offset: 0, 0
+  index: -1

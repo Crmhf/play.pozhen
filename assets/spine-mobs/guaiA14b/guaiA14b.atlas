@@ -1,0 +1,27 @@
+
+guaiA14b.png
+size: 256,128
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+guaiA14b/shenti
+  rotate: true
+  xy: 2, 2
+  size: 96, 156
+  orig: 96, 156
+  offset: 0, 0
+  index: -1
+guaiA14b/shou2
+  rotate: false
+  xy: 160, 53
+  size: 59, 45
+  orig: 59, 45
+  offset: 0, 0
+  index: -1
+guaiA14b/shuo1
+  rotate: false
+  xy: 160, 6
+  size: 57, 45
+  orig: 57, 45
+  offset: 0, 0
+  index: -1

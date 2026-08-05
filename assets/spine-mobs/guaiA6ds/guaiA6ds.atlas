@@ -1,0 +1,131 @@
+
+guaiA6ds.png
+size: 1024,1024
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+guaiA6ds/01
+  rotate: false
+  xy: 2, 718
+  size: 634, 274
+  orig: 634, 274
+  offset: 0, 0
+  index: -1
+guaiA6ds/02
+  rotate: true
+  xy: 624, 94
+  size: 622, 252
+  orig: 622, 252
+  offset: 0, 0
+  index: -1
+guaiA6ds/04
+  rotate: false
+  xy: 2, 192
+  size: 620, 254
+  orig: 620, 254
+  offset: 0, 0
+  index: -1
+guaiA6ds/05
+  rotate: false
+  xy: 2, 448
+  size: 620, 268
+  orig: 620, 268
+  offset: 0, 0
+  index: -1
+guaiA6ds/guaiA6d_body1
+  rotate: false
+  xy: 638, 864
+  size: 73, 52
+  orig: 73, 52
+  offset: 0, 0
+  index: -1
+guaiA6ds/guaiA6d_chibang1
+  rotate: false
+  xy: 740, 932
+  size: 38, 60
+  orig: 38, 60
+  offset: 0, 0
+  index: -1
+guaiA6ds/guaiA6d_chibang2
+  rotate: false
+  xy: 638, 804
+  size: 33, 58
+  orig: 33, 58
+  offset: 0, 0
+  index: -1
+guaiA6ds/guaiA6d_head1
+  rotate: false
+  xy: 2, 118
+  size: 88, 72
+  orig: 88, 72
+  offset: 0, 0
+  index: -1
+guaiA6ds/guaiA6d_head2
+  rotate: false
+  xy: 638, 918
+  size: 100, 74
+  orig: 100, 74
+  offset: 0, 0
+  index: -1
+guaiA6ds/guaiA6d_head3
+  rotate: false
+  xy: 780, 956
+  size: 51, 36
+  orig: 51, 36
+  offset: 0, 0
+  index: -1
+guaiA6ds/guaiA6d_jian1
+  rotate: false
+  xy: 42, 86
+  size: 31, 30
+  orig: 31, 30
+  offset: 0, 0
+  index: -1
+guaiA6ds/guaiA6d_jian2
+  rotate: false
+  xy: 130, 164
+  size: 31, 26
+  orig: 31, 26
+  offset: 0, 0
+  index: -1
+guaiA6ds/guaiA6d_qian1a
+  rotate: false
+  xy: 92, 133
+  size: 36, 57
+  orig: 36, 57
+  offset: 0, 0
+  index: -1
+guaiA6ds/guaiA6d_qian1b
+  rotate: false
+  xy: 2, 2
+  size: 26, 55
+  orig: 26, 55
+  offset: 0, 0
+  index: -1
+guaiA6ds/guaiA6d_qian2a
+  rotate: false
+  xy: 2, 59
+  size: 38, 57
+  orig: 38, 57
+  offset: 0, 0
+  index: -1
+guaiA6ds/guaiA6d_qian2b
+  rotate: false
+  xy: 713, 876
+  size: 21, 40
+  orig: 21, 40
+  offset: 0, 0
+  index: -1
+
+guaiA6ds2.png
+size: 1024,256
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+guaiA6ds/03
+  rotate: false
+  xy: 2, 2
+  size: 630, 236
+  orig: 630, 236
+  offset: 0, 0
+  index: -1

@@ -1,35 +1,55 @@
 // Spine 骨骼动画接入层（spine-canvas 3.8，已 vendor 到 js/vendor/spine-canvas.js）
-// 将 .skel/.atlas/.png 渲染到我们的 2D 游戏画布上
+// 支持两类素材：
+//  A) 鬼灭角色：skeleton.skel 二进制 + skeleton.atlas
+//  B) Q版怪物：<id>.json(3.5已转3.8) + <id>.atlas + <id>.png
 const PENDING = new Map();
 
 export class SpineActor {
   /**
-   * @param basePath 形如 'assets/spine/tanjiro/'
-   * @param scale 渲染缩放（角色在 spine 中通常较大）
+   * @param basePath 形如 'assets/spine/tanjiro/' 或 'assets/spine-mobs/guaiA1a/'
+   * @param scale 渲染缩放
+   * @param opts { mobId?: string, minY?: number } mobId 用于推断文件名；minY 脚底偏移
    */
-  constructor(basePath, scale = 0.45) {
+  constructor(basePath, scale = 0.45, opts = {}) {
     this.base = basePath;
     this.scale = scale;
+    this.mobId = opts.mobId || null;
+    this.minY = opts.minY || 0;   // 怪物模型中心原点 → 脚底偏移
     this.ready = false;
-    this.anims = {};        // 语义名 -> spine 动画名
+    this.anims = {};
     this.current = null;
     this.time = 0;
   }
 
   async load() {
-    if (PENDING.has(this.base)) { const a = await PENDING.get(this.base); Object.assign(this, a); return; }
-    const job = this._doLoad();
-    PENDING.set(this.base, job);
-    const a = await job;
-    Object.assign(this, a);
+    if (!window.spine) return;
+    // 缓存只存 SkeletonData + 动画映射（不可变，可共享）；每实例独立 Skeleton/AnimationState
+    if (!PENDING.has(this.base)) PENDING.set(this.base, this._loadData());
+    const { data, anims } = await PENDING.get(this.base);
+    const sp = window.spine;
+    this.data = data;
+    this.anims = anims;
+    this.skeleton = new sp.Skeleton(data);
+    this.skeleton.setToSetupPose();
+    this.state = new sp.AnimationState(new sp.AnimationStateData(data));
+    this.ready = true;
   }
 
-  async _doLoad() {
-    if (!window.spine) return { ready: false };
+  async _loadData() {
     const sp = window.spine;
     const am = new sp.canvas.AssetManager(this.base);
-    am.loadTextureAtlas('skeleton.atlas');
-    am.loadBinary('skeleton.skel');
+    let atlasPath, dataPath, isJson;
+    if (this.mobId) {
+      atlasPath = `${this.mobId}.atlas`;
+      dataPath = `${this.mobId}.json`;
+      isJson = true;
+    } else {
+      atlasPath = 'skeleton.atlas';
+      dataPath = 'skeleton.skel';
+      isJson = false;
+    }
+    am.loadTextureAtlas(atlasPath);
+    if (isJson) am.loadText(dataPath); else am.loadBinary(dataPath);
     await new Promise((res, rej) => {
       const t0 = performance.now();
       const tick = () => {
@@ -39,13 +59,11 @@ export class SpineActor {
       };
       tick();
     });
-    const atlas = am.get('skeleton.atlas'); // loadTextureAtlas 直接存 TextureAtlas 实例
+    const atlas = am.get(atlasPath); // loadTextureAtlas 直接存 TextureAtlas 实例
     const loader = new sp.AtlasAttachmentLoader(atlas);
-    const binary = new sp.SkeletonBinary(loader);
-    const data = binary.readSkeletonData(am.get('skeleton.skel'));
-    const skeleton = new sp.Skeleton(data);
-    const stateData = new sp.AnimationStateData(data);
-    const state = new sp.AnimationState(stateData);
+    const data = isJson
+      ? new sp.SkeletonJson(loader).readSkeletonData(am.get(dataPath))
+      : new sp.SkeletonBinary(loader).readSkeletonData(am.get(dataPath));
     // 语义动画映射（素材实际动画名：idle/run/atk1-3/skill_a/skill_b/hit/die/fly/down）
     const names = data.animations.map(a => a.name);
     const find = (...keys) => {
@@ -55,7 +73,20 @@ export class SpineActor {
       }
       return null;
     };
-    const anims = {
+    const isMob = !!this.mobId;
+    const anims = isMob ? {
+      // 怪物语义：std/walk/atk/jifei
+      idle: find('std', 'idle') || names[0],
+      walk: find('walk', 'run') || names[0],
+      atk1: find('atk', 'attack') || names[0],
+      atk2: find('atk') || names[0],
+      atk3: find('atk') || names[0],
+      skill: find('atk') || names[0],
+      ult: find('atk') || names[0],
+      hurt: find('jifei', 'hit') || names[0],
+      death: find('jifei', 'die') || names[0],
+      jump: find('std') || names[0],
+    } : {
       idle: find('idle', 'rest') || names[0],
       walk: find('run', 'walk') || names[0],
       atk1: find('atk1', 'attack', 'zatk') || names[0],
@@ -69,7 +100,7 @@ export class SpineActor {
     };
     // 调试：暴露动画清单
     (window.__spineAnims = window.__spineAnims || {})[this.base] = names;
-    return { ready: true, skeleton, state, anims, data };
+    return { data, anims };
   }
 
   /** 切换动画（相同不重复设置） */
@@ -89,11 +120,13 @@ export class SpineActor {
   }
 
   /** 渲染到游戏画布：x,y 为脚底世界坐标（y 向下正） */
-  draw(ctx, x, y, dir = 1, scaleMul = 1) {
+  draw(ctx, x, y, dir = 1, scaleMul = 1, alpha = 1) {
     if (!this.ready) return;
     const s = this.scale * scaleMul;
     ctx.save();
-    ctx.translate(x, y);
+    if (alpha < 1) ctx.globalAlpha = alpha;
+    // 怪物模型原点在中心：把 minY（脚底，负值）锚到 y
+    ctx.translate(x, y + this.minY * s);
     ctx.scale(dir * s, -s); // spine y 向上
     this.skeleton.updateWorldTransform();
     if (!this._renderer) {
@@ -116,18 +149,11 @@ export class SpineActor {
     this.skeleton.updateWorldTransform();
     const s = 0.31;
     ctx.save();
-    ctx.translate(canvas.width / 2, canvas.height * 0.97);
+    ctx.translate(canvas.width / 2, canvas.height * 0.97 + this.minY * s);
     ctx.scale(s, -s);
     const r = new window.spine.canvas.SkeletonRenderer(ctx);
     r.triangleRendering = true;
     r.draw(this.skeleton);
     ctx.restore();
-  }
-
-  _bounds() {
-    const sk = this.skeleton;
-    const offset = new window.spine.Vector2(), size = new window.spine.Vector2();
-    try { sk.getBounds(offset, size); } catch (e) { return { w: 100, h: 200, cx: 0 }; }
-    return { w: size.x, h: size.y, cx: offset.x + size.x / 2 };
   }
 }

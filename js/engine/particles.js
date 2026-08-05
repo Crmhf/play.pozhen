@@ -1,5 +1,5 @@
 // 2D 粒子系统（Canvas，对象池，上限自动降级）+ VFX 序列帧播放器
-import { rand, Pool } from './utils.js?v=1785885722';
+import { rand, Pool } from './utils.js?v=1785918405';
 
 const MAX_PARTICLES = 500;
 
@@ -56,8 +56,8 @@ export class Particles {
     }
   }
   // 常用预设
-  hitSpark(x, y, dir = 1) {
-    this.emit({ x, y, vx: dir * 80, vy: -60, vrand: 220, life: 0.35, size: 5, color: '#ffd27d', gravity: 500 }, 12);
+  hitSpark(x, y, dir = 1, color = '#ffd27d') {
+    this.emit({ x, y, vx: dir * 80, vy: -60, vrand: 220, life: 0.35, size: 5, color, gravity: 500 }, 12);
     this.emit({ x, y, vrand: 90, life: 0.25, size: 3, color: '#fff5e0' }, 6);
   }
   bloodInk(x, y, dir = 1) { // 水墨朱砂

@@ -1,0 +1,76 @@
+
+guaiA3a.png
+size: 256,64
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+guaiA3a/erduo01
+  rotate: false
+  xy: 106, 38
+  size: 31, 24
+  orig: 31, 24
+  offset: 0, 0
+  index: -1
+guaiA3a/erduo02
+  rotate: true
+  xy: 204, 45
+  size: 17, 25
+  orig: 17, 25
+  offset: 0, 0
+  index: -1
+guaiA3a/qugan
+  rotate: false
+  xy: 59, 25
+  size: 45, 37
+  orig: 45, 37
+  offset: 0, 0
+  index: -1
+guaiA3a/tou
+  rotate: false
+  xy: 2, 11
+  size: 55, 51
+  orig: 55, 51
+  offset: 0, 0
+  index: -1
+guaiA3a/weiba
+  rotate: false
+  xy: 106, 17
+  size: 20, 19
+  orig: 20, 19
+  offset: 0, 0
+  index: -1
+guaiA3a/yanjing
+  rotate: true
+  xy: 59, 2
+  size: 21, 16
+  orig: 21, 16
+  offset: 0, 0
+  index: -1
+guaiA3a/youhoutui
+  rotate: true
+  xy: 139, 42
+  size: 20, 32
+  orig: 20, 32
+  offset: 0, 0
+  index: -1
+guaiA3a/youqiantui
+  rotate: true
+  xy: 77, 10
+  size: 13, 27
+  orig: 13, 27
+  offset: 0, 0
+  index: -1
+guaiA3a/zuohoutui
+  rotate: true
+  xy: 173, 43
+  size: 19, 29
+  orig: 19, 29
+  offset: 0, 0
+  index: -1
+guaiA3a/zuoqiantui
+  rotate: false
+  xy: 231, 37
+  size: 12, 25
+  orig: 12, 25
+  offset: 0, 0
+  index: -1

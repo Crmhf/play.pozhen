@@ -1,0 +1,83 @@
+
+guaiA11c.png
+size: 1024,128
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+guaiA11c/body
+  rotate: false
+  xy: 2, 2
+  size: 120, 111
+  orig: 120, 111
+  offset: 0, 0
+  index: -1
+guaiA11c/left foot
+  rotate: false
+  xy: 832, 83
+  size: 19, 30
+  orig: 19, 30
+  offset: 0, 0
+  index: -1
+guaiA11c/left hand
+  rotate: false
+  xy: 606, 67
+  size: 70, 46
+  orig: 70, 46
+  offset: 0, 0
+  index: -1
+guaiA11c/left hand1
+  rotate: false
+  xy: 678, 68
+  size: 66, 45
+  orig: 66, 45
+  offset: 0, 0
+  index: -1
+guaiA11c/left leg
+  rotate: true
+  xy: 606, 38
+  size: 27, 44
+  orig: 27, 44
+  offset: 0, 0
+  index: -1
+guaiA11c/right foot
+  rotate: false
+  xy: 803, 76
+  size: 27, 37
+  orig: 27, 37
+  offset: 0, 0
+  index: -1
+guaiA11c/right hand
+  rotate: true
+  xy: 124, 16
+  size: 97, 133
+  orig: 97, 133
+  offset: 0, 0
+  index: -1
+guaiA11c/right hand1
+  rotate: true
+  xy: 259, 21
+  size: 92, 126
+  orig: 92, 126
+  offset: 0, 0
+  index: -1
+guaiA11c/right leg
+  rotate: true
+  xy: 746, 76
+  size: 37, 55
+  orig: 37, 55
+  offset: 0, 0
+  index: -1
+guaiA11c/tou
+  rotate: true
+  xy: 387, 12
+  size: 101, 120
+  orig: 101, 120
+  offset: 0, 0
+  index: -1
+guaiA11c/xiaba
+  rotate: false
+  xy: 509, 30
+  size: 95, 83
+  orig: 95, 83
+  offset: 0, 0
+  index: -1

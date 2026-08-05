@@ -1,0 +1,125 @@
+
+guaiA5c.png
+size: 1024,128
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+guaiA5c/guaiA5c_bi1
+  rotate: true
+  xy: 707, 107
+  size: 19, 25
+  orig: 19, 25
+  offset: 0, 0
+  index: -1
+guaiA5c/guaiA5c_bi2
+  rotate: true
+  xy: 159, 47
+  size: 20, 15
+  orig: 20, 15
+  offset: 0, 0
+  index: -1
+guaiA5c/guaiA5c_body
+  rotate: false
+  xy: 587, 71
+  size: 34, 55
+  orig: 34, 55
+  offset: 0, 0
+  index: -1
+guaiA5c/guaiA5c_head
+  rotate: false
+  xy: 51, 10
+  size: 49, 57
+  orig: 49, 57
+  offset: 0, 0
+  index: -1
+guaiA5c/guaiA5c_jiao1
+  rotate: true
+  xy: 102, 2
+  size: 19, 40
+  orig: 19, 40
+  offset: 0, 0
+  index: -1
+guaiA5c/guaiA5c_jiao2
+  rotate: false
+  xy: 134, 27
+  size: 23, 40
+  orig: 23, 40
+  offset: 0, 0
+  index: -1
+guaiA5c/guaiA5c_shou1
+  rotate: false
+  xy: 102, 23
+  size: 30, 44
+  orig: 30, 44
+  offset: 0, 0
+  index: -1
+guaiA5c/guaiA5c_shou2
+  rotate: false
+  xy: 648, 99
+  size: 29, 27
+  orig: 29, 27
+  offset: 0, 0
+  index: -1
+guaiA5c/guaiA5c_shou2a
+  rotate: false
+  xy: 679, 106
+  size: 26, 20
+  orig: 26, 20
+  offset: 0, 0
+  index: -1
+guaiA5c/guaiA5c_tui1
+  rotate: false
+  xy: 623, 85
+  size: 23, 41
+  orig: 23, 41
+  offset: 0, 0
+  index: -1
+guaiA5c/guaiA5c_tui2
+  rotate: false
+  xy: 587, 28
+  size: 24, 41
+  orig: 24, 41
+  offset: 0, 0
+  index: -1
+guaiA5c/guaiA5c_weiba
+  rotate: true
+  xy: 2, 2
+  size: 65, 47
+  orig: 65, 47
+  offset: 0, 0
+  index: -1
+guaiA5c/guaiA5c_wuqi
+  rotate: false
+  xy: 2, 69
+  size: 175, 57
+  orig: 175, 57
+  offset: 0, 0
+  index: -1
+guaiA5c/guaiA5e01
+  rotate: false
+  xy: 179, 26
+  size: 100, 100
+  orig: 100, 100
+  offset: 0, 0
+  index: -1
+guaiA5c/guaiA5e02
+  rotate: false
+  xy: 281, 26
+  size: 100, 100
+  orig: 100, 100
+  offset: 0, 0
+  index: -1
+guaiA5c/guaiA5e03
+  rotate: false
+  xy: 383, 26
+  size: 100, 100
+  orig: 100, 100
+  offset: 0, 0
+  index: -1
+guaiA5c/guaiA5e04
+  rotate: false
+  xy: 485, 26
+  size: 100, 100
+  orig: 100, 100
+  offset: 0, 0
+  index: -1

@@ -1,20 +1,23 @@
 // 破阵大乱斗 · 主入口：启动 / 全局状态机 / 固定时间步游戏循环
-import { clamp } from './engine/utils.js?v=1785885722';
-import { Input } from './engine/input.js?v=1785885722';
-import { audio } from './engine/audio.js?v=1785885722';
-import { feel } from './engine/shake.js?v=1785885722';
-import { particles, vfxLib, VfxPlayer } from './engine/particles.js?v=1785885722';
-import { Physics } from './engine/physics.js?v=1785885722';
-import { Renderer3D } from './engine/renderer3d.js?v=1785885722';
-import { CHARACTERS } from './data/characters.js?v=1785885722';
-import { LEVELS } from './data/levels.js?v=1785885722';
-import { MONSTER_MAP } from './data/monsters.js?v=1785885722';
-import { Player } from './game/player.js?v=1785885722';
-import { Enemy } from './game/enemy.js?v=1785885722';
-import { Combat } from './game/combat.js?v=1785885722';
-import { Director } from './game/director.js?v=1785885722';
-import { Level } from './game/level.js?v=1785885722';
-import { UI } from './game/ui.js?v=1785885722';
+import { clamp } from './engine/utils.js?v=1785918405';
+import { Input } from './engine/input.js?v=1785918405';
+import { audio } from './engine/audio.js?v=1785918405';
+import { feel } from './engine/shake.js?v=1785918405';
+import { particles, vfxLib, VfxPlayer } from './engine/particles.js?v=1785918405';
+import { Physics } from './engine/physics.js?v=1785918405';
+import { Renderer3D } from './engine/renderer3d.js?v=1785918405';
+import { CHARACTERS } from './data/characters.js?v=1785918405';
+import { LEVELS } from './data/levels.js?v=1785918405';
+import { MONSTER_MAP } from './data/monsters.js?v=1785918405';
+import { BOSS_MAP } from './data/bosses.js?v=1785918405';
+import { SpineActor } from './engine/spine-actor.js?v=1785918405';
+import { MOB_MANIFEST } from './data/mobmanifest.js?v=1785918405';
+import { Player } from './game/player.js?v=1785918405';
+import { Enemy } from './game/enemy.js?v=1785918405';
+import { Combat } from './game/combat.js?v=1785918405';
+import { Director } from './game/director.js?v=1785918405';
+import { Level } from './game/level.js?v=1785918405';
+import { UI } from './game/ui.js?v=1785918405';
 
 const GSTATE = { TITLE: 'TITLE', SELECT: 'SELECT', STORY: 'STORY', PLAYING: 'PLAYING', PAUSED: 'PAUSED', CLEAR: 'CLEAR', OVER: 'OVER', VICTORY: 'VICTORY' };
 const FIXED_DT = 1 / 120;
@@ -102,6 +105,19 @@ class Game {
     this.level = new Level(this, lv, idx);
     this.level.setup();
     this.level.camera.x = this.w / 2;
+    // 预载本关怪物/Boss 骨骼素材（共享 SkeletonData 缓存）
+    const mobIds = new Set();
+    for (const w of lv.waves) for (const id of w.mobs) {
+      const md = MONSTER_MAP[id];
+      if (md && md.spineMob) mobIds.add(md.spineMob);
+    }
+    const bd = BOSS_MAP[lv.boss];
+    if (bd && bd.spineMob) mobIds.add(bd.spineMob);
+    if (bd && bd.second && bd.second.spineMob) mobIds.add(bd.second.spineMob);
+    await Promise.all([...mobIds].map(mid => {
+      const mm = MOB_MANIFEST[mid];
+      return mm ? new SpineActor(`assets/spine-mobs/${mid}/`, 1, { mobId: mid, minY: mm.minY }).load().catch(() => {}) : null;
+    }));
     // 玩家
     if (!this.player || this.player.data !== this.charData) {
       this.player = new Player(this.charData, this.phys, this);

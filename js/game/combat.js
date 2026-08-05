@@ -1,7 +1,7 @@
 // 战斗结算：命中判定 / 伤害 / 连击 / 击退（Hitbox-Hurtbox 逻辑分离）
-import { feel } from '../engine/shake.js?v=1785885722';
-import { audio } from '../engine/audio.js?v=1785885722';
-import { particles } from '../engine/particles.js?v=1785885722';
+import { feel } from '../engine/shake.js?v=1785918405';
+import { audio } from '../engine/audio.js?v=1785918405';
+import { particles } from '../engine/particles.js?v=1785918405';
 
 export class Combat {
   constructor(game) { this.game = game; }
@@ -59,7 +59,7 @@ export class Combat {
     feel.hitStop(heavy ? 100 : 55);
     feel.shake(heavy ? 0.35 : 0.16);
     audio.play(crit ? 'crit' : (Math.random() < 0.5 ? 'hit' : 'hit2'), { pitch: 1 + Math.min(0.4, p.combo * 0.015) });
-    particles.hitSpark(e.x, e.y - 36, p.dir);
+    particles.hitSpark(e.x, e.y - 36, p.dir, p.data.element || '#ffd27d');
     p.stats.dmg += dmg;
     p.addRage(2.5);
     this._addCombo();

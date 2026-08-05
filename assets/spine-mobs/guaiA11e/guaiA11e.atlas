@@ -1,0 +1,76 @@
+
+guaiA11e.png
+size: 1024,256
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+guaiA11e/body
+  rotate: false
+  xy: 198, 109
+  size: 172, 134
+  orig: 172, 134
+  offset: 0, 0
+  index: -1
+guaiA11e/di
+  rotate: false
+  xy: 519, 110
+  size: 68, 47
+  orig: 68, 47
+  offset: 0, 0
+  index: -1
+guaiA11e/left foot
+  rotate: false
+  xy: 790, 192
+  size: 36, 51
+  orig: 36, 51
+  offset: 0, 0
+  index: -1
+guaiA11e/left hand
+  rotate: true
+  xy: 2, 2
+  size: 86, 122
+  orig: 86, 122
+  offset: 0, 0
+  index: -1
+guaiA11e/right foot
+  rotate: false
+  xy: 126, 5
+  size: 61, 83
+  orig: 61, 83
+  offset: 0, 0
+  index: -1
+guaiA11e/right hand
+  rotate: true
+  xy: 372, 106
+  size: 137, 145
+  orig: 137, 145
+  offset: 0, 0
+  index: -1
+guaiA11e/shangbi1
+  rotate: false
+  xy: 519, 159
+  size: 107, 84
+  orig: 107, 84
+  offset: 0, 0
+  index: -1
+guaiA11e/shangbi2
+  rotate: false
+  xy: 628, 158
+  size: 86, 85
+  orig: 86, 85
+  offset: 0, 0
+  index: -1
+guaiA11e/tou
+  rotate: false
+  xy: 2, 90
+  size: 194, 153
+  orig: 194, 153
+  offset: 0, 0
+  index: -1
+guaiA11e/xiaba
+  rotate: false
+  xy: 716, 182
+  size: 72, 61
+  orig: 72, 61
+  offset: 0, 0
+  index: -1

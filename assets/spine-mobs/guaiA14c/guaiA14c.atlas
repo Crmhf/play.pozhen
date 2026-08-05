@@ -1,0 +1,83 @@
+
+guaiA14c.png
+size: 512,128
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+guaiA14c/dai1
+  rotate: false
+  xy: 484, 90
+  size: 11, 36
+  orig: 11, 36
+  offset: 0, 0
+  index: -1
+guaiA14c/dai2
+  rotate: false
+  xy: 62, 2
+  size: 16, 41
+  orig: 16, 41
+  offset: 0, 0
+  index: -1
+guaiA14c/e
+  rotate: false
+  xy: 95, 55
+  size: 90, 71
+  orig: 90, 71
+  offset: 0, 0
+  index: -1
+guaiA14c/nei
+  rotate: false
+  xy: 279, 49
+  size: 84, 77
+  orig: 84, 77
+  offset: 0, 0
+  index: -1
+guaiA14c/she
+  rotate: false
+  xy: 365, 56
+  size: 50, 30
+  orig: 50, 30
+  offset: 0, 0
+  index: -1
+guaiA14c/sheni
+  rotate: false
+  xy: 2, 45
+  size: 91, 81
+  orig: 91, 81
+  offset: 0, 0
+  index: -1
+guaiA14c/shou1
+  rotate: false
+  xy: 365, 88
+  size: 50, 38
+  orig: 50, 38
+  offset: 0, 0
+  index: -1
+guaiA14c/shou2
+  rotate: false
+  xy: 2, 12
+  size: 58, 31
+  orig: 58, 31
+  offset: 0, 0
+  index: -1
+guaiA14c/tou
+  rotate: false
+  xy: 187, 60
+  size: 90, 66
+  orig: 90, 66
+  offset: 0, 0
+  index: -1
+guaiA14c/tui1
+  rotate: false
+  xy: 417, 82
+  size: 32, 44
+  orig: 32, 44
+  offset: 0, 0
+  index: -1
+guaiA14c/tui2
+  rotate: false
+  xy: 451, 83
+  size: 31, 43
+  orig: 31, 43
+  offset: 0, 0
+  index: -1

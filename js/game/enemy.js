@@ -1,10 +1,12 @@
 // 敌军 AI：状态机 + 战术轮盘（围拢/绕后/抢攻）+ 攻击令牌（Combat Director 发牌）
 // 兵种行为：melee/tank/charger/archer/caster/bomber
-import { StateMachine, KEEP, clamp, rand } from '../engine/utils.js?v=1785885722';
-import { feel } from '../engine/shake.js?v=1785885722';
-import { audio } from '../engine/audio.js?v=1785885722';
-import { particles } from '../engine/particles.js?v=1785885722';
-import { InkWarrior, shade } from '../engine/sprite.js?v=1785885722';
+import { StateMachine, KEEP, clamp, rand } from '../engine/utils.js?v=1785918405';
+import { feel } from '../engine/shake.js?v=1785918405';
+import { audio } from '../engine/audio.js?v=1785918405';
+import { particles } from '../engine/particles.js?v=1785918405';
+import { InkWarrior, shade } from '../engine/sprite.js?v=1785918405';
+import { SpineActor } from '../engine/spine-actor.js?v=1785918405';
+import { MOB_MANIFEST } from '../data/mobmanifest.js?v=1785918405';
 
 export const EST = {
   SPAWN: 'SPAWN', IDLE: 'IDLE', MOVE: 'MOVE', WINDUP: 'WINDUP', ATTACK: 'ATTACK',
@@ -36,6 +38,16 @@ export class Enemy {
     this.zOffset = rand(-8, 8);            // 站位错层
     this.palette = elite ? { ...def.palette, trim: '#e04030', cloth: shade(def.palette.cloth, -14) } : def.palette;
     this.warrior = new InkWarrior(this.palette, { weapon: def.weapon, bulk: def.bulk, hat: def.hat, scale: def.scale });
+    // Q版 Spine 骨骼模型（与主角同级建模）
+    this.spineActor = null;
+    if (def.spineMob && MOB_MANIFEST[def.spineMob]) {
+      const mm = MOB_MANIFEST[def.spineMob];
+      const targetPx = (def.mobPx || 85) * (elite ? 1.15 : 1);
+      this.spineActor = new SpineActor(`assets/spine-mobs/${def.spineMob}/`, targetPx / mm.h, {
+        mobId: def.spineMob, minY: mm.minY,
+      });
+      this.spineActor.load().catch(() => this.spineActor = null);
+    }
   }
 
   get vx() { return this.phys.getVel(this.body).x; }
@@ -130,6 +142,7 @@ export class Enemy {
 
   tickPhysics(s, dt, fsm) {
     this.animT += dt;
+    if (this.spineActor) this.spineActor.update(dt);
     this.hurtT = Math.max(0, this.hurtT - dt);
     this.flashT = Math.max(0, this.flashT - dt);
     this.atkTimer -= dt;
@@ -257,18 +270,26 @@ export class Enemy {
   draw(ctx, camX, camY) {
     const s = this.fsm.state;
     if (s === EST.DEAD && this.fsm.stateTime > 0.5) return;
+    // ---- Spine 骨骼模型渲染 ----
+    if (this.spineActor && this.spineActor.ready) {
+      let anim = 'idle', loop = true, ts = 1;
+      if (s === EST.MOVE) anim = 'walk';
+      else if (s === EST.WINDUP) { anim = 'atk1'; loop = false; ts = 0.6; }
+      else if (s === EST.ATTACK) { anim = 'atk1'; loop = false; ts = 1.6; }
+      else if (s === EST.HURT || s === EST.LAUNCHED) { anim = 'hurt'; loop = false; }
+      else if (s === EST.DEAD) { anim = 'death'; loop = false; }
+      this.spineActor.play(anim, { loop, timeScale: ts });
+      const alpha = s === EST.DEAD ? Math.max(0, 1 - this.fsm.stateTime * 2.2) : 1;
+      this.spineActor.draw(ctx, this.x - camX, this.y - camY, this.dir, 1, alpha);
+      this._drawOverlays(ctx, camX, camY, s);
+      return;
+    }
     const atkKinds = { melee: 'slash1', tank: 'slash1', charger: 'thrust', archer: 'shoot', caster: 'cast', bomber: 'cast' };
     const atk = (s === EST.WINDUP || s === EST.ATTACK) ? {
       t: s === EST.WINDUP ? 0.2 : 0.6 + this.fsm.stateTime * 2,
       kind: atkKinds[this.def.ai] || 'slash1',
     } : null;
-    // 出手前摇：泛红警示
-    if (s === EST.WINDUP && Math.floor(this.animT * 12) % 2 === 0) {
-      ctx.save(); ctx.globalAlpha = 0.4; ctx.globalCompositeOperation = 'lighter';
-      ctx.fillStyle = '#ff4030';
-      ctx.beginPath(); ctx.arc(this.x - camX, this.y - 34 - camY, 26 * this.def.scale, 0, 7); ctx.fill();
-      ctx.restore();
-    }
+    this._drawOverlays(ctx, camX, camY, s);
     // 冻结冰壳
     this.warrior.draw(ctx, {
       x: this.x, y: this.y + this.zOffset * 0, dir: this.dir,
@@ -278,25 +299,38 @@ export class Enemy {
       block: s === EST.BLOCK, cast: s === EST.WINDUP && this.def.ai === 'caster',
       scaleMul: this.def.scale,
     }, camX, camY);
+  }
+
+  // 通用覆盖层：前摇红闪 / 受击白闪 / 血条（Spine 与水墨渲染共用）
+  _drawOverlays(ctx, camX, camY, s) {
+    const h = 62 * this.def.scale; // 身体高度基准
+    // 出手前摇：泛红警示
+    if (s === EST.WINDUP && Math.floor(this.animT * 12) % 2 === 0) {
+      ctx.save(); ctx.globalAlpha = 0.4; ctx.globalCompositeOperation = 'lighter';
+      ctx.fillStyle = '#ff4030';
+      ctx.beginPath(); ctx.arc(this.x - camX, this.y - h * 0.55 - camY, 26 * this.def.scale, 0, 7); ctx.fill();
+      ctx.restore();
+    }
+    // 冻结冰壳
     if (this.freezeT > 0) {
       ctx.save(); ctx.globalAlpha = 0.45; ctx.fillStyle = '#9ad8f0';
-      ctx.beginPath(); ctx.ellipse(this.x - camX, this.y - 30 - camY, 22, 34, 0, 0, 7); ctx.fill();
+      ctx.beginPath(); ctx.ellipse(this.x - camX, this.y - h * 0.5 - camY, 22 * this.def.bulk, h * 0.6, 0, 0, 7); ctx.fill();
       ctx.restore();
     }
     // 受击白闪
     if (this.flashT > 0 && s !== EST.WINDUP) {
       ctx.save(); ctx.globalAlpha = 0.6; ctx.globalCompositeOperation = 'lighter';
       ctx.fillStyle = '#ffffff';
-      ctx.beginPath(); ctx.ellipse(this.x - camX, this.y - 30 - camY, 18 * this.def.bulk, 30, 0, 0, 7); ctx.fill();
+      ctx.beginPath(); ctx.ellipse(this.x - camX, this.y - h * 0.5 - camY, 18 * this.def.bulk, h * 0.55, 0, 0, 7); ctx.fill();
       ctx.restore();
     }
-    // 血条（受伤后显示 2s）
+    // 血条（受伤后显示）
     if (this.hp < this.maxHp && s !== EST.DEAD) {
       const w = 34 * this.def.bulk, pct = clamp(this.hp / this.maxHp, 0, 1);
       ctx.fillStyle = 'rgba(0,0,0,.5)';
-      ctx.fillRect(this.x - camX - w / 2, this.y - 78 * this.def.scale - camY, w, 4);
+      ctx.fillRect(this.x - camX - w / 2, this.y - h - 16 - camY, w, 4);
       ctx.fillStyle = this.elite ? '#e04030' : '#c8b040';
-      ctx.fillRect(this.x - camX - w / 2, this.y - 78 * this.def.scale - camY, w * pct, 4);
+      ctx.fillRect(this.x - camX - w / 2, this.y - h - 16 - camY, w * pct, 4);
     }
   }
 

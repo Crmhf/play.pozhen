@@ -1,0 +1,104 @@
+
+guaiA3e.png
+size: 512,256
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+guaiA3e/chibang1
+  rotate: false
+  xy: 265, 155
+  size: 84, 84
+  orig: 84, 84
+  offset: 0, 0
+  index: -1
+guaiA3e/chibang2
+  rotate: true
+  xy: 351, 179
+  size: 60, 93
+  orig: 60, 93
+  offset: 0, 0
+  index: -1
+guaiA3e/houer
+  rotate: false
+  xy: 446, 155
+  size: 63, 48
+  orig: 63, 48
+  offset: 0, 0
+  index: -1
+guaiA3e/houtui1
+  rotate: true
+  xy: 265, 103
+  size: 50, 79
+  orig: 50, 79
+  offset: 0, 0
+  index: -1
+guaiA3e/houtui2
+  rotate: true
+  xy: 446, 205
+  size: 34, 64
+  orig: 34, 64
+  offset: 0, 0
+  index: -1
+guaiA3e/jingmao
+  rotate: true
+  xy: 149, 67
+  size: 52, 95
+  orig: 52, 95
+  offset: 0, 0
+  index: -1
+guaiA3e/meimao
+  rotate: true
+  xy: 119, 50
+  size: 40, 26
+  orig: 40, 26
+  offset: 0, 0
+  index: -1
+guaiA3e/qianer
+  rotate: false
+  xy: 2, 36
+  size: 115, 54
+  orig: 115, 54
+  offset: 0, 0
+  index: -1
+guaiA3e/qiantui1
+  rotate: true
+  xy: 2, 2
+  size: 32, 65
+  orig: 32, 65
+  offset: 0, 0
+  index: -1
+guaiA3e/qiantui2
+  rotate: true
+  xy: 351, 146
+  size: 31, 61
+  orig: 31, 61
+  offset: 0, 0
+  index: -1
+guaiA3e/shenti
+  rotate: false
+  xy: 2, 92
+  size: 145, 147
+  orig: 145, 147
+  offset: 0, 0
+  index: -1
+guaiA3e/tou
+  rotate: false
+  xy: 149, 121
+  size: 114, 118
+  orig: 114, 118
+  offset: 0, 0
+  index: -1
+guaiA3e/weiba
+  rotate: true
+  xy: 346, 96
+  size: 48, 54
+  orig: 48, 54
+  offset: 0, 0
+  index: -1
+guaiA3e/yanjing
+  rotate: false
+  xy: 69, 11
+  size: 40, 23
+  orig: 40, 23
+  offset: 0, 0
+  index: -1

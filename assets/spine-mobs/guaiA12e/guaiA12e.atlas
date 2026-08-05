@@ -1,0 +1,153 @@
+
+guaiA12e.png
+size: 1024,128
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+guaiA12e/biyan
+  rotate: false
+  xy: 400, 2
+  size: 52, 27
+  orig: 52, 27
+  offset: 0, 0
+  index: -1
+guaiA12e/cz
+  rotate: true
+  xy: 2, 5
+  size: 121, 134
+  orig: 121, 134
+  offset: 0, 0
+  index: -1
+guaiA12e/datuiL
+  rotate: false
+  xy: 454, 6
+  size: 24, 23
+  orig: 24, 23
+  offset: 0, 0
+  index: -1
+guaiA12e/datuiR
+  rotate: false
+  xy: 474, 31
+  size: 24, 26
+  orig: 24, 26
+  offset: 0, 0
+  index: -1
+guaiA12e/er1
+  rotate: true
+  xy: 523, 81
+  size: 45, 70
+  orig: 45, 70
+  offset: 0, 0
+  index: -1
+guaiA12e/er2
+  rotate: false
+  xy: 595, 80
+  size: 63, 46
+  orig: 63, 46
+  offset: 0, 0
+  index: -1
+guaiA12e/jiaoL
+  rotate: false
+  xy: 714, 83
+  size: 16, 13
+  orig: 16, 13
+  offset: 0, 0
+  index: -1
+guaiA12e/jiaoR
+  rotate: false
+  xy: 500, 46
+  size: 14, 11
+  orig: 14, 11
+  offset: 0, 0
+  index: -1
+guaiA12e/kuang
+  rotate: true
+  xy: 660, 80
+  size: 46, 52
+  orig: 46, 52
+  offset: 0, 0
+  index: -1
+guaiA12e/shenti
+  rotate: true
+  xy: 138, 25
+  size: 101, 141
+  orig: 101, 141
+  offset: 0, 0
+  index: -1
+guaiA12e/shouL
+  rotate: true
+  xy: 773, 94
+  size: 32, 50
+  orig: 32, 50
+  offset: 0, 0
+  index: -1
+guaiA12e/souR
+  rotate: false
+  xy: 873, 90
+  size: 41, 36
+  orig: 41, 36
+  offset: 0, 0
+  index: -1
+guaiA12e/tou
+  rotate: false
+  xy: 281, 15
+  size: 117, 111
+  orig: 117, 111
+  offset: 0, 0
+  index: -1
+guaiA12e/wuqi
+  rotate: true
+  xy: 400, 59
+  size: 67, 121
+  orig: 67, 121
+  offset: 0, 0
+  index: -1
+guaiA12e/xc
+  rotate: false
+  xy: 207, 3
+  size: 17, 20
+  orig: 17, 20
+  offset: 0, 0
+  index: -1
+guaiA12e/xiaotuiL
+  rotate: false
+  xy: 523, 60
+  size: 13, 19
+  orig: 13, 19
+  offset: 0, 0
+  index: -1
+guaiA12e/xiaotuiR
+  rotate: false
+  xy: 916, 110
+  size: 13, 16
+  orig: 13, 16
+  offset: 0, 0
+  index: -1
+guaiA12e/yan1
+  rotate: false
+  xy: 138, 2
+  size: 67, 21
+  orig: 67, 21
+  offset: 0, 0
+  index: -1
+guaiA12e/yan2
+  rotate: false
+  xy: 400, 31
+  size: 72, 26
+  orig: 72, 26
+  offset: 0, 0
+  index: -1
+guaiA12e/ye1
+  rotate: false
+  xy: 825, 98
+  size: 46, 28
+  orig: 46, 28
+  offset: 0, 0
+  index: -1
+guaiA12e/ye2
+  rotate: false
+  xy: 714, 98
+  size: 57, 28
+  orig: 57, 28
+  offset: 0, 0
+  index: -1

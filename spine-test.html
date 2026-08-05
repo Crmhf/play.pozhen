@@ -60,3 +60,53 @@ async function testOne(id) {
 </script>
 </body>
 </html>
+<script>
+// 怪物 JSON(3.5) 兼容性测试
+(async () => {
+  const log2 = (msg, cls) => { const d = document.createElement('div'); d.className = cls || ''; d.textContent = msg; document.getElementById('log').appendChild(d); };
+  try {
+    const am = new spine.canvas.AssetManager('assets/spine-mobs/guaiA10a/');
+    am.loadTextureAtlas('guaiA10a.atlas');
+    am.loadText('guaiA10a.json');
+    await new Promise((res, rej) => {
+      const t0 = performance.now();
+      const tick = () => {
+        if (am.isLoadingComplete()) return res();
+        if (performance.now() - t0 > 10000) return rej(new Error('timeout'));
+        setTimeout(tick, 80);
+      };
+      tick();
+    });
+    const atlas = am.get('guaiA10a.atlas');
+    const json = new spine.SkeletonJson(new spine.AtlasAttachmentLoader(atlas));
+    const data = json.readSkeletonData(am.get('guaiA10a.json'));
+    const names = data.animations.map(a => a.name);
+    log2('[MOB-OK] guaiA10a 动画: ' + names.join(', '), 'ok');
+    const sk = new spine.Skeleton(data);
+    sk.setToSetupPose();
+    const st = new spine.AnimationState(new spine.AnimationStateData(data));
+    st.setAnimation(0, names.includes('std') ? 'std' : names[0], true);
+    st.update(0.5); st.apply(sk); sk.updateWorldTransform();
+    // 诊断：插槽/附件类型
+    const slotInfo = sk.drawOrder.slice(0, 5).map(sl => {
+      const a = sl.getAttachment();
+      return sl.data.name + ':' + (a ? a.constructor.name : 'null');
+    });
+    log2('[MOB-DIAG] slots=' + sk.slots.length + ' ' + slotInfo.join(' | '), 'ok');
+    const cv = document.createElement('canvas'); cv.width = 200; cv.height = 200;
+    const ctx = cv.getContext('2d');
+    ctx.translate(100, 190); ctx.scale(0.24, -0.24);
+    // 两种渲染路径都试
+    const rd1 = new spine.canvas.SkeletonRenderer(ctx); rd1.triangleRendering = true; rd1.draw(sk);
+    document.getElementById('stage').appendChild(cv);
+    const cv2 = document.createElement('canvas'); cv2.width = 200; cv2.height = 200;
+    const ctx2 = cv2.getContext('2d');
+    ctx2.translate(100, 190); ctx2.scale(0.24, -0.24);
+    const rd2 = new spine.canvas.SkeletonRenderer(ctx2); rd2.triangleRendering = false; rd2.draw(sk);
+    document.getElementById('stage').appendChild(cv2);
+  } catch (e) {
+    log2('[MOB-FAIL] ' + (e && e.message || e), 'err');
+  }
+  document.title = 'DONE2';
+})();
+</script>

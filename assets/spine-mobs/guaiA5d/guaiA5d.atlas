@@ -1,0 +1,125 @@
+
+guaiA5d.png
+size: 1024,128
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+guaiA5d/guaiA5d_bi1
+  rotate: true
+  xy: 210, 5
+  size: 19, 25
+  orig: 19, 25
+  offset: 0, 0
+  index: -1
+guaiA5d/guaiA5d_bi2
+  rotate: false
+  xy: 739, 111
+  size: 20, 15
+  orig: 20, 15
+  offset: 0, 0
+  index: -1
+guaiA5d/guaiA5d_body
+  rotate: true
+  xy: 66, 5
+  size: 46, 61
+  orig: 46, 61
+  offset: 0, 0
+  index: -1
+guaiA5d/guaiA5d_head
+  rotate: false
+  xy: 590, 73
+  size: 48, 53
+  orig: 48, 53
+  offset: 0, 0
+  index: -1
+guaiA5d/guaiA5d_jiao1
+  rotate: true
+  xy: 640, 73
+  size: 18, 38
+  orig: 18, 38
+  offset: 0, 0
+  index: -1
+guaiA5d/guaiA5d_jiao2
+  rotate: false
+  xy: 590, 32
+  size: 23, 39
+  orig: 23, 39
+  offset: 0, 0
+  index: -1
+guaiA5d/guaiA5d_shou1
+  rotate: true
+  xy: 640, 93
+  size: 33, 55
+  orig: 33, 55
+  offset: 0, 0
+  index: -1
+guaiA5d/guaiA5d_shou2
+  rotate: false
+  xy: 129, 18
+  size: 35, 33
+  orig: 35, 33
+  offset: 0, 0
+  index: -1
+guaiA5d/guaiA5d_shou2a
+  rotate: false
+  xy: 615, 48
+  size: 29, 23
+  orig: 29, 23
+  offset: 0, 0
+  index: -1
+guaiA5d/guaiA5d_tui1
+  rotate: true
+  xy: 697, 105
+  size: 21, 40
+  orig: 21, 40
+  offset: 0, 0
+  index: -1
+guaiA5d/guaiA5d_tui2
+  rotate: true
+  xy: 166, 2
+  size: 22, 42
+  orig: 22, 42
+  offset: 0, 0
+  index: -1
+guaiA5d/guaiA5d_weiba
+  rotate: false
+  xy: 2, 2
+  size: 62, 49
+  orig: 62, 49
+  offset: 0, 0
+  index: -1
+guaiA5d/guaiA5d_wuqi
+  rotate: false
+  xy: 2, 53
+  size: 178, 73
+  orig: 178, 73
+  offset: 0, 0
+  index: -1
+guaiA5d/guaiA5e01
+  rotate: false
+  xy: 182, 26
+  size: 100, 100
+  orig: 100, 100
+  offset: 0, 0
+  index: -1
+guaiA5d/guaiA5e02
+  rotate: false
+  xy: 284, 26
+  size: 100, 100
+  orig: 100, 100
+  offset: 0, 0
+  index: -1
+guaiA5d/guaiA5e03
+  rotate: false
+  xy: 386, 26
+  size: 100, 100
+  orig: 100, 100
+  offset: 0, 0
+  index: -1
+guaiA5d/guaiA5e04
+  rotate: false
+  xy: 488, 26
+  size: 100, 100
+  orig: 100, 100
+  offset: 0, 0
+  index: -1

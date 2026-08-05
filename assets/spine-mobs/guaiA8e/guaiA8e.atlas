@@ -1,0 +1,97 @@
+
+guaiA8e.png
+size: 1024,256
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+guaiA8e/YX18
+  rotate: false
+  xy: 2, 100
+  size: 262, 132
+  orig: 262, 132
+  offset: 0, 0
+  index: -1
+guaiA8e/YX19
+  rotate: false
+  xy: 454, 90
+  size: 175, 142
+  orig: 175, 142
+  offset: 0, 0
+  index: -1
+guaiA8e/data
+  rotate: false
+  xy: 807, 104
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+guaiA8e/shayu44
+  rotate: false
+  xy: 937, 160
+  size: 83, 72
+  orig: 83, 72
+  offset: 0, 0
+  index: -1
+guaiA8e/shayu45
+  rotate: false
+  xy: 2, 2
+  size: 65, 96
+  orig: 65, 96
+  offset: 0, 0
+  index: -1
+guaiA8e/shayu46
+  rotate: true
+  xy: 266, 65
+  size: 167, 186
+  orig: 167, 186
+  offset: 0, 0
+  index: -1
+guaiA8e/shayu47
+  rotate: false
+  xy: 937, 109
+  size: 55, 49
+  orig: 55, 49
+  offset: 0, 0
+  index: -1
+guaiA8e/shayu48
+  rotate: false
+  xy: 69, 4
+  size: 35, 39
+  orig: 35, 39
+  offset: 0, 0
+  index: -1
+guaiA8e/shayu49
+  rotate: false
+  xy: 171, 55
+  size: 48, 43
+  orig: 48, 43
+  offset: 0, 0
+  index: -1
+guaiA8e/shayu50
+  rotate: false
+  xy: 221, 59
+  size: 34, 39
+  orig: 34, 39
+  offset: 0, 0
+  index: -1
+guaiA8e/shayu51
+  rotate: false
+  xy: 125, 50
+  size: 44, 48
+  orig: 44, 48
+  offset: 0, 0
+  index: -1
+guaiA8e/shayu52
+  rotate: false
+  xy: 631, 94
+  size: 174, 138
+  orig: 174, 138
+  offset: 0, 0
+  index: -1
+guaiA8e/shayu53
+  rotate: false
+  xy: 69, 45
+  size: 54, 53
+  orig: 54, 53
+  offset: 0, 0
+  index: -1

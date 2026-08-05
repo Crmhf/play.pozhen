@@ -1,0 +1,62 @@
+
+guaiA14e.png
+size: 512,256
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+guaiA14e/shenti
+  rotate: true
+  xy: 174, 103
+  size: 148, 162
+  orig: 148, 162
+  offset: 0, 0
+  index: -1
+guaiA14e/shou1
+  rotate: true
+  xy: 2, 2
+  size: 95, 188
+  orig: 95, 188
+  offset: 0, 0
+  index: -1
+guaiA14e/shou2
+  rotate: true
+  xy: 338, 155
+  size: 96, 152
+  orig: 96, 152
+  offset: 0, 0
+  index: -1
+guaiA14e/tou
+  rotate: false
+  xy: 2, 99
+  size: 170, 152
+  orig: 170, 152
+  offset: 0, 0
+  index: -1
+guaiA14e/tui1
+  rotate: false
+  xy: 192, 7
+  size: 67, 94
+  orig: 67, 94
+  offset: 0, 0
+  index: -1
+guaiA14e/tui2
+  rotate: false
+  xy: 261, 22
+  size: 56, 79
+  orig: 56, 79
+  offset: 0, 0
+  index: -1
+guaiA14e/xiaba
+  rotate: false
+  xy: 338, 103
+  size: 110, 50
+  orig: 110, 50
+  offset: 0, 0
+  index: -1
+guaiA14e/zui
+  rotate: false
+  xy: 319, 64
+  size: 82, 37
+  orig: 82, 37
+  offset: 0, 0
+  index: -1
