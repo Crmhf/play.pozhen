@@ -1,7 +1,7 @@
 // UI：标题/选将/剧情卷轴/结算/暂停/Boss横幅/伤害数字/HUD
-import { audio } from '../engine/audio.js?v=1785927271';
-import { InkWarrior } from '../engine/sprite.js?v=1785927271';
-import { CHARACTERS } from '../data/characters.js?v=1785927271';
+import { audio } from '../engine/audio.js?v=1785930800';
+import { InkWarrior } from '../engine/sprite.js?v=1785930800';
+import { CHARACTERS } from '../data/characters.js?v=1785930800';
 
 const $ = id => document.getElementById(id);
 const layer = () => $('screen-layer');
@@ -55,7 +55,7 @@ export class UI {
       const cv = document.createElement('canvas'); cv.width = 150; cv.height = 130;
       pv.appendChild(cv);
       // 优先 Spine 骨骼立绘预览；失败再 AI 立绘；再水墨小人
-      import('../engine/spine-actor.js?v=1785927271').then(({ SpineActor }) => {
+      import('../engine/spine-actor.js?v=1785930800').then(({ SpineActor }) => {
         if (!c.spine) throw 0;
         const actor = new SpineActor(c.spine, c.spineScale || 0.42);
         return actor.load().then(() => actor.ready ? actor : Promise.reject());
@@ -224,7 +224,26 @@ export class UI {
   }
 
   showUltBanner(charData) {
-    this.showToast(`${charData.name} · ${charData.ult.name}！`, 1600);
+    this.showSkillCallout(charData.ult.name, charData, true);
+  }
+
+  /** 出招文字标识：name 招式名, big=超大招全屏演出 */
+  showSkillCallout(name, charData, big = false) {
+    const old = document.querySelector('.skill-callout'); old && old.remove();
+    const color = charData.element || '#ffd27d';
+    const el = document.createElement('div');
+    el.className = 'skill-callout' + (big ? ' big' : '');
+    el.style.setProperty('--skc', color);
+    el.innerHTML = `<span class="sk-name">${name}</span>
+      <span class="sk-tag">${big ? '超 大 招' : '大 招'} · ${charData.name}</span>`;
+    $('app').appendChild(el);
+    // 元素色边缘光
+    const vg = document.createElement('div');
+    vg.className = 'skill-vignette';
+    vg.style.setProperty('--skc', color);
+    $('app').appendChild(vg);
+    setTimeout(() => vg.remove(), 550);
+    setTimeout(() => { el.classList.add('out'); setTimeout(() => el.remove(), 320); }, big ? 1300 : 900);
   }
 
   showToast(text, ms = 2200) {

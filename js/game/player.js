@@ -1,10 +1,10 @@
 // 玩家：通用状态机驱动，土狼时间+跳跃缓冲+可变跳高+连段+技能+绝技+闪避
-import { StateMachine, KEEP, clamp } from '../engine/utils.js?v=1785927271';
-import { feel } from '../engine/shake.js?v=1785927271';
-import { audio } from '../engine/audio.js?v=1785927271';
-import { particles, vfxLib } from '../engine/particles.js?v=1785927271';
-import { InkWarrior } from '../engine/sprite.js?v=1785927271';
-import { SpineActor } from '../engine/spine-actor.js?v=1785927271';
+import { StateMachine, KEEP, clamp } from '../engine/utils.js?v=1785930800';
+import { feel } from '../engine/shake.js?v=1785930800';
+import { audio } from '../engine/audio.js?v=1785930800';
+import { particles, vfxLib } from '../engine/particles.js?v=1785930800';
+import { InkWarrior } from '../engine/sprite.js?v=1785930800';
+import { SpineActor } from '../engine/spine-actor.js?v=1785930800';
 
 export const PSTATE = {
   IDLE: 'IDLE', RUN: 'RUN', JUMP: 'JUMP', FALL: 'FALL', LAND: 'LAND',
@@ -193,6 +193,19 @@ export class Player {
     audio.play(sk.sfx);
     this.rage = Math.min(100, this.rage + 6);
     const g = this.game, cx = this.x, cy = this.y - 30;
+    // 出招文字标识（大招）+ 元素色粒子爆发
+    g.ui.showSkillCallout(sk.name, this.data, false);
+    const ec = this.data.element || '#ffd27d';
+    particles.emit({ x: cx, y: cy, vrand: 260, life: 0.55, size: 6, color: ec, glow: true }, 26);
+    particles.emit({ x: cx, y: cy, vrand: 120, life: 0.4, size: 3, color: '#ffffff' }, 10);
+    feel.flash(this._rgb(ec), 90);
+    // 元素追加特效
+    if (sk.extra) {
+      const ex = sk.kind === 'blink' ? this.x + this.dir * (sk.dist || 200)
+               : sk.kind === 'ice_lance' ? this.x + this.dir * 160
+               : cx;
+      g.vfx.play(sk.extra, ex, cy, { scale: 1.5, fps: 26, flip: this.dir < 0 });
+    }
     switch (sk.kind) {
       case 'spin':
         g.vfx.play(sk.vfx, cx, cy, { scale: 1.6, fps: 24, once: false });
@@ -235,7 +248,7 @@ export class Player {
     this.rage = 0; this.ultT = 0; this._ultWave = 0; this._ultTick = 0;
     audio.play('ult');
     audio.play('gong');
-    feel.flash('255,220,150', 200);
+    feel.flash(this._rgb(this.data.element || '#ffd27d'), 260);
     feel.slowMotion(0.35, 500);
     feel.shake(0.5);
     this.iFrames = Math.max(this.iFrames, ult.dur + 0.3);
@@ -310,6 +323,11 @@ export class Player {
     this.game.ui.damageNumber(this.x, this.y - 70, Math.round(dmg), 'player');
     if (this.hp <= 0) this.fsm.set(PSTATE.DEAD);
     return true;
+  }
+
+  _rgb(hex) {
+    const n = parseInt(hex.slice(1), 16);
+    return `${n >> 16},${(n >> 8) & 255},${n & 255}`;
   }
 
   heal(v) { this.hp = Math.min(this.maxHp, this.hp + v); particles.heal(this.x, this.y - 40); audio.play('heal'); }
