@@ -1,6 +1,6 @@
 // 精灵渲染：优先 AI 生成的 sprite sheet，缺省时用水墨程序化骨骼战士
 // 程序化渲染器：关节化身体（躯干/头/双臂/双腿/武器），墨块+飞白风格
-import { clamp, lerp } from './utils.js?v=1785930800';
+import { clamp, lerp } from './utils.js?v=1785931908';
 
 export class SpriteSheet {
   constructor() { this.img = null; this.cols = 1; this.rows = 1; this.ready = false; }

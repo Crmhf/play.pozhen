@@ -1,6 +1,6 @@
 // 2D 幻想江湖背景层：多层视差 + 环境粒子（Canvas 2D，替代 3D 方案）
 // 层序：天空渐变 → AI 幻境原画(0.12) → 中景剪影山(0.35) → 雾霭(0.55) → 环境粒子
-import { rand } from './utils.js?v=1785930800';
+import { rand } from './utils.js?v=1785931908';
 
 export class Renderer2D {
   constructor() {
@@ -88,15 +88,23 @@ export class Renderer2D {
     sky.addColorStop(1, cfg.skyBottom || '#12141c');
     ctx.fillStyle = sky;
     ctx.fillRect(-20, -20, w + 40, h + 40);
-    // 2. AI 幻境原画（cover 铺满，视差 0.12）
+    // 2. AI 幻境原画（cover 铺满，视差 0.12，镜像平铺消除接缝）
     if (this.texReady) {
       const img = this.tex;
       const scale = Math.max(w / img.width, h * 0.9 / img.height);
       const dw = img.width * scale, dh = img.height * scale;
-      const offX = -(camX * 0.12) % dw;
-      ctx.globalAlpha = 0.96;
-      for (let x = offX - dw; x < w + dw; x += dw) {
-        ctx.drawImage(img, x, h * 0.72 - dh + 40, dw, dh);
+      const offX = -(camX * 0.12) % (dw * 2);
+      let k = 0;
+      for (let x = offX - dw * 2; x < w + dw; x += dw, k++) {
+        if (k % 2 === 1) { // 奇数块水平翻转，边缘无缝
+          ctx.save();
+          ctx.translate(x + dw, 0);
+          ctx.scale(-1, 1);
+          ctx.drawImage(img, 0, h * 0.72 - dh + 40, dw, dh);
+          ctx.restore();
+        } else {
+          ctx.drawImage(img, x, h * 0.72 - dh + 40, dw, dh);
+        }
       }
       ctx.globalAlpha = 1;
     }

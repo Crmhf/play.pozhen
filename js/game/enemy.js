@@ -1,12 +1,12 @@
 // 敌军 AI：状态机 + 战术轮盘（围拢/绕后/抢攻）+ 攻击令牌（Combat Director 发牌）
 // 兵种行为：melee/tank/charger/archer/caster/bomber
-import { StateMachine, KEEP, clamp, rand } from '../engine/utils.js?v=1785930800';
-import { feel } from '../engine/shake.js?v=1785930800';
-import { audio } from '../engine/audio.js?v=1785930800';
-import { particles } from '../engine/particles.js?v=1785930800';
-import { InkWarrior, shade } from '../engine/sprite.js?v=1785930800';
-import { SpineActor } from '../engine/spine-actor.js?v=1785930800';
-import { MOB_MANIFEST } from '../data/mobmanifest.js?v=1785930800';
+import { StateMachine, KEEP, clamp, rand } from '../engine/utils.js?v=1785931908';
+import { feel } from '../engine/shake.js?v=1785931908';
+import { audio } from '../engine/audio.js?v=1785931908';
+import { particles } from '../engine/particles.js?v=1785931908';
+import { InkWarrior, shade } from '../engine/sprite.js?v=1785931908';
+import { SpineActor } from '../engine/spine-actor.js?v=1785931908';
+import { MOB_MANIFEST } from '../data/mobmanifest.js?v=1785931908';
 
 export const EST = {
   SPAWN: 'SPAWN', IDLE: 'IDLE', MOVE: 'MOVE', WINDUP: 'WINDUP', ATTACK: 'ATTACK',
