@@ -1,13 +1,13 @@
 // 关卡导演：波次编排 + 锁屏推进 + 镜头 + 投射物 + 掉落 + 地面渲染
-import { clamp, rand } from '../engine/utils.js?v=1785942019';
-import { feel } from '../engine/shake.js?v=1785942019';
-import { audio } from '../engine/audio.js?v=1785942019';
-import { particles } from '../engine/particles.js?v=1785942019';
-import { Enemy } from './enemy.js?v=1785942019';
-import { Boss } from './boss.js?v=1785942019';
-import { MONSTER_MAP } from '../data/monsters.js?v=1785942019';
-import { BOSS_MAP } from '../data/bosses.js?v=1785942019';
-import { shade } from '../engine/sprite.js?v=1785942019';
+import { clamp, rand } from '../engine/utils.js?v=1785942329';
+import { feel } from '../engine/shake.js?v=1785942329';
+import { audio } from '../engine/audio.js?v=1785942329';
+import { particles } from '../engine/particles.js?v=1785942329';
+import { Enemy } from './enemy.js?v=1785942329';
+import { Boss } from './boss.js?v=1785942329';
+import { MONSTER_MAP } from '../data/monsters.js?v=1785942329';
+import { BOSS_MAP } from '../data/bosses.js?v=1785942329';
+import { shade } from '../engine/sprite.js?v=1785942329';
 
 const VIEW_W = () => innerWidth;
 const GROUND_Y = 0; // 地面像素 y（世界坐标，向下为正；物理层内部取反）
@@ -49,9 +49,10 @@ export class Level {
   spawnWave(i) {
     const w = this.data.waves[i];
     // 首波 7 个，其余进增援队列，保持场上 5~8 个
-    this._reinforce = w.mobs.slice(7);
+    this._reinforce = w.mobs.slice(4);
+    this._reinfT = 0; // 分批增援计时
     this._spawnOne = id => this._spawnMob(id, w.elite);
-    w.mobs.slice(0, 7).forEach(id => this._spawnMob(id, w.elite));
+    w.mobs.slice(0, 4).forEach(id => this._spawnMob(id, w.elite));
     this.game.ui.showToast(`第 ${i + 1} 波敌军杀到！`);
     audio.play('drum_roll');
   }
@@ -135,11 +136,15 @@ export class Level {
         }
       }
       this.camera.targetX = this.lockLeft + viewW / 2;
-      // 增援补员：场上少于 5 个且队列还有 → 补 2~3 个
+      // 分阶段增援：场上 ≤3 且距上批 ≥2s → 放一批 2~3 个（鼓点+烟尘登场）
       const aliveMobs = g.enemies.filter(e => e.alive && !e.isBoss);
-      if (this.phase === 'wave' && this._reinforce && this._reinforce.length && aliveMobs.length < 5) {
+      this._reinfT = (this._reinfT || 0) - dt;
+      if (this.phase === 'wave' && this._reinforce && this._reinforce.length
+          && aliveMobs.length <= 3 && this._reinfT <= 0) {
         const batch = this._reinforce.splice(0, Math.min(3, this._reinforce.length));
-        batch.forEach(id => this._spawnOne(id));
+        batch.forEach((id, k) => setTimeout(() => this._spawnOne(id), k * 350));
+        this._reinfT = 2.0;
+        audio.play('drum_roll');
       }
       // 清波判定：增援打光 + 场上无敌
       const waveDone = (!this._reinforce || this._reinforce.length === 0);
