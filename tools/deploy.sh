@@ -11,6 +11,6 @@ git remote set-url origin "https://Crmhf:${TOKEN}@gh-proxy.com/https://github.co
 git push -q origin main || echo "(GitHub 推送失败，继续部署)"
 git remote set-url origin https://github.com/Crmhf/play.pozhen.git
 tar czf - --exclude='.git' --exclude='.DS_Store' . 2>/dev/null | \
-  sshpass -p 'Cr@cf123x56' ssh -o StrictHostKeyChecking=no root@121.41.39.129 \
+  sshpass -p 'Cr@cf123x56' ssh -o StrictHostKeyChecking=no -o PreferredAuthentications=password -o PubkeyAuthentication=no root@121.41.39.129 \
   "tar xzf - -C /www/wwwroot/play.maozirui.com/webgame/play-pozhen && echo DEPLOYED"
 curl -s -o /dev/null -w "online:%{http_code}\n" https://play.maozirui.com/webgame/play-pozhen/
