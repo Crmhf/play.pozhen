@@ -41,7 +41,10 @@ export class Physics {
   addGround(x, y, w, h) {
     const pl = this.pl;
     const body = this.world.createBody({ position: new pl.Vec2(this.px(x), this.px(-y)) });
-    body.createFixture({ shape: new pl.Box(this.px(w / 2), this.px(h / 2)), friction: 0.6 });
+    body.createFixture({
+      shape: new pl.Box(this.px(w / 2), this.px(h / 2)), friction: 0.6,
+      filterCategoryBits: 0x4, // 地面层
+    });
     return body;
   }
   // 平台（单向板用静态盒即可，简化）
@@ -50,7 +53,7 @@ export class Physics {
   addWall(x, y, h) {
     const pl = this.pl;
     const body = this.world.createBody({ position: new pl.Vec2(this.px(x), this.px(-y)) });
-    body.createFixture({ shape: new pl.Box(this.px(4), this.px(h / 2)) });
+    body.createFixture({ shape: new pl.Box(this.px(4), this.px(h / 2)), filterCategoryBits: 0x4 });
     return body;
   }
 
@@ -60,6 +63,8 @@ export class Physics {
    */
   addCharacter(x, y, w, h, userData) {
     const pl = this.pl;
+    const isPlayer = userData && userData.type === 'player';
+    const cat = isPlayer ? 0x1 : 0x2;
     const body = this.world.createBody({
       type: 'dynamic', position: new pl.Vec2(this.px(x), this.px(-y)),
       fixedRotation: true, bullet: true, allowSleep: false,
@@ -67,11 +72,13 @@ export class Physics {
     body.createFixture({
       shape: new pl.Box(this.px(w / 2), this.px(h / 2)),
       density: 1.2, friction: 0.0, restitution: 0,
+      filterCategoryBits: cat,
+      filterMaskBits: 0x4, // 只撞地面/墙，不撞其他角色（逻辑层做站位分离）
     });
-    // 脚底 sensor
+    // 脚底 sensor（只感知地面）
     const foot = body.createFixture({
       shape: new pl.Box(this.px(w / 2 - 2), this.px(3), new pl.Vec2(0, this.px(-h / 2 - 1)), 0),
-      isSensor: true,
+      isSensor: true, filterCategoryBits: cat, filterMaskBits: 0x4,
     });
     foot.setUserData('foot');
     body.setUserData(userData);

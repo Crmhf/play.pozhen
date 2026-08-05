@@ -1,12 +1,12 @@
 // 敌军 AI：状态机 + 战术轮盘（围拢/绕后/抢攻）+ 攻击令牌（Combat Director 发牌）
 // 兵种行为：melee/tank/charger/archer/caster/bomber
-import { StateMachine, KEEP, clamp, rand } from '../engine/utils.js?v=1785943046';
-import { feel } from '../engine/shake.js?v=1785943046';
-import { audio } from '../engine/audio.js?v=1785943046';
-import { particles } from '../engine/particles.js?v=1785943046';
-import { InkWarrior, shade } from '../engine/sprite.js?v=1785943046';
-import { SpineActor } from '../engine/spine-actor.js?v=1785943046';
-import { MOB_MANIFEST } from '../data/mobmanifest.js?v=1785943046';
+import { StateMachine, KEEP, clamp, rand } from '../engine/utils.js?v=1785943991';
+import { feel } from '../engine/shake.js?v=1785943991';
+import { audio } from '../engine/audio.js?v=1785943991';
+import { particles } from '../engine/particles.js?v=1785943991';
+import { InkWarrior, shade } from '../engine/sprite.js?v=1785943991';
+import { SpineActor } from '../engine/spine-actor.js?v=1785943991';
+import { MOB_MANIFEST } from '../data/mobmanifest.js?v=1785943991';
 
 export const EST = {
   SPAWN: 'SPAWN', IDLE: 'IDLE', MOVE: 'MOVE', WINDUP: 'WINDUP', ATTACK: 'ATTACK',
@@ -217,6 +217,11 @@ export class Enemy {
       if (e === this || !e.alive) continue;
       const dx = this.x - e.x;
       if (Math.abs(dx) < 26 && Math.abs(this.y - e.y) < 40) targetVx += Math.sign(dx || 1) * 36;
+    }
+    // 与主角软性保持距离：贴身时自身退开（而不是把主角推着走）
+    const pdx = this.x - p.x;
+    if (Math.abs(pdx) < 40 && Math.abs(this.y - p.y) < 50 && s === EST.MOVE) {
+      targetVx += Math.sign(pdx || 1) * 90;
     }
     this.phys.setVel(this.body, targetVx, this.vy);
 
