@@ -1,10 +1,10 @@
 // 玩家：通用状态机驱动，土狼时间+跳跃缓冲+可变跳高+连段+技能+绝技+闪避
-import { StateMachine, KEEP, clamp } from '../engine/utils.js?v=1785944591';
-import { feel } from '../engine/shake.js?v=1785944591';
-import { audio } from '../engine/audio.js?v=1785944591';
-import { particles, vfxLib } from '../engine/particles.js?v=1785944591';
-import { InkWarrior } from '../engine/sprite.js?v=1785944591';
-import { SpineActor } from '../engine/spine-actor.js?v=1785944591';
+import { StateMachine, KEEP, clamp } from '../engine/utils.js?v=1785948459';
+import { feel } from '../engine/shake.js?v=1785948459';
+import { audio } from '../engine/audio.js?v=1785948459';
+import { particles, vfxLib } from '../engine/particles.js?v=1785948459';
+import { InkWarrior } from '../engine/sprite.js?v=1785948459';
+import { SpineActor } from '../engine/spine-actor.js?v=1785948459';
 
 export const PSTATE = {
   IDLE: 'IDLE', RUN: 'RUN', JUMP: 'JUMP', FALL: 'FALL', LAND: 'LAND',
@@ -61,7 +61,7 @@ export class Player {
       case PSTATE.SKILL: if (fsm.stateTime >= this.data.skill.dur) return g ? PSTATE.IDLE : PSTATE.FALL; break;
       case PSTATE.ULT: if (fsm.stateTime >= this.data.ult.dur) return PSTATE.IDLE; break;
       case PSTATE.DASH: if (fsm.stateTime >= 0.22) return g ? PSTATE.IDLE : PSTATE.FALL; break;
-      case PSTATE.HURT: if (fsm.stateTime >= 0.32) return g ? PSTATE.IDLE : PSTATE.FALL; break;
+      case PSTATE.HURT: if (fsm.stateTime >= 0.2) return g ? PSTATE.IDLE : PSTATE.FALL; break;
     }
     return KEEP;
   }
@@ -108,6 +108,12 @@ export class Player {
     this.hurtT = Math.max(0, this.hurtT - dt);
     if (this.comboT > 0) { this.comboT -= dt; if (this.comboT <= 0) this.combo = 0; }
     this.mp = Math.min(this.maxMp, this.mp + dt * 4); // 内力缓回
+    // 绝技就绪提示（一次）
+    if (this.rage >= 100 && !this._ultReady) {
+      this._ultReady = true;
+      this.game.ui.showToast('怒气已满 · 按 L 释放绝技！', 1800);
+      audio.play('combo_up', { pitch: 1.5 });
+    } else if (this.rage < 100) this._ultReady = false;
 
     // 输入缓冲（YONGZHE 跳跃缓冲）
     if (input.jumpPressed) this.jumpBuf = 0.12;
@@ -311,7 +317,7 @@ export class Player {
     if (this.iFrames > 0 || this.hp <= 0) return false;
     const kResist = 0;
     this.hp = Math.max(0, this.hp - dmg);
-    this.iFrames = opt.iFrames ?? 0.6;
+    this.iFrames = opt.iFrames ?? 1.0; // 受击保护拉长，防连续硬直
     this.hurtT = 0.3;
     const dir = this.x >= fromX ? 1 : -1;
     this.phys.setVel(this.body, dir * (opt.knock || 200), this.grounded ? 120 : this.vy);

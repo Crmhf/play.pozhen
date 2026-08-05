@@ -1,7 +1,7 @@
 // 战斗结算：命中判定 / 伤害 / 连击 / 击退（Hitbox-Hurtbox 逻辑分离）
-import { feel } from '../engine/shake.js?v=1785944591';
-import { audio } from '../engine/audio.js?v=1785944591';
-import { particles } from '../engine/particles.js?v=1785944591';
+import { feel } from '../engine/shake.js?v=1785948459';
+import { audio } from '../engine/audio.js?v=1785948459';
+import { particles } from '../engine/particles.js?v=1785948459';
 
 export class Combat {
   constructor(game) { this.game = game; }
@@ -71,6 +71,10 @@ export class Combat {
     p.combo++; p.comboT = 3;
     p.stats.maxCombo = Math.max(p.stats.maxCombo, p.combo);
     if (p.combo % 10 === 0) audio.play('combo_up', { pitch: 1 + p.combo * 0.004 });
+    if (p.combo % 20 === 0) { // 连击奖励：掉战意/军粮 + 提示
+      this.game.level.spawnPickup(p.x + 40 * p.dir, Math.random() < 0.5 ? 'rage' : 'rice');
+      this.game.ui.showToast(`${p.combo} 连击！犒赏掉落`, 1200);
+    }
     this.game.ui.updateCombo(p.combo);
   }
 

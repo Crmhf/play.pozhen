@@ -4,7 +4,7 @@ const M = (id, name, family, ai, o) => ({
   id, name, family, ai,
   spineMob: o.spineMob || null, mobPx: o.mobPx || 0,
   hp: o.hp, atk: o.atk, speed: o.speed || 120, range: o.range || 64, atkCd: o.atkCd || 1.2,
-  windup: o.windup || 0.35, recover: o.recover || 0.4,
+  windup: o.windup || 0.35, recover: o.recover || 0.55,
   palette: o.palette, weapon: o.weapon || 'sword', hat: o.hat || null, bulk: o.bulk || 0.9,
   scale: o.scale || 1.55, score: o.score || 10, projectile: o.projectile || null,
   blockChance: o.blockChance || 0, knockResist: o.knockResist || 0,

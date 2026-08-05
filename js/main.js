@@ -1,23 +1,23 @@
 // 破阵大乱斗 · 主入口：启动 / 全局状态机 / 固定时间步游戏循环
-import { clamp } from './engine/utils.js?v=1785944591';
-import { Input } from './engine/input.js?v=1785944591';
-import { audio } from './engine/audio.js?v=1785944591';
-import { feel } from './engine/shake.js?v=1785944591';
-import { particles, vfxLib, VfxPlayer } from './engine/particles.js?v=1785944591';
-import { Physics } from './engine/physics.js?v=1785944591';
-import { Renderer2D } from './engine/renderer2d.js?v=1785944591';
-import { CHARACTERS } from './data/characters.js?v=1785944591';
-import { LEVELS } from './data/levels.js?v=1785944591';
-import { MONSTER_MAP } from './data/monsters.js?v=1785944591';
-import { BOSS_MAP } from './data/bosses.js?v=1785944591';
-import { SpineActor } from './engine/spine-actor.js?v=1785944591';
-import { MOB_MANIFEST } from './data/mobmanifest.js?v=1785944591';
-import { Player } from './game/player.js?v=1785944591';
-import { Enemy } from './game/enemy.js?v=1785944591';
-import { Combat } from './game/combat.js?v=1785944591';
-import { Director } from './game/director.js?v=1785944591';
-import { Level } from './game/level.js?v=1785944591';
-import { UI } from './game/ui.js?v=1785944591';
+import { clamp } from './engine/utils.js?v=1785948459';
+import { Input } from './engine/input.js?v=1785948459';
+import { audio } from './engine/audio.js?v=1785948459';
+import { feel } from './engine/shake.js?v=1785948459';
+import { particles, vfxLib, VfxPlayer } from './engine/particles.js?v=1785948459';
+import { Physics } from './engine/physics.js?v=1785948459';
+import { Renderer2D } from './engine/renderer2d.js?v=1785948459';
+import { CHARACTERS } from './data/characters.js?v=1785948459';
+import { LEVELS } from './data/levels.js?v=1785948459';
+import { MONSTER_MAP } from './data/monsters.js?v=1785948459';
+import { BOSS_MAP } from './data/bosses.js?v=1785948459';
+import { SpineActor } from './engine/spine-actor.js?v=1785948459';
+import { MOB_MANIFEST } from './data/mobmanifest.js?v=1785948459';
+import { Player } from './game/player.js?v=1785948459';
+import { Enemy } from './game/enemy.js?v=1785948459';
+import { Combat } from './game/combat.js?v=1785948459';
+import { Director } from './game/director.js?v=1785948459';
+import { Level } from './game/level.js?v=1785948459';
+import { UI } from './game/ui.js?v=1785948459';
 
 const GSTATE = { TITLE: 'TITLE', SELECT: 'SELECT', STORY: 'STORY', PLAYING: 'PLAYING', PAUSED: 'PAUSED', CLEAR: 'CLEAR', OVER: 'OVER', VICTORY: 'VICTORY' };
 const FIXED_DT = 1 / 120;
@@ -101,6 +101,7 @@ class Game {
     this.phys = new Physics();
     this.enemies = [];
     this.director.reset();
+    this.director.max = idx < 2 ? 2 : 3; // 前两关同时出手者少些
     particles.clear(); this.vfx.clear();
     this.level = new Level(this, lv, idx);
     this.level.setup();
@@ -160,7 +161,8 @@ class Game {
     this.level.onBossDead();
     // 剩余小怪溃散
     for (const e of this.enemies) if (e.alive && !e.isBoss) { e.hp = 0; e.fsm.set('DEAD'); }
-    setTimeout(() => this._levelCleared(), 1800);
+    const lvIdx = this.levelIndex;
+    setTimeout(() => { if (this.levelIndex === lvIdx) this._levelCleared(); }, 1800); // 防跨关误触发
   }
   _levelCleared() {
     if (this.state !== GSTATE.PLAYING) return;
@@ -225,9 +227,10 @@ class Game {
 
     if (this.state === GSTATE.PLAYING) {
       if (this.input.pausePressed) this._togglePause();
-      // 固定时间步物理
-      this.acc += gdt;
-      while (this.acc >= FIXED_DT) {
+      // 固定时间步物理（turbo 加速用于自动化回归）
+      this.acc += gdt * (this._turbo || 1);
+      let guard = 60;
+      while (this.acc >= FIXED_DT && guard-- > 0) {
         this._step(FIXED_DT);
         this.acc -= FIXED_DT;
       }
@@ -320,7 +323,11 @@ game.init();
 window.__game = game; // 调试入口
 
 // ---------- 自动驾驶（?auto=1 冒烟测试/平衡性分析）----------
+const turboM = location.search.match(/turbo=(\d+)/);
+if (turboM) game._turbo = Math.min(10, +turboM[1]);
 if (location.search.includes('auto=1')) {
+  let deaths = 0, clears = 0, lastState = '', t0 = Date.now();
+  const clearLog = [];
   const keys = game.input.keys, pressed = game.input.pressed;
   const AUTO_KEY = 'KeyD';
   let lastAtk = 0, lastSkill = 0;
@@ -334,6 +341,12 @@ if (location.search.includes('auto=1')) {
   setInterval(() => {
     const b = document.body;
     // 自动连闯：CLEAR→下一阵；STORY→自动进阵
+    if (game.state !== lastState) {
+      if (game.state === 'OVER') deaths++;
+      if (game.state === 'CLEAR') { clears++; clearLog.push(`L${game.levelIndex + 1}@${Math.round((Date.now() - t0) / 1000)}s`); }
+      lastState = game.state;
+      b.dataset.deaths = deaths; b.dataset.clears = clearLog.join(' ');
+    }
     if (game.state === 'CLEAR') { game.toStory(game.levelIndex + 1); return; }
     if (game.state === 'STORY') { game.startLevel(game.levelIndex); return; }
     if (game.state === 'OVER') { game.startLevel(game.levelIndex); return; }

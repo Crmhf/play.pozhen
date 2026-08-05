@@ -1,12 +1,12 @@
 // 敌军 AI：状态机 + 战术轮盘（围拢/绕后/抢攻）+ 攻击令牌（Combat Director 发牌）
 // 兵种行为：melee/tank/charger/archer/caster/bomber
-import { StateMachine, KEEP, clamp, rand } from '../engine/utils.js?v=1785944591';
-import { feel } from '../engine/shake.js?v=1785944591';
-import { audio } from '../engine/audio.js?v=1785944591';
-import { particles } from '../engine/particles.js?v=1785944591';
-import { InkWarrior, shade } from '../engine/sprite.js?v=1785944591';
-import { SpineActor } from '../engine/spine-actor.js?v=1785944591';
-import { MOB_MANIFEST } from '../data/mobmanifest.js?v=1785944591';
+import { StateMachine, KEEP, clamp, rand } from '../engine/utils.js?v=1785948459';
+import { feel } from '../engine/shake.js?v=1785948459';
+import { audio } from '../engine/audio.js?v=1785948459';
+import { particles } from '../engine/particles.js?v=1785948459';
+import { InkWarrior, shade } from '../engine/sprite.js?v=1785948459';
+import { SpineActor } from '../engine/spine-actor.js?v=1785948459';
+import { MOB_MANIFEST } from '../data/mobmanifest.js?v=1785948459';
 
 export const EST = {
   SPAWN: 'SPAWN', IDLE: 'IDLE', MOVE: 'MOVE', WINDUP: 'WINDUP', ATTACK: 'ATTACK',
@@ -25,7 +25,9 @@ export class Enemy {
     this.elite = elite;
     const mul = (elite ? 1.6 : 1) * (1 + (level - 1) * 0.08);
     this.maxHp = def.hp * mul; this.hp = this.maxHp;
-    this.atk = def.atk * mul * 1.25; // 攻击力补正：挨打要疼
+    // 伤害随关卡爬坡：L1 只有 68%，L10 达 140%（前期宽容，后期凶残）
+    const dmgScale = (0.6 + 0.08 * level) * (elite ? 1.2 : 1);
+    this.atk = def.atk * dmgScale;
     this.x = x; this.y = 0; this.dir = -1;
     this.alive = true;
     this.body = physics.addCharacter(x, -60, 24 * def.bulk, 52 * def.scale, { type: 'enemy', ref: this });

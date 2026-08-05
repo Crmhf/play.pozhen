@@ -1,13 +1,13 @@
 // 关卡导演：波次编排 + 锁屏推进 + 镜头 + 投射物 + 掉落 + 地面渲染
-import { clamp, rand } from '../engine/utils.js?v=1785944591';
-import { feel } from '../engine/shake.js?v=1785944591';
-import { audio } from '../engine/audio.js?v=1785944591';
-import { particles } from '../engine/particles.js?v=1785944591';
-import { Enemy } from './enemy.js?v=1785944591';
-import { Boss } from './boss.js?v=1785944591';
-import { MONSTER_MAP } from '../data/monsters.js?v=1785944591';
-import { BOSS_MAP } from '../data/bosses.js?v=1785944591';
-import { shade } from '../engine/sprite.js?v=1785944591';
+import { clamp, rand } from '../engine/utils.js?v=1785948459';
+import { feel } from '../engine/shake.js?v=1785948459';
+import { audio } from '../engine/audio.js?v=1785948459';
+import { particles } from '../engine/particles.js?v=1785948459';
+import { Enemy } from './enemy.js?v=1785948459';
+import { Boss } from './boss.js?v=1785948459';
+import { MONSTER_MAP } from '../data/monsters.js?v=1785948459';
+import { BOSS_MAP } from '../data/bosses.js?v=1785948459';
+import { shade } from '../engine/sprite.js?v=1785948459';
 
 const VIEW_W = () => innerWidth;
 const GROUND_Y = 0; // 地面像素 y（世界坐标，向下为正；物理层内部取反）
@@ -152,7 +152,7 @@ export class Level {
         this.phase = 'march';
         g.ui.showToast(this.waveIdx + 1 >= this.waveGates.length ? '敌阵已破，直取主将！' : '通路已开，继续前进！');
         audio.play('gong');
-        p.heal(p.maxHp * 0.08);
+        p.heal(p.maxHp * 0.12);
       }
     } else if (this.phase === 'clear') {
       // 破阵后自由卷轴（同死区逻辑）
@@ -261,7 +261,7 @@ export class Level {
       pk.y += pk.vy * dt;
       if (pk.y > -14) { pk.y = -14; pk.vy = 0; }
       if (Math.abs(p.x - pk.x) < 30 && Math.abs(p.y - pk.y) < 50) {
-        if (pk.type === 'rice') p.heal(p.maxHp * 0.15);
+        if (pk.type === 'rice') p.heal(p.maxHp * 0.2);
         else { p.addRage(20); audio.play('pickup'); }
         pk.t = 99;
       }
