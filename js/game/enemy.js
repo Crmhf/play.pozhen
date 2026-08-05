@@ -1,12 +1,12 @@
 // 敌军 AI：状态机 + 战术轮盘（围拢/绕后/抢攻）+ 攻击令牌（Combat Director 发牌）
 // 兵种行为：melee/tank/charger/archer/caster/bomber
-import { StateMachine, KEEP, clamp, rand } from '../engine/utils.js?v=1785931908';
-import { feel } from '../engine/shake.js?v=1785931908';
-import { audio } from '../engine/audio.js?v=1785931908';
-import { particles } from '../engine/particles.js?v=1785931908';
-import { InkWarrior, shade } from '../engine/sprite.js?v=1785931908';
-import { SpineActor } from '../engine/spine-actor.js?v=1785931908';
-import { MOB_MANIFEST } from '../data/mobmanifest.js?v=1785931908';
+import { StateMachine, KEEP, clamp, rand } from '../engine/utils.js?v=1785942019';
+import { feel } from '../engine/shake.js?v=1785942019';
+import { audio } from '../engine/audio.js?v=1785942019';
+import { particles } from '../engine/particles.js?v=1785942019';
+import { InkWarrior, shade } from '../engine/sprite.js?v=1785942019';
+import { SpineActor } from '../engine/spine-actor.js?v=1785942019';
+import { MOB_MANIFEST } from '../data/mobmanifest.js?v=1785942019';
 
 export const EST = {
   SPAWN: 'SPAWN', IDLE: 'IDLE', MOVE: 'MOVE', WINDUP: 'WINDUP', ATTACK: 'ATTACK',
@@ -79,6 +79,7 @@ export class Enemy {
 
   _wantAttack(dist, inRange) {
     if (this.freezeT > 0) return false;
+    if (this.isBoss) return this.atkTimer <= 0 && inRange; // Boss 免令牌，主动进攻
     const ai = this.def.ai;
     if (ai === 'archer' || ai === 'caster') {
       return this.atkTimer <= 0 && dist <= this.def.range && Math.abs(this.player.y - this.y) < 90;
@@ -222,6 +223,11 @@ export class Enemy {
     if (!this.hasToken && (ai === 'melee' || ai === 'tank' || ai === 'charger') && dist < 300 && this.atkTimer <= 0) {
       this.game.director.requestToken(this);
     }
+    // 令牌回收：持令却游离太远超过 1.2s → 让位给近身同伴（防持令围观）
+    if (this.hasToken && dist > 170) {
+      this._tokenFarT = (this._tokenFarT || 0) + dt;
+      if (this._tokenFarT > 1.2) { this.game.director.releaseToken(this); this._tokenFarT = 0; }
+    } else this._tokenFarT = 0;
   }
 
   // ---------- 受击 ----------

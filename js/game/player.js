@@ -1,10 +1,10 @@
 // 玩家：通用状态机驱动，土狼时间+跳跃缓冲+可变跳高+连段+技能+绝技+闪避
-import { StateMachine, KEEP, clamp } from '../engine/utils.js?v=1785931908';
-import { feel } from '../engine/shake.js?v=1785931908';
-import { audio } from '../engine/audio.js?v=1785931908';
-import { particles, vfxLib } from '../engine/particles.js?v=1785931908';
-import { InkWarrior } from '../engine/sprite.js?v=1785931908';
-import { SpineActor } from '../engine/spine-actor.js?v=1785931908';
+import { StateMachine, KEEP, clamp } from '../engine/utils.js?v=1785942019';
+import { feel } from '../engine/shake.js?v=1785942019';
+import { audio } from '../engine/audio.js?v=1785942019';
+import { particles, vfxLib } from '../engine/particles.js?v=1785942019';
+import { InkWarrior } from '../engine/sprite.js?v=1785942019';
+import { SpineActor } from '../engine/spine-actor.js?v=1785942019';
 
 export const PSTATE = {
   IDLE: 'IDLE', RUN: 'RUN', JUMP: 'JUMP', FALL: 'FALL', LAND: 'LAND',
@@ -123,7 +123,7 @@ export class Player {
         this.dir = mx > 0 ? 1 : -1;
         phys.setVel(this.body, mx * speed, this.vy);
       } else if (this.grounded) {
-        phys.setVel(this.body, this.vx * 0.6, this.vy); // 地面摩擦
+        phys.setVel(this.body, this.vx * 0.3, this.vy); // 地面急停（干爽手感）
       }
     }
     // 空中攻击时下坠减缓
@@ -173,7 +173,7 @@ export class Player {
     // ---- 攻击判定帧 ----
     if (s === PSTATE.ATTACK && !this.atkHitDone) {
       const c = d.combo[this.comboIdx];
-      if (fsm.stateTime >= c.dur * 0.45) {
+      if (fsm.stateTime >= c.dur * 0.36) {
         this.atkHitDone = true;
         this.game.combat.playerMelee(c);
       }

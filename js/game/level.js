@@ -1,13 +1,13 @@
 // 关卡导演：波次编排 + 锁屏推进 + 镜头 + 投射物 + 掉落 + 地面渲染
-import { clamp, rand } from '../engine/utils.js?v=1785931908';
-import { feel } from '../engine/shake.js?v=1785931908';
-import { audio } from '../engine/audio.js?v=1785931908';
-import { particles } from '../engine/particles.js?v=1785931908';
-import { Enemy } from './enemy.js?v=1785931908';
-import { Boss } from './boss.js?v=1785931908';
-import { MONSTER_MAP } from '../data/monsters.js?v=1785931908';
-import { BOSS_MAP } from '../data/bosses.js?v=1785931908';
-import { shade } from '../engine/sprite.js?v=1785931908';
+import { clamp, rand } from '../engine/utils.js?v=1785942019';
+import { feel } from '../engine/shake.js?v=1785942019';
+import { audio } from '../engine/audio.js?v=1785942019';
+import { particles } from '../engine/particles.js?v=1785942019';
+import { Enemy } from './enemy.js?v=1785942019';
+import { Boss } from './boss.js?v=1785942019';
+import { MONSTER_MAP } from '../data/monsters.js?v=1785942019';
+import { BOSS_MAP } from '../data/bosses.js?v=1785942019';
+import { shade } from '../engine/sprite.js?v=1785942019';
 
 const VIEW_W = () => innerWidth;
 const GROUND_Y = 0; // 地面像素 y（世界坐标，向下为正；物理层内部取反）
@@ -45,21 +45,26 @@ export class Level {
     phys.addWall(this.length + 60, -300, 800);
   }
 
-  // ---------- 刷怪 ----------
+  // ---------- 刷怪（首波+增援队列）----------
   spawnWave(i) {
     const w = this.data.waves[i];
-    const p = this.game.player;
-    w.mobs.forEach((id, k) => {
-      // 近身包夹：前方(右侧)为主 140~360px，远程兵放远端
-      const def = MONSTER_MAP[id];
-      const isRanged = def.ai === 'archer' || def.ai === 'caster';
-      const side = k % 3 === 2 ? -1 : 1; // 2/3 从正面杀出
-      const dist = isRanged ? rand(280, 420) : rand(140, 280);
-      const x = clamp(p.x + side * dist + rand(-30, 30), this.camL + 60, this.camL + VIEW_W() - 80);
-      this.game.spawnEnemy(id, x, w.elite);
-    });
+    // 首波 7 个，其余进增援队列，保持场上 5~8 个
+    this._reinforce = w.mobs.slice(7);
+    this._spawnOne = id => this._spawnMob(id, w.elite);
+    w.mobs.slice(0, 7).forEach(id => this._spawnMob(id, w.elite));
     this.game.ui.showToast(`第 ${i + 1} 波敌军杀到！`);
     audio.play('drum_roll');
+  }
+
+  _spawnMob(id, elite) {
+    const p = this.game.player;
+    // 近身包夹：前方(右侧)为主 140~360px，远程兵放远端
+    const def = MONSTER_MAP[id];
+    const isRanged = def.ai === 'archer' || def.ai === 'caster';
+    const side = Math.random() < 0.3 ? -1 : 1; // 7 成从正面杀出
+    const dist = isRanged ? rand(280, 420) : rand(140, 280);
+    const x = clamp(p.x + side * dist + rand(-30, 30), this.camL + 60, this.camL + VIEW_W() - 80);
+    this.game.spawnEnemy(id, x, elite);
   }
 
   spawnBoss() {
@@ -130,9 +135,15 @@ export class Level {
         }
       }
       this.camera.targetX = this.lockLeft + viewW / 2;
-      // 清波判定
+      // 增援补员：场上少于 5 个且队列还有 → 补 2~3 个
       const aliveMobs = g.enemies.filter(e => e.alive && !e.isBoss);
-      if (this.phase === 'wave' && aliveMobs.length === 0) {
+      if (this.phase === 'wave' && this._reinforce && this._reinforce.length && aliveMobs.length < 5) {
+        const batch = this._reinforce.splice(0, Math.min(3, this._reinforce.length));
+        batch.forEach(id => this._spawnOne(id));
+      }
+      // 清波判定：增援打光 + 场上无敌
+      const waveDone = (!this._reinforce || this._reinforce.length === 0);
+      if (this.phase === 'wave' && aliveMobs.length === 0 && waveDone) {
         this.phase = 'march';
         g.ui.showToast(this.waveIdx + 1 >= this.waveGates.length ? '敌阵已破，直取主将！' : '通路已开，继续前进！');
         audio.play('gong');

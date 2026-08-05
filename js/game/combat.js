@@ -1,7 +1,7 @@
 // 战斗结算：命中判定 / 伤害 / 连击 / 击退（Hitbox-Hurtbox 逻辑分离）
-import { feel } from '../engine/shake.js?v=1785931908';
-import { audio } from '../engine/audio.js?v=1785931908';
-import { particles } from '../engine/particles.js?v=1785931908';
+import { feel } from '../engine/shake.js?v=1785942019';
+import { audio } from '../engine/audio.js?v=1785942019';
+import { particles } from '../engine/particles.js?v=1785942019';
 
 export class Combat {
   constructor(game) { this.game = game; }
@@ -80,7 +80,7 @@ export class Combat {
       // 刀光贴身：锚在角色身前半步，方向跟随朝向
       this.game.vfx.play(c.vfx, p.x + p.dir * c.range * 0.42, p.y - 36, {
         scale: 1.15 + (c.dmg || 1) * 0.22, fps: 30, flip: p.dir < 0,
-        rot: (c.kind === 'slash2' ? 0.6 : c.kind === 'slash3' ? -0.2 : 0) * p.dir,
+        rot: c.kind === 'slash2' ? 0.6 : c.kind === 'slash3' ? -0.2 : 0, // flip 已镜像，旋转不乘方向（防二次反转）
       });
     }
     if (hits === 0) return;

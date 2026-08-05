@@ -1,5 +1,5 @@
 // 2D 粒子系统（Canvas，对象池，上限自动降级）+ VFX 序列帧播放器
-import { rand, Pool } from './utils.js?v=1785931908';
+import { rand, Pool } from './utils.js?v=1785942019';
 
 const MAX_PARTICLES = 500;
 

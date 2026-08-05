@@ -6,7 +6,7 @@ export const CHARACTERS = [
     title: '水之呼吸', desc: '水面般柔韧的剑技，攻防一体。',
     spine: 'assets/spine/tanjiro/', spineScale: 0.28,
     palette: { cloth: '#2e4a3a', trim: '#3a6a52', skin: '#e8c39a', weapon: '#2a2a30', hair: '#5a2a22' },
-    hp: 125, mp: 100, atk: 14, speed: 300, jump: 780,
+    hp: 125, mp: 100, atk: 14, speed: 300, jump: 600,
     combo: [
       { dmg: 1.0, range: 80, arc: 60, knock: 140, stun: 0.22, kind: 'slash1', dur: 0.26, vfx: 'slash_1', sfx: 'swing' },
       { dmg: 1.1, range: 82, arc: 60, knock: 160, stun: 0.24, kind: 'slash2', dur: 0.24, vfx: 'slash_2', sfx: 'swing2' },
@@ -23,7 +23,7 @@ export const CHARACTERS = [
     title: '雷之呼吸', desc: '沉睡中的雷霆一击，快若闪电。',
     spine: 'assets/spine/zenitsu/', spineScale: 0.28,
     palette: { cloth: '#c8a028', trim: '#f0d060', skin: '#e8c39a', weapon: '#e8e0c8', hair: '#e8c838' },
-    hp: 110, mp: 110, atk: 13, speed: 340, jump: 800,
+    hp: 110, mp: 110, atk: 13, speed: 340, jump: 616,
     combo: [
       { dmg: 0.9, range: 76, arc: 55, knock: 110, stun: 0.18, kind: 'slash1', dur: 0.2, vfx: 'slash_2', sfx: 'swing2' },
       { dmg: 1.0, range: 78, arc: 55, knock: 130, stun: 0.2, kind: 'thrust', dur: 0.2, vfx: 'slash_1', sfx: 'swing' },
@@ -40,7 +40,7 @@ export const CHARACTERS = [
     title: '兽之呼吸', desc: '山猪突猛进，野性双刀乱舞。',
     spine: 'assets/spine/inosuke/', spineScale: 0.28,
     palette: { cloth: '#4a3a2e', trim: '#8a6a4a', skin: '#d9a877', weapon: '#c8d0d8', hair: '#2a2a34' },
-    hp: 140, mp: 90, atk: 15, speed: 310, jump: 790,
+    hp: 140, mp: 90, atk: 15, speed: 310, jump: 608,
     combo: [
       { dmg: 0.8, range: 74, arc: 55, knock: 100, stun: 0.17, kind: 'slash1', dur: 0.19, vfx: 'slash_1', sfx: 'swing' },
       { dmg: 0.8, range: 74, arc: 55, knock: 100, stun: 0.17, kind: 'slash2', dur: 0.17, vfx: 'slash_2', sfx: 'swing2' },
@@ -58,7 +58,7 @@ export const CHARACTERS = [
     title: '炎之呼吸', desc: '燃烧心灵的豪炎剑士，势如烈火。',
     spine: 'assets/spine/rengoku/', spineScale: 0.28,
     palette: { cloth: '#8a2a1a', trim: '#f0b040', skin: '#e8c39a', weapon: '#f0d8a0', hair: '#e8b838' },
-    hp: 150, mp: 90, atk: 19, speed: 270, jump: 730,
+    hp: 150, mp: 90, atk: 19, speed: 270, jump: 562,
     combo: [
       { dmg: 1.2, range: 84, arc: 70, knock: 200, stun: 0.3, kind: 'slash1', dur: 0.3, vfx: 'slash_4', sfx: 'swing' },
       { dmg: 1.3, range: 86, arc: 70, knock: 220, stun: 0.32, kind: 'smash', dur: 0.32, vfx: 'slash_5', sfx: 'swing2' },
@@ -75,7 +75,7 @@ export const CHARACTERS = [
     title: '虫之呼吸', desc: '蝶舞般轻盈的突刺，紫藤之毒。',
     spine: 'assets/spine/shinobu/', spineScale: 0.28,
     palette: { cloth: '#e8e4ec', trim: '#6a4a8a', skin: '#f0d0b8', weapon: '#c8b8d8', hair: '#2a2030' },
-    hp: 100, mp: 120, atk: 12, speed: 330, jump: 820,
+    hp: 100, mp: 120, atk: 12, speed: 330, jump: 631,
     combo: [
       { dmg: 0.8, range: 88, arc: 45, knock: 100, stun: 0.18, kind: 'thrust', dur: 0.2, vfx: 'slash_1', sfx: 'swing2' },
       { dmg: 0.9, range: 88, arc: 45, knock: 110, stun: 0.18, kind: 'thrust', dur: 0.18, vfx: 'slash_2', sfx: 'swing' },
@@ -93,7 +93,7 @@ export const CHARACTERS = [
     title: '恋之呼吸', desc: '鞭剑如练，刚柔并济的恋之剑舞。',
     spine: 'assets/spine/mitsuri/', spineScale: 0.28,
     palette: { cloth: '#f0e8e0', trim: '#e88aa8', skin: '#f0d0b8', weapon: '#d8e8c8', hair: '#e89ab0' },
-    hp: 115, mp: 110, atk: 13, speed: 310, jump: 790,
+    hp: 115, mp: 110, atk: 13, speed: 310, jump: 608,
     combo: [
       { dmg: 0.9, range: 96, arc: 55, knock: 120, stun: 0.2, kind: 'slash1', dur: 0.22, vfx: 'slash_2', sfx: 'swing' },
       { dmg: 1.0, range: 96, arc: 55, knock: 130, stun: 0.22, kind: 'slash2', dur: 0.22, vfx: 'slash_3', sfx: 'swing2' },
@@ -110,7 +110,7 @@ export const CHARACTERS = [
     title: '花之呼吸', desc: '静谧绽放的花之剑技，精准而华丽。',
     spine: 'assets/spine/kanao/', spineScale: 0.28,
     palette: { cloth: '#f0f0f2', trim: '#e86a8a', skin: '#f0d0b8', weapon: '#e8d8e0', hair: '#1e1a24' },
-    hp: 105, mp: 110, atk: 13, speed: 320, jump: 810,
+    hp: 105, mp: 110, atk: 13, speed: 320, jump: 623,
     combo: [
       { dmg: 0.9, range: 78, arc: 55, knock: 110, stun: 0.19, kind: 'slash1', dur: 0.2, vfx: 'slash_1', sfx: 'swing' },
       { dmg: 0.9, range: 80, arc: 55, knock: 120, stun: 0.2, kind: 'slash2', dur: 0.2, vfx: 'slash_3', sfx: 'swing2' },
@@ -127,7 +127,7 @@ export const CHARACTERS = [
     title: '爆血之鬼', desc: '娇小的身躯，爆裂的血鬼术。',
     spine: 'assets/spine/nezuko/', spineScale: 0.28,
     palette: { cloth: '#e88a9a', trim: '#f0d0d8', skin: '#f0d0b8', weapon: '#e86a5a', hair: '#2a1a20' },
-    hp: 120, mp: 110, atk: 14, speed: 300, jump: 790,
+    hp: 120, mp: 110, atk: 14, speed: 300, jump: 608,
     combo: [
       { dmg: 0.9, range: 74, arc: 55, knock: 110, stun: 0.19, kind: 'slash1', dur: 0.2, vfx: 'slash_2', sfx: 'swing' },
       { dmg: 1.0, range: 76, arc: 55, knock: 130, stun: 0.21, kind: 'slash2', dur: 0.2, vfx: 'slash_1', sfx: 'swing2' },

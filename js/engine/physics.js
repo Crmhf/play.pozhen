@@ -6,7 +6,7 @@ export class Physics {
   constructor() {
     const pl = window.planck;
     this.pl = pl;
-    this.world = new pl.World({ gravity: new pl.Vec2(0, -28) });
+    this.world = new pl.World({ gravity: new pl.Vec2(0, -33) });
     this.groundContacts = new Map(); // body -> count
     this._bindContacts();
   }
