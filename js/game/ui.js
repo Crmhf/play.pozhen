@@ -1,7 +1,7 @@
 // UI：标题/选将/剧情卷轴/结算/暂停/Boss横幅/伤害数字/HUD
-import { audio } from '../engine/audio.js?v=1785948459';
-import { InkWarrior } from '../engine/sprite.js?v=1785948459';
-import { CHARACTERS } from '../data/characters.js?v=1785948459';
+import { audio } from '../engine/audio.js?v=1785960849';
+import { InkWarrior } from '../engine/sprite.js?v=1785960849';
+import { CHARACTERS } from '../data/characters.js?v=1785960849';
 
 const $ = id => document.getElementById(id);
 const layer = () => $('screen-layer');
@@ -55,7 +55,7 @@ export class UI {
       const cv = document.createElement('canvas'); cv.width = 150; cv.height = 130;
       pv.appendChild(cv);
       // 优先 Spine 骨骼立绘预览；失败再 AI 立绘；再水墨小人
-      import('../engine/spine-actor.js?v=1785948459').then(({ SpineActor }) => {
+      import('../engine/spine-actor.js?v=1785960849').then(({ SpineActor }) => {
         if (!c.spine) throw 0;
         const actor = new SpineActor(c.spine, c.spineScale || 0.42);
         return actor.load().then(() => actor.ready ? actor : Promise.reject());
@@ -134,7 +134,7 @@ export class UI {
     el.innerHTML = `
       <div class="result-title win">天 下 歸 一</div>
       <div class="result-stats">
-        十阵皆破，三国烽烟尽散。<br>
+        十阵皆破，江湖风波平定。<br>
         总斩敌 <b>${stats.kills}</b> · 总伤害 <b>${Math.round(stats.dmg)}</b> · 最大连击 <b>${stats.maxCombo}</b>
       </div>
       <button class="ink-btn" id="btn-title">功成身退</button>`;
